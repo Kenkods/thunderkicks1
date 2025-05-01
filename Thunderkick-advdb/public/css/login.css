@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px 20px; 
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+.input-group {
+    margin: 15px 0;
+}
+
+input {
+    width: 80%;
+    padding: 8px;  
+    font-size: 14px; 
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+
+.login-button {
+    background-color: #ffecb3;
+    color: #333; 
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 80%;
+    font-size: 16px;
+    font-weight: 600; 
+}
+
+.login-button:hover {
+    background-color: #ffd54f; 
+}
+
+.forgot-password {
+    display: block;
+    margin: 8px 0 15px;
+    text-decoration: none;
+    color: #000; 
+    font-size: 12px;
+    opacity: 0.8;
+    text-align: right;
+    padding-left: 10%;
+    font-weight: 600;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+    opacity: 1;
+    color: #000; 
+}
+
+
+.social-icons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icons img {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.social-icons img:hover {
+    transform: scale(1.1);
+}
+img{
+   width: 300px;
+
+}
+
+.link-button {
+    display: block;
+    margin: 10px auto 0;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0.85;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.link-button:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
