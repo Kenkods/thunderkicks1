@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
-    <link rel="stylesheet" href="/public/css/register.css">
+    <link rel="stylesheet" href="/Github/thunderkicks1/thunderkick-advdb/public/css/register.css">
 </head>
 <body>
     <div class="container">
-        <img src="/src/hehe.png" alt="">
+        <img src="/Github/thunderkicks1/thunderkick-advdb/public/imgs/hehe.png" alt="">
         <form>
             <div class="input-group">
                 <input type="text" id="full-name" name="full-name" placeholder="Full Name" required>
@@ -26,7 +26,7 @@
                 <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
             </div>
 
-            <a href="login.html" class="forgot-password">Already have an account? Login</a>
+            <a href="login.php" class="forgot-password">Already have an account? Login</a>
             <button type="submit" class="login-button" >Register</button>
         </form>
     </div>

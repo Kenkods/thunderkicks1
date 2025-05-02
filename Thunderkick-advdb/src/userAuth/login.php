@@ -9,11 +9,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
-    <link rel="stylesheet" href="/public/css/login.css">
+    <link rel="stylesheet" href="/Github/thunderkicks1/thunderkick-advdb/public/css/login.css">
 </head>
 <body>
     <div class="container">
-        <img src="/src/hehe.png" alt="">
+        <img src="/Github/thunderkicks1/thunderkick-advdb/public/imgs/hehe.png" alt="">
         <form>
             <div class="input-group">
                 <input type="text" id="username" name="username" placeholder="Username" required>
@@ -25,7 +25,7 @@
             <button type="submit" class="login-button">Login</button>
             
             <a href="forgot.html" class="link-button">Forgot Password?</a>
-            <a href="register.html" class="link-button">Register</a>
+            <a href="register.php" class="link-button">Register</a>
         </form>
         
         <div class="social-icons">

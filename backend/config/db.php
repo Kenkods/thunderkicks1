@@ -13,6 +13,8 @@ catch(mysqli_sql_exception){
     echo"Not Connected";
 
 }
-
+   if($conn){
+    echo "ss";
+   }
 
 ?>
