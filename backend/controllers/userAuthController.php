@@ -1,5 +1,5 @@
 <?php 
-    require_once '/../model/AuthModel.php';
+    require_once '../model/AuthModel.php';
 
     class userAuthController{
         public function register(){
@@ -10,14 +10,30 @@
                 $password=$_POST['password'];
                 $confirm_pass=$_POST['confirm_password'];
 
+
+
                 if($password!==$confirm_pass){
-                    echo "P"
+                    echo "Password does not match";
 
                 }
+                else{
+                    echo "Password is matched";
+
+                    $userModel= new userModel();
+                    $success=$userModel->createUser($full_name,$email,$username,$password);
+                    if($success){
+                        echo "User created successfully";
+
+                    }
+                    else{
+                        echo "User creation failed";
+                    }
+                
 
             }
 
         }
 
     }
+}
 ?>

@@ -8,9 +8,9 @@ class userModel{
    }
 
 
-    public createUser($full_name,$email,$username,$password){
-        $stmt=$this->conn->prepare("INSERT INTO users (fullname, email, username, password) VALUES (?, ?, ? ?)");
-        $stmt->bind_param("sss", $full_name, $email, $username, $password);
+    public function createUser($full_name,$email,$username,$password){
+        $stmt=$this->conn->prepare("INSERT INTO users (full_name, email, username, password) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $full_name, $email, $username, $password);
 
         $success = $stmt->execute();
         $stmt->close();
