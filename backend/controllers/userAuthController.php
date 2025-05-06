@@ -13,14 +13,14 @@
 
 
                 if($password!==$confirm_pass){
-                    echo "Password does not match";
+                    $error='Password does not match';
 
                 }
                 else{
-                    echo "Password is matched";
+                    $hashedpassword=password_hash($password,PASSWORD_DEFAULT);
 
                     $userModel= new userModel();
-                    $success=$userModel->createUser($full_name,$email,$username,$password);
+                    $success=$userModel->createUser($full_name,$email,$username,$hashedpassword);
                     if($success){
                         echo "User created successfully";
 
@@ -33,6 +33,26 @@
             }
 
         }
+
+    }
+
+    public function login(){
+            if($_SERVER['REQUEST_METHOD']==="POST"){
+                $username=trim($_POST['username']);
+                $password=$_POST['password'];
+
+               $userModel= new userModel();
+               $result=$userModel->login($username);
+               if(password_verify(  $password,$result['password'] )){
+                echo "Login successful Controller";
+               }
+               else{
+                    echo "login Failure";
+               }
+
+                
+            }
+
 
     }
 }

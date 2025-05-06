@@ -16,6 +16,25 @@ class userModel{
         $stmt->close();
         return $success;
     }
+    public function login($username){
+        $stmt = $this->conn->prepare("SELECT password FROM users WHERE username = ?");
+        $stmt->bind_param("s",$username);
+
+        $result=$stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+
+        if($result->num_rows===1){
+            echo "Login success Model";
+            return $result->fetch_assoc();
+
+        }
+        else{
+            echo "failed";
+            return false;
+        }
+        
+    }
     
 
 

@@ -27,7 +27,7 @@
                 <input type="password" id="password" name="password" placeholder="Password" required>
             </div>
             <div class="input-group">
-                <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm Password" required>
+            <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm Password"  required>  
             </div>
 
             <a href="login.php" class="forgot-password">Already have an account? Login</a>
