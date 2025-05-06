@@ -73,12 +73,14 @@
         <img src="setting.png" alt="setting" class="h-6 hover:cursor-pointer hover:bg-gray-200">
       </div>
     </div>
-    <!--New Arrival Products-->
+    
+
+
     <div class="w-full  ">
-      <div class="w-full flex flex-wrap py-3 px-33   ">
-      <?php for ($i = 0; $i <= 7; $i++): ?>
-      <div class="max-w-sm bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border-gray-300 border-2 my-3 mx-2 ">
-        <img class="w-full h-48 object-cover" src="hero.jpg" alt="Product Image <?= $i ?>">
+      <div class="w-full flex flex-wrap py-2  px-30">
+      <?php for ($i = 0; $i <= 3; $i++): ?>
+      <div class=" bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border-gray-300 border-2 my-3 mx-2 max-w-xs">
+        <img class="w-full h-40 object-cover" src="hero.jpg" alt="Product Image <?= $i ?>">
         <div class="p-4">
           <h2 class="text-xl font-semibold font-mono text-gray-800">Sneaker <?=$name[$i] ?></h2>
           <p class="mt-2 text-gray-600 text-sm">Stylish sneaker number <?= $i ?>, perfect for daily wear.</p>

@@ -8,6 +8,7 @@
     --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-400: oklch(70.4% 0.191 22.216);
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-yellow-400: oklch(85.2% 0.199 91.936);
     --color-yellow-500: oklch(79.5% 0.184 86.047);
@@ -277,8 +278,8 @@
   .h-8 {
     height: calc(var(--spacing) * 8);
   }
-  .h-48 {
-    height: calc(var(--spacing) * 48);
+  .h-40 {
+    height: calc(var(--spacing) * 40);
   }
   .max-h-\[680px\] {
     max-height: 680px;
@@ -291,9 +292,6 @@
   }
   .w-full {
     width: 100%;
-  }
-  .max-w-sm {
-    max-width: var(--container-sm);
   }
   .max-w-xs {
     max-width: var(--container-xs);
@@ -390,8 +388,8 @@
   .bg-gray-100 {
     background-color: var(--color-gray-100);
   }
-  .bg-gray-200 {
-    background-color: var(--color-gray-200);
+  .bg-red-400 {
+    background-color: var(--color-red-400);
   }
   .bg-red-500 {
     background-color: var(--color-red-500);
@@ -426,17 +424,14 @@
   .px-7 {
     padding-inline: calc(var(--spacing) * 7);
   }
+  .px-20 {
+    padding-inline: calc(var(--spacing) * 20);
+  }
+  .px-29 {
+    padding-inline: calc(var(--spacing) * 29);
+  }
   .px-30 {
     padding-inline: calc(var(--spacing) * 30);
-  }
-  .px-32 {
-    padding-inline: calc(var(--spacing) * 32);
-  }
-  .px-33 {
-    padding-inline: calc(var(--spacing) * 33);
-  }
-  .px-34 {
-    padding-inline: calc(var(--spacing) * 34);
   }
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
@@ -452,6 +447,15 @@
   }
   .pr-10 {
     padding-right: calc(var(--spacing) * 10);
+  }
+  .pl-20 {
+    padding-left: calc(var(--spacing) * 20);
+  }
+  .pl-30 {
+    padding-left: calc(var(--spacing) * 30);
+  }
+  .pl-33 {
+    padding-left: calc(var(--spacing) * 33);
   }
   .font-\[\'Montserrat\'\] {
     font-family: 'Montserrat';
