@@ -15,7 +15,7 @@ include_once(BASE_PATH . '/backend/config/db.php');
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="/Thunderkicks1/Thunderkick-advdb/public/css/style.css" rel="stylesheet">
+  <link href="/Thunderkicks1/Thunderkick-advdb/public/css/Landing/style.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
 
@@ -73,7 +73,7 @@ include_once(BASE_PATH . '/backend/config/db.php');
       </div>
     </div>
 
-    <div class="w-full flex flex-col md:flex-row justify-between items-center py-5 bg-gray-100 px-5 md:px-20 text-xl">
+    <div class="w-full flex flex-col md:flex-row justify-between items-center py-5 bg-gray-100 px-5 md:px-20 text-xl ">
       <h1 class="font-bold text-3xl md:text-4xl  mb-4 md:mb-0 font-['Montserrat']">New Arrival</h1>
       <div class="flex items-center space-x-4">
         <h3 class="font-medium cursor-default border-b-2">All products</h3>
@@ -84,19 +84,22 @@ include_once(BASE_PATH . '/backend/config/db.php');
 
 
     <div class="w-full  ">
-      <div class="w-full flex flex-wrap py-2  px-30">
+      <div class="w-full flex flex-wrap py-2  px-22">
       
      
       <?php foreach($adidascards as $card): ?>
      
 
-      <div class=" bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border-gray-300 border-2 my-3 mx-2 max-w-xs">
-        <img class="w-full h-40 object-cover" src="/Thunderkicks1/Thunderkick-advdb/public/imgs/hero.jpg" alt="Product Image">
-        <div class="p-4">
-          <h2 class="text-xl font-semibold font-mono text-gray-800"><?=htmlspecialchars($card['name'])?></h2>
-          <p class="mt-2 text-gray-600 text-sm font-semibold">Stock : <?=htmlspecialchars($card['stock'])?></p>
+      <div class=" bg-white rounded-xl shadow-md overflow-hidden  hover:drop-shadow-[0px_15px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-gray-200 border-2 my-3 mx-4 max-w-65 hover:cursor-pointer">
+        <img class=" h-40 w-full object-cover" src=<?=htmlspecialchars($card['shoe_img'])?> alt="Product Image">
+        <div class="px-3 py-4">
+          <div class=" flex flex-wrap  h-15">
+          <h2 class="text-xl font-semibold font-mono text-gray-800 flex flex-wrap w-60"><?=htmlspecialchars($card['name'])?></h2>
+          </div>
+          <p class="mt-2 text-gray-600 text-sm font-semibold relative">Stock : <?=htmlspecialchars($card['stock'])?></p>
+         
           <div class="mt-4 flex justify-between items-center">
-            <span class="text-yellow-600 font-bold text-lg">$</span>
+            <span class="text-yellow-600 font-bold text-lg">$<?=htmlspecialchars($card['price'])?></span>
             <button class="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Buy Now</button>
           </div>
         </div>

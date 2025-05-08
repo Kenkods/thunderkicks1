@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" :"npx @tailwindcss/cli -i /public/css/input.css -o ./public/css/Landing/style.css --watch"
+    "dev" :"npx @tailwindcss/cli -i ./public/css/Landing/input.css -o ./public/css/Landing/style.css --watch"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.4",

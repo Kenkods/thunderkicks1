@@ -8,7 +8,7 @@ class CardsModel {
     }
 
     public function getShoes($brand_name) {
-        $query = "SELECT s.name, s.price, s.stock FROM shoes s JOIN brand b ON s.brand_id = b.brand_id WHERE b.brand_name=?";
+        $query = "SELECT s.name, s.price, s.stock, s.shoe_img FROM shoes s JOIN brand b ON s.brand_id = b.brand_id WHERE b.brand_name=?";
         
       
         
