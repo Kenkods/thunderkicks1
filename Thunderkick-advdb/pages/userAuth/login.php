@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         <img src="/thunderkicks1/thunderkick-advdb/public/imgs/hehe.png" alt="">
-        <form action="/thunderkicks1/backend/handlers/authLogin.php" method="POST">
+        <form action="/thunderkicks1/thunderkick-advdb/public/index.php" method="POST">
             <div class="input-group">
                 <input type="text" id="username" name="username" placeholder="Username" required>
             </div>

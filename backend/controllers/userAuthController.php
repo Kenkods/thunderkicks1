@@ -1,7 +1,19 @@
 <?php 
-    require_once '../model/AuthModel.php';
+    require_once __DIR__ . '/../config/db.php'; 
+    $conn = getConnection();
+    require_once(__DIR__ . '/../model/AuthModel.php');
 
+    
+
+
+    
     class userAuthController{
+        private $conn;
+        public function __construct($conn){
+            $this->conn=$conn;
+
+
+        }
         public function register(){
             if($_SERVER['REQUEST_METHOD']==="POST"){
                 $full_name=trim($_POST['full_name']);
@@ -19,7 +31,7 @@
                 else{
                     $hashedpassword=password_hash($password,PASSWORD_DEFAULT);
 
-                    $userModel= new userModel();
+                    $userModel= new userModel($this->conn);
                     $success=$userModel->createUser($full_name,$email,$username,$hashedpassword);
                     if($success){
                         echo "User created successfully";
@@ -41,7 +53,7 @@
                 $username=trim($_POST['username']);
                 $password=$_POST['password'];
 
-               $userModel= new userModel();
+               $userModel= new userModel($this->conn);
                $result=$userModel->login($username);
                if(password_verify(  $password,$result['password'] )){
                 echo "Login successful Controller";

@@ -23,7 +23,6 @@
     --color-white: #fff;
     --spacing: 0.25rem;
     --container-xs: 20rem;
-    --container-sm: 24rem;
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
     --text-lg: 1.125rem;
@@ -388,12 +387,6 @@
   .bg-gray-100 {
     background-color: var(--color-gray-100);
   }
-  .bg-red-400 {
-    background-color: var(--color-red-400);
-  }
-  .bg-red-500 {
-    background-color: var(--color-red-500);
-  }
   .bg-slate-700 {
     background-color: var(--color-slate-700);
   }
@@ -424,12 +417,6 @@
   .px-7 {
     padding-inline: calc(var(--spacing) * 7);
   }
-  .px-20 {
-    padding-inline: calc(var(--spacing) * 20);
-  }
-  .px-29 {
-    padding-inline: calc(var(--spacing) * 29);
-  }
   .px-30 {
     padding-inline: calc(var(--spacing) * 30);
   }
@@ -447,15 +434,6 @@
   }
   .pr-10 {
     padding-right: calc(var(--spacing) * 10);
-  }
-  .pl-20 {
-    padding-left: calc(var(--spacing) * 20);
-  }
-  .pl-30 {
-    padding-left: calc(var(--spacing) * 30);
-  }
-  .pl-33 {
-    padding-left: calc(var(--spacing) * 33);
   }
   .font-\[\'Montserrat\'\] {
     font-family: 'Montserrat';

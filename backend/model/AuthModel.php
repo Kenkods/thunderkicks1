@@ -1,10 +1,11 @@
 <?php 
+
 class userModel{
    private $conn;
 
-   public function __construct() {
+   public function __construct($conn) {
       
-       $this->conn = include_once(__DIR__ . '/../config/db.php');
+    $this->conn = $conn;
    }
 
 

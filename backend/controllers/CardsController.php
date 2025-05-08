@@ -1,15 +1,23 @@
 <?php
-    require_once '/../model/CardsModel.php';
-
+    require_once __DIR__ . '/../config/db.php'; 
+    $conn = getConnection();
+   require_once (__DIR__ . '/../model/CardsModel.php');
+   
     class CardsController{
+
+        private $conn;
+
+        public function __construct($conn) {
+            $this->conn = $conn;
+        }
+
+
         public function showCards($brand_name){
 
-                $cardsModel= new CardsModel();
+                $cardsModel= new CardsModel($this->conn);
+                $cards = $cardsModel->getShoes($brand_name);
+                return $cards;
                
-                $cards []= $cardsModel->getShoes($brand_name);
-                require __DIR__. '/../../Thunderkick-advdb/src/Landing.php';
-               
-
 
         }
 

@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <img src="/thunderkicks1/thunderkick-advdb/public/imgs/hehe.png" alt="">
-        <form action="/thunderkicks1/backend/handlers/authRegister.php" method="POST">
+        <form action="/thunderkicks1/Thunderkick-advdb/public/index.php" method="POST">
             <div class="input-group">
                 <input type="text" id="full-name" name="full_name" placeholder="Full Name" required>
             </div>
