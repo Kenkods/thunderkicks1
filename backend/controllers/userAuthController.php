@@ -55,8 +55,18 @@
 
                $userModel= new userModel($this->conn);
                $result=$userModel->login($username);
-               if(password_verify(  $password,$result['password'] )){
+               if($result && password_verify(  $password,$result['password'] )){
                 echo "Login successful Controller";
+                $_SESSION['user']=[
+                    'username'=>$result['username'],
+                    'password'=>$result['password']
+                ];
+
+                header("Location: /thunderkicks1/Thunderkick-advdb/public/index.php?page=landing");
+
+                  exit;
+
+                
                }
                else{
                     echo "login Failure";
@@ -65,6 +75,17 @@
                 
             }
 
+
+    }
+
+    public function logout(){
+        if($_SERVER['REQUEST_METHOD']==="POST"){
+
+        session_unset();
+        session_destroy();
+        header("Location: /thunderkicks1/Thunderkick-advdb/public/index.php?page=login");
+        }
+        
 
     }
 }

@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <img src="/thunderkicks1/thunderkick-advdb/public/imgs/hehe.png" alt="">
-        <form action="/thunderkicks1/Thunderkick-advdb/public/index.php" method="POST">
+        <form action="/thunderkicks1/Thunderkick-advdb/public/index.php?page=register" method="POST">
             <div class="input-group">
                 <input type="text" id="full-name" name="full_name" placeholder="Full Name" required>
             </div>
@@ -30,7 +30,7 @@
             <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm Password"  required>  
             </div>
 
-            <a href="login.php" class="forgot-password">Already have an account? Login</a>
+            <a href="login" class="forgot-password">Already have an account? Login</a>
             <button type="submit" class="login-button" >Register</button>
         </form>
     </div>

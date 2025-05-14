@@ -1,9 +1,9 @@
 <?php
-// Define base path once, from this file's position
-define('BASE_PATH', realpath(__DIR__ . '/../../../'));
 
-// DB connection
-include_once(BASE_PATH . '/backend/config/db.php');
+ 
+
+
+
 
 
 
@@ -35,7 +35,9 @@ include_once(BASE_PATH . '/backend/config/db.php');
   <header class="cursor-default bg-gray-100">
     <nav class="flex flex-wrap items-center justify-between px-7 py-3">
       <div class="flex items-center space-x-4 w-full md:w-auto">
-        <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/logo.png" alt="logo" class="w-24 md:w-40">
+        <a href="/thunderkicks1/thunderkick-advdb/public/index.php?page=landing">
+          <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/logo.png" alt="logo" class="w-24 md:w-40">
+        </a>
         <ul class="flex flex-wrap space-x-2 font-bold font-mono text-xl">
           <li>
             <select class="hover:cursor-pointer px-2 hover:border-b-yellow-500 hover:border-b-2 mt-2 ">
@@ -56,7 +58,15 @@ include_once(BASE_PATH . '/backend/config/db.php');
           <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/search.png" alt="search icon" class="h-5 w-5 absolute right-2 top-1.5">
         </div>
         <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/checkout.png" alt="checkout" class="h-7 hover:cursor-pointer">
-        <button type="button" class="font-extrabold text-xl font-mono px-4 py-1 bg-yellow-400 rounded-2xl hover:bg-yellow-500 hover:cursor-pointer" ><a href="/Thunderkicks1/Thunderkick-advdb/pages/userAuth/login.php">Login</a></button>
+        <?php
+          if(isset($_SESSION['user'])):  ?>
+          <form method="POST" action="/thunderkicks1/Thunderkick-advdb/public/logout">
+            <button type="submit" class="font-extrabold text-xl font-mono px-4 py-1 bg-yellow-400 rounded-2xl hover:bg-yellow-500 hover:cursor-pointer" >Logout</button>
+
+          </form>
+      <?php else: ?>
+        <button type="button" class="font-extrabold text-xl font-mono px-4 py-1 bg-yellow-400 rounded-2xl hover:bg-yellow-500 hover:cursor-pointer" ><a href="/Thunderkicks1/Thunderkick-advdb/public/login">Login</a></button>
+        <?php endif;?>
       </div>
     </nav>
   </header>
@@ -105,9 +115,10 @@ include_once(BASE_PATH . '/backend/config/db.php');
         </div>
       </div>
         <?php endforeach;?>
-        <button class=" border-1 relative top-5 px-5 py-2 font-medium hover:cursor-pointer hover:scale-105 transition duration-300"> View All</button>
-      </div>
+       <button class=" border-1 relative top-5 px-5 py-2 font-medium hover:cursor-pointer hover:scale-105 transition duration-300"> View All</button>
 
+      </div>
+       
 
       <div class="w-full flex flex-col md:flex-row justify-center items-center py-5 bg-gray-100 px-5 md:px-20 text-xl my-15 ">
       <h1 class="font-bold text-3xl md:text-4xl  mb-4 md:mb-0 font-['Montserrat']">Shop By Category</h1>
@@ -142,5 +153,6 @@ include_once(BASE_PATH . '/backend/config/db.php');
 
    
   </main>
+  <script src="/thunderkicks1/thunderkick-advdb/public/js/userLog.js"></script>
 </body>
 </html>
