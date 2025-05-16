@@ -20,6 +20,12 @@
                
 
         }
+        public function showCategory($category_name,$limit, $offset){
+            $cardsModel = new CardsModel($this->conn);
+            $categories=$cardsModel->getCategory($category_name,$limit,$offset);
+            return $categories;
+
+        }
 
     }
 

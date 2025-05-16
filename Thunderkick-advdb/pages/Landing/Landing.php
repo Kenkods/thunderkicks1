@@ -115,7 +115,7 @@
         </div>
       </div>
         <?php endforeach;?>
-       <button class=" border-1 relative top-5 px-5 py-2 font-medium hover:cursor-pointer hover:scale-105 transition duration-300"> View All</button>
+       <button class=" border-1 relative top-5 px-5 py-2 font-medium hover:cursor-pointer hover:scale-105 transition duration-300"> <a href="/Thunderkicks1/Thunderkick-advdb/public/products">View All</a></button>
 
       </div>
        

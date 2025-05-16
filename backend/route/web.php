@@ -9,7 +9,7 @@
             
             require_once __DIR__. '/../controllers/CardsController.php';
             $cards = new CardsController($conn);
-            $adidascards=$cards->showCards('Nike');
+            $adidascards=$cards->showCategory('Mens',4,0);
             require BASE_PATH. '/pages/Landing/Landing.php';
              
             return $adidascards;
@@ -40,6 +40,9 @@
            
             break;
         case 'products':
+            require_once __DIR__. '/../controllers/CardsController.php';
+            $cards = new CardsController($conn);
+            $adidascards=$cards->showCategory('Mens',10,0);
             require BASE_PATH. '/pages/shop/products.php';
             break;
 
