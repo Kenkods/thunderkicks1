@@ -3,7 +3,7 @@ function getConnection(){
 $db_server = "localhost";
 $db_user = "root";
 $db_password = "";
-$db_name = "thunderkicks";
+$db_name = "thunders";
 
 
 $conn = mysqli_connect($db_server, $db_user, $db_password, $db_name);

@@ -26,9 +26,28 @@
             return $categories;
 
         }
+        public function filterFetch(){
+
+             header('Content-Type: application/json');
+    
+            $data = json_decode(file_get_contents("php://input"), true);
+            
+            $brand = $data['brand'] ?? null;
+            $category = $data['category'] ?? null;
+            $size = $data['size'] ?? null;
+            $type = $data['type'] ?? null;
+
+
+            $productsModel= new CardsModel($this->conn);
+            $products = $productsModel->filterProducts($brand, $category, $size, $type);
+
+            echo json_encode($products);
+
+
+        }
+
+
 
     }
-
-
 
 ?>

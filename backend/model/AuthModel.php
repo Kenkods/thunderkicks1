@@ -28,7 +28,7 @@ class userModel{
         if($result->num_rows===1){
             echo "Login success Model";
             return $result->fetch_assoc();
-
+          
         }
         else{
             echo "failed";

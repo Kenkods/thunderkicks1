@@ -34,7 +34,7 @@
                     $userModel= new userModel($this->conn);
                     $success=$userModel->createUser($full_name,$email,$username,$hashedpassword);
                     if($success){
-                        echo "User created successfully";
+                        header("Location: /thunderkicks1/Thunderkick-advdb/public/index.php?page=login");
 
                     }
                     else{

@@ -32,7 +32,7 @@
   </style>
 </head>
 <body class="w-full overflow-x-hidden caret-transparent focus:outline-none"> 
-  <header class="cursor-default bg-gray-100">
+  <header class="cursor-default bg-gray-200">
     <nav class="flex flex-wrap items-center justify-between px-7 py-3">
       <div class="flex items-center space-x-4 w-full md:w-auto">
         <a href="/thunderkicks1/thunderkick-advdb/public/index.php?page=landing">
@@ -71,7 +71,7 @@
     </nav>
   </header>
 
-  <main class="w-full caret-transparent"> 
+  <main class="w-full caret-transparent bg-gray-10"> 
     <div class="w-full px-5 md:px-20 py-5">
       <div class="relative w-full cursor-default">
         <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/hero.jpg" alt="hero" class="w-full max-h-[680px] object-cover rounded-lg border-gray-300 border-2">
@@ -106,11 +106,22 @@
           <div class=" flex flex-wrap  h-15">
           <h2 class="text-xl font-semibold font-mono text-gray-800 flex flex-wrap w-60"><?=htmlspecialchars($card['name'])?></h2>
           </div>
+          <p class="mt-2 text-gray-600 text-xs font-semibold relative">Size : <?=htmlspecialchars($card['size'])?></p>
+
           <p class="mt-2 text-gray-600 text-sm font-semibold relative">Stock : <?=htmlspecialchars($card['stock'])?></p>
-         
+
           <div class="mt-4 flex justify-between items-center">
             <span class=" font-bold text-lg">$<?=htmlspecialchars($card['price'])?></span>
-            <button class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Buy Now</button>
+           
+             <?php if(isset($_SESSION['user'])): ?>
+              <form method="POST" action="/thunderkicks1/Thunderkick-advdb/public/addToCart">
+                <input type="hidden" name="shoe_id" value="<?=htmlspecialchars($card['shoe_id'])?>">
+                <button type="submit" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</button>
+              </form>
+            <?php else: ?>
+              <a href="/Thunderkicks1/Thunderkick-advdb/public/login" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</a>
+            <?php endif; ?>
+             
           </div>
         </div>
       </div>
@@ -139,11 +150,12 @@
           </div>
 
 
-          
+          <a href="/Thunderkicks1/Thunderkick-advdb/public/products=kids">
           <div class="bg-white rounded-xl overflow-hidden border-0 my-3 mx-4 hover:cursor-pointer max-w-80 group transition duration-300  hover:scale-100">
             <img class="w-full object-cover h-120 transition duration-300 transform group-hover:scale-105" src="/Thunderkicks1/Thunderkick-advdb/public/imgs/shoes/kidsCategory.jpg" alt="Product Image">
             <h1 class="flex justify-center items-center my-7 font-semibold text-2xl">KIDS</h1>
           </div>
+          </a>
 
           </div>
       </div>
