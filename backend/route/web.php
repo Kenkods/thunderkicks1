@@ -59,6 +59,9 @@
             $adidascards=$cards->showCategory('Kids',4,0);
             require BASE_PATH. '/pages/shop/products.php';
             break;
+        case 'addToCart':
+            require BASE_PATH. '/pages/shop/cart.php';           
+             break;
 
            
            

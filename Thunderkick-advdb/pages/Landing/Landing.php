@@ -114,7 +114,7 @@
             <span class=" font-bold text-lg">$<?=htmlspecialchars($card['price'])?></span>
            
              <?php if(isset($_SESSION['user'])): ?>
-              <form method="POST" action="/thunderkicks1/Thunderkick-advdb/public/addToCart">
+              <form method="POST" action="/thunderkicks1/Thunderkick-advdb/public/index.php?page=addToCart">
                 <input type="hidden" name="shoe_id" value="<?=htmlspecialchars($card['shoe_id'])?>">
                 <button type="submit" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</button>
               </form>
