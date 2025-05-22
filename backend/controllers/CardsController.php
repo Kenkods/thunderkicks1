@@ -23,6 +23,21 @@
         public function showCategory($category_name,$limit, $offset){
             $cardsModel = new CardsModel($this->conn);
             $categories=$cardsModel->getCategory($category_name,$limit,$offset);
+
+             foreach ($categories as &$card) {
+        if (!empty($card['sizes'])) {
+            $sizesArr = explode(',', $card['sizes']);
+            $sizes = [];
+            foreach ($sizesArr as $sizeStock) {
+                list($size, $stock) = explode(':', $sizeStock);
+                $sizes[] = ['size' => $size, 'stock' => $stock];
+            }
+            $card['sizes'] = $sizes;
+        } else {
+            $card['sizes'] = [];
+        }
+    }
+    unset($card);
             return $categories;
 
         }
@@ -44,6 +59,15 @@
             echo json_encode($products);
 
 
+        }
+        public function getShoeID($shoe_id){
+            if($_SERVER['REQUEST_METHOD']==="POST"){
+                $shoe_id=$_POST['shoe_id'];
+            
+            $cardsModel= new CardsModel($this->conn);
+            $cards= $cardsModel->getShoeID($shoe_id);
+            return $cards;
+            }
         }
 
 

@@ -8,7 +8,14 @@ class CardsModel {
     }
 
     public function getShoes($brand_name) {
-        $query = "SELECT s.name, s.price, s.stock, s.size, s.shoe_img FROM shoes s JOIN brand b ON s.brand_id = b.brand_id WHERE b.brand_name=?";
+       $query ="
+            SELECT s.name, s.price, s.shoe_img, sz.size, sz.stock
+            FROM shoes s
+            JOIN brand b ON s.brand_id = b.brand_id
+            JOIN sizes sz ON s.shoe_id = sz.shoe_id
+            WHERE b.brand_name = ?
+            ";
+
         
       
         
@@ -35,8 +42,15 @@ class CardsModel {
     }
 
     public function getCategory($category_name, $limit, $offset){
-        $query="SELECT s.shoe_id, s.name, s.price, s.stock, s.size, s.shoe_img FROM shoes s JOIN category c ON s.cat_id =c.cat_id WHERE c.category_name=?
-         LIMIT ? OFFSET ?";
+      $query ="SELECT s.name, s.price, s.shoe_img, GROUP_CONCAT(CONCAT(sz.size, ':', sz.stock) SEPARATOR ', ') AS sizes
+                FROM shoes s
+                JOIN category c ON s.cat_id = c.cat_id
+                JOIN sizes sz ON s.shoe_id = sz.shoe_id
+                WHERE c.category_name = ?
+                GROUP BY s.shoe_id
+                LIMIT ? OFFSET ?";
+
+            
 
         $stmt=$this->conn->prepare($query);
         if(!$stmt){
@@ -59,11 +73,12 @@ class CardsModel {
     }
     
        public function filterProducts($brand, $category, $size, $type) {
-    $sql = "SELECT shoes.*, brand.brand_name, category.category_name, type.shoe_type
+    $sql = "SELECT shoes.*, brand.brand_name, category.category_name, type.shoe_type, sizes.*
             FROM shoes
             INNER JOIN brand ON shoes.brand_id = brand.brand_id
             INNER JOIN category ON shoes.cat_id = category.cat_id
              INNER JOIN type ON shoes.type_id = type.type_id
+             INNER JOIN sizes ON shoes.shoe_id = sizes.shoe_id
             WHERE 1";
 
     $params = [];
@@ -77,7 +92,7 @@ class CardsModel {
         $params[] = $category;
     }
     if ($size) {
-        $sql .= " AND shoes.size = ?";
+        $sql .= " AND sizes.size = ?";
         $params[] = $size;
     }
     if($type){
@@ -86,7 +101,11 @@ class CardsModel {
 
     }
 
+  
     $stmt = $this->conn->prepare($sql);
+    if (!$stmt) {
+    die("Prepare failed: " . $this->conn->error);
+}
     
     if (!empty($params)) {
         $types = str_repeat('s', count($params));
@@ -102,6 +121,27 @@ class CardsModel {
     }
 
     return $products;
+}
+
+public function getShoeID($shoe_id){
+    $sql = "SELECT * FROM shoes WHERE shoe_id=?";
+    $stmt = $this->conn->prepare($sql);
+
+     if (!$stmt) {
+    die("Prepare failed: " . $this->conn->error);
+}
+    $stmt->bind_param("s", $shoe_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $shoes = [];
+    while ($row = $result->fetch_assoc()){
+        $shoes[] = $row;
+    }
+    return $shoes;
+
+
+
+
 }
 
 

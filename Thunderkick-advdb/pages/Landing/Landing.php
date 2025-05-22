@@ -106,16 +106,20 @@
           <div class=" flex flex-wrap  h-15">
           <h2 class="text-xl font-semibold font-mono text-gray-800 flex flex-wrap w-60"><?=htmlspecialchars($card['name'])?></h2>
           </div>
-          <p class="mt-2 text-gray-600 text-xs font-semibold relative">Size : <?=htmlspecialchars($card['size'])?></p>
-
-          <p class="mt-2 text-gray-600 text-sm font-semibold relative">Stock : <?=htmlspecialchars($card['stock'])?></p>
-
+          <div class="flex flex-wrap px-2">
+          <?php if (!empty($card['sizes']) && is_array($card['sizes'])): ?>
+            <?php foreach ($card['sizes'] as $size): ?>
+              <button  type="button" class="size-btn hover:scale-110 border-2 px-2  hover:cursor-pointer  transform transition duration-150 mx-1"  data-size="<?=htmlspecialchars($size['size'])?>"><?=htmlspecialchars($size['size'])?></button>
+              <?php endforeach; ?>
+            <?php endif;?>
+            </div>
           <div class="mt-4 flex justify-between items-center">
             <span class=" font-bold text-lg">$<?=htmlspecialchars($card['price'])?></span>
            
              <?php if(isset($_SESSION['user'])): ?>
-              <form method="POST" action="/thunderkicks1/Thunderkick-advdb/public/index.php?page=addToCart">
-                <input type="hidden" name="shoe_id" value="<?=htmlspecialchars($card['shoe_id'])?>">
+
+              <form method="POST" action="/Thunderkicks1/Thunderkick-advdb/public/index.php?page=addToCart">
+                <!-- <input type="hidden" name="shoe_id" value="<?=htmlspecialchars($card['shoe_id'])?>"> -->
                 <button type="submit" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</button>
               </form>
             <?php else: ?>
@@ -165,6 +169,6 @@
 
    
   </main>
-  <script src="/thunderkicks1/thunderkick-advdb/public/js/userLog.js"></script>
+  <script src="/thunderkicks1/thunderkick-advdb/public/js/landing.js"></script>
 </body>
 </html>
