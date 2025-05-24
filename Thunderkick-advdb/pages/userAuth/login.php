@@ -20,7 +20,13 @@
             </div>
             <div class="input-group">
                 <input type="password" id="password" name="password" placeholder="Password" required>
+                <?php if(!empty($error)):?>
+                <span class="text-3xl">
+                    <?=htmlspecialchars($error)?>
+                </span>
+                <?php endif; ?>
             </div>
+            
             
             <button type="submit" class="login-button">Login</button>
             

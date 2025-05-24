@@ -55,22 +55,23 @@
         <div class="flex flex-col lg:flex-row gap-8">
 
             <!-- LEFT CART ITEMS -->
-            <div class="flex-1 space-y-6">
 
+            <div class="flex-1 space-y-6">
+                    <?php foreach($addCart as $carts) :?>
                 <!-- SINGLE CART ITEM -->
                 <div class="bg-white rounded-lg shadow p-4 flex flex-col md:flex-row gap-4">
                     <!-- Product Image -->
                     <div class="flex justify-center items-center bg-gray-100 p-4 rounded">
-                        <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/img2.png" alt="cart image" class="h-40 object-contain">
+                        <img src=<?=htmlspecialchars($carts['shoe_img'])?> alt="cart image" class="h-40 object-contain">
                     </div>
 
                     <!-- Product Details -->
                     <div class="flex-1 space-y-4">
                         <div>
-                            <h3 class="text-xl font-semibold">Subzone Shoes</h3>
-                            <p class="text-sm text-gray-500">Brand - Adidas</p>
+                            <h3 class="text-xl font-semibold"><?=htmlspecialchars($carts['name'])?></h3>
+                            <p class="text-sm text-gray-500"><?=htmlspecialchars($carts['name'])?></p>
                             <p class="text-sm text-gray-500">COLOR: BLUE</p>
-                            <p class="text-sm text-gray-500">SIZE: M</p>
+                            <p class="text-sm text-gray-500">SIZE: <?=htmlspecialchars($carts['size'])?></p>
                         </div>
 
 
@@ -82,7 +83,7 @@
                                 <button onclick="increaseNumber('qty1','price1')" class="bg-gray-200 px-2 rounded">+</button>
                             </div>
 
-                            <h4 class="text-lg font-bold">$<span id="price1">3400.00</span></h4>
+                            <h4 class="text-lg font-bold">$<span id="price1" data-price="<?=htmlspecialchars($carts['price'])?>"><?=htmlspecialchars($carts['price'])?></span></h4>
                         </div>
 
                         <div class="flex justify-between text-sm text-gray-600">
@@ -99,48 +100,9 @@
                         </div>
                     </div>
                 </div>
+                <?php endforeach;?>
 
-                <div class="bg-white rounded-lg shadow p-4 flex flex-col md:flex-row gap-4">
-                    <!-- Product Image -->
-                    <div class="flex justify-center items-center bg-gray-100 p-4 rounded">
-                        <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/img2.png" alt="cart image" class="h-40 object-contain">
-                    </div>
-
-                    <!-- Product Details -->
-                    <div class="flex-1 space-y-4">
-                        <div>
-                            <h3 class="text-xl font-semibold">Anta KT9</h3>
-                            <p class="text-sm text-gray-500">Anta</p>
-                            <p class="text-sm text-gray-500">COLOR: BLUE</p>
-                            <p class="text-sm text-gray-500">SIZE: M</p>
-                        </div>
-
-
-                        <!-- Quantity and Price -->
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-2">
-                                <button onclick="decreaseNumber('qty1','price1')" class="bg-gray-200 px-2 rounded">-</button>
-                                <input id="qty1" type="text" value="1" class="w-10 text-center border rounded">
-                                <button onclick="increaseNumber('qty1','price1')" class="bg-gray-200 px-2 rounded">+</button>
-                            </div>
-
-                            <h4 class="text-lg font-bold">$<span id="price1">4341.00</span></h4>
-                        </div>
-
-                        <div class="flex justify-between text-sm text-gray-600">
-                            <button class="hover:text-red-500 flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg> Remove
-                            </button>
-                            <button class="hover:text-pink-500 flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.01 4.01 4 6.5 4c1.74 0 3.41 1.01 4.13 2.44C11.09 5.01 12.76 4 14.5 4 16.99 4 19 6.01 19 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                </svg> Move to Wishlist
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- add new item here -->
 
@@ -188,8 +150,10 @@
     function increaseNumber(qtyId, priceId) {
         let qty = document.getElementById(qtyId);
         let price = document.getElementById(priceId);
-        qty.value = parseInt(qty.value) + 1;
-        price.innerText = (parseInt(qty.value) * 20).toFixed(2);
+        let initialPrice= parseFloat(price.getAttribute('data-price'));
+        let newQTY =parseInt(qty.value) +1;
+        qty.value = newQTY;
+        price.innerText = (newQTY*initialPrice).toFixed(2);
     }
 
     function decreaseNumber(qtyId, priceId) {

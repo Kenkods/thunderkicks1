@@ -31,7 +31,6 @@ class userModel{
           
         }
         else{
-            echo "failed";
             return false;
         }
         

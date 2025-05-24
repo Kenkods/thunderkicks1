@@ -71,6 +71,8 @@
            
             <div class="w-full flex flex-wrap  justify-center items-center " id="productList">
                 <?php foreach($adidascards as $card): ?>
+                    <form action="/thunderkicks1/thunderkick-advdb/public/index.php?page=addToCart" method="POST">
+                        <input name="shoe_id" id="" type="hidden" value=<?=htmlspecialchars($card['shoe_id'])?> >
                   <div class=" bg-white rounded-xl shadow-md overflow-hidden  hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200  my-3 mx-4 max-w-75 min-w-75 hover:cursor-pointer">
         <img class=" h-40 w-full object-cover" src=<?=htmlspecialchars($card['shoe_img'])?> alt="Product Image">
         <div class="px-3 py-4">
@@ -85,6 +87,7 @@
           </div>
         </div>
       </div>
+      </form>
                  <?php endforeach;?>
 
             </div>

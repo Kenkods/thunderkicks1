@@ -59,6 +59,17 @@
             $adidascards=$cards->showCategory('Kids',4,0);
             require BASE_PATH. '/pages/shop/products.php';
             break;
+        case 'addToCart':
+            require_once __DIR__. '/../controllers/CardsController.php';
+            $cards= new CardsController($conn);
+            $addCart=$cards->getShoeID($_POST['shoe_id']);
+            $_SESSION['carts']=[
+                'shoe_id'=>$_POST['shoe_id'],
+                'user'=>$_SESSION['user']
+            ];
+            require BASE_PATH. '/pages/shop/cart.php';  
+           
+             break;
 
            
            

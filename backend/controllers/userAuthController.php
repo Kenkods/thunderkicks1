@@ -38,7 +38,7 @@
 
                     }
                     else{
-                        echo "User creation failed";
+                        $error="Username or email already exists";
                     }
                 
 
@@ -56,20 +56,21 @@
                $userModel= new userModel($this->conn);
                $result=$userModel->login($username);
                if($result && password_verify(  $password,$result['password'] )){
-                echo "Login successful Controller";
                 $_SESSION['user']=[
                     'username'=>$result['username'],
                     'password'=>$result['password']
                 ];
+                
 
                 header("Location: /thunderkicks1/Thunderkick-advdb/public/index.php?page=landing");
 
-                  exit;
-
+                
                 
                }
                else{
-                    echo "login Failure";
+                
+                $error="Invalid username or password";
+                
                }
 
                 
