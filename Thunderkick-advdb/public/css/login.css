@@ -8,48 +8,48 @@ body {
     margin: 0;
 }
 
-.container {
+.tk-container {
     background-color: #fff;
-    padding: 20px 20px; 
+    padding: 20px 20px;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
 }
-.input-group {
+
+.tk-input-group {
     margin: 15px 0;
 }
 
-input {
+.tk-input {
     width: 80%;
-    padding: 8px;  
-    font-size: 14px; 
+    padding: 8px;
+    font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 10px;
 }
 
-
-.login-button {
+.tk-login-button {
     background-color: #ffecb3;
-    color: #333; 
+    color: #333;
     border: none;
     padding: 12px;
     border-radius: 10px;
     cursor: pointer;
     width: 80%;
     font-size: 16px;
-    font-weight: 600; 
+    font-weight: 600;
 }
 
-.login-button:hover {
-    background-color: #ffd54f; 
+.tk-login-button:hover {
+    background-color: #ffd54f;
 }
 
-.forgot-password {
+.tk-forgot-password {
     display: block;
     margin: 8px 0 15px;
     text-decoration: none;
-    color: #000; 
+    color: #000;
     font-size: 12px;
     opacity: 0.8;
     text-align: right;
@@ -57,36 +57,35 @@ input {
     font-weight: 600;
 }
 
-.forgot-password:hover {
+.tk-forgot-password:hover {
     text-decoration: underline;
     opacity: 1;
-    color: #000; 
+    color: #000;
 }
 
-
-.social-icons {
+.tk-social-icons {
     margin-top: 30px;
     display: flex;
     justify-content: center;
     gap: 20px;
 }
 
-.social-icons img {
+.tk-social-icons img {
     width: 32px;
     height: 32px;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
 
-.social-icons img:hover {
+.tk-social-icons img:hover {
     transform: scale(1.1);
 }
-img{
-   width: 300px;
 
+.tk-logo {
+    width: 300px;
 }
 
-.link-button {
+.tk-link-button {
     display: block;
     margin: 10px auto 0;
     text-align: center;
@@ -99,7 +98,7 @@ img{
     transition: all 0.2s ease;
 }
 
-.link-button:hover {
+.tk-link-button:hover {
     text-decoration: underline;
     opacity: 1;
 }
