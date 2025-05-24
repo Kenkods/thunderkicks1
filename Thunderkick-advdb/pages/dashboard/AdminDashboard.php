@@ -1,3 +1,11 @@
+<?php
+// Display success/error messages
+if (isset($_GET['success'])) {
+	echo '<div class="alert alert-success">Shoe added successfully!</div>';
+} elseif (isset($_GET['error'])) {
+	echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['error']) . '</div>';
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,19 +15,27 @@
 
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 	<!-- My CSS -->
 	<link rel="stylesheet" href="AdminDashboard.css">
+	<style>
+		.sizes-container {
+			max-height: 200px;
+			overflow-y: auto;
+			border: 1px solid #dee2e6;
+			padding: 10px;
+			border-radius: 5px;
+		}
+	</style>
 
 	<title>Thunderkicks</title>
 </head>
 
 <body>
-
-
-	<!-- sa sidebar na lng ato himoon ya ipang href lng nato kada button sa sidebar  -->
 	<section id="sidebar">
 		<a href="#" class="brand">
-			<img src="tanda.png" class="logo"> <!--logo po dito-->
+			<img src="tanda.png" class="logo">
 			<span class="text">ThunderKicks</span>
 		</a>
 		<ul class="side-menu top">
@@ -29,38 +45,8 @@
 					<span class="text">Dashboard</span>
 				</a>
 			</li>
-			<li>
-				<a href="Inventory.html">
-					<i class='bx bxs-shopping-bag-alt'></i>
-					<span class="text">Inventory</span>
-				</a>
-			</li>
-			<li>
-				<a href="">
-					<i class='bx bxs-doughnut-chart'></i>
-					<span class="text">Analytics</span>
-				</a>
-			</li>
-			<li>
-				<a href="Review.html">
-					<i class='bx bxs-message-dots'></i>
-					<span class="text">Reviews</span>
-				</a>
-			</li>
-			<li>
-				<a href="Team.html">
-					<i class='bx bxs-group'></i>
-					<span class="text">Team</span>
-				</a>
-			</li>
 		</ul>
 		<ul class="side-menu">
-			<li>
-				<a href="#">
-					<i class='bx bxs-cog'></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
 			<li>
 				<a href="#" class="logout">
 					<i class='bx bxs-log-out-circle'></i>
@@ -69,53 +55,19 @@
 			</li>
 		</ul>
 	</section>
-	<!-- SIDEBAR -->
 
 
 
 	<!-- CONTENT -->
 	<section id="content">
-		<!-- NAVBAR -->
-		<nav>
-			<i class='bx bx-menu'></i>
-			<a href="#" class="nav-link">Categories</a>
-			<form action="#">
-				<div class="form-input">
-					<input type="search" placeholder="Search...">
-					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-				</div>
-			</form>
-			<input type="checkbox" id="switch-mode" hidden>
-			<label for="switch-mode" class="switch-mode"></label>
-			<a href="#" class="notification">
-				<i class='bx bxs-bell'></i>
-				<span class="num">8</span>
-			</a>
-			<a href="#" class="profile">
-				<img src="profile.png">
-			</a>
-		</nav>
-		<!-- NAVBAR -->
 
 		<!-- MAIN -->
 		<main>
 			<div class="head-title">
 				<div class="left">
 					<h1>Dashboard</h1>
-					<ul class="breadcrumb">
-						<li>
-							<a href="AdminDashboard.php">Dashboard</a>
-						</li>
-						<li><i class='bx bx-chevron-right'></i></li>
-						<li>
-							<a class="active" href="#">Home</a>
-						</li>
-					</ul>
 				</div>
-				<a href="#" class="btn-download">
-					<i class='bx bxs-cloud-download'></i>
-					<span class="text">Download PDF</span>
-				</a>
+				<button class="btn-download" data-bs-toggle="modal" data-bs-target="#addShoesModal">Add Shoes</button>
 			</div>
 
 			<ul class="box-info">
@@ -201,12 +153,114 @@
 				</div>
 			</div>
 		</main>
-		<!-- MAIN -->
+
+		<!-- Add Shoes Modal -->
+		<div class="modal fade" id="addShoesModal" tabindex="-1" aria-labelledby="addShoesModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<form action="/thunderkicks1/backend/controllers/addShoesHandler.php" method="POST" enctype="multipart/form-data">
+						<div class="modal-header">
+							<h5 class="modal-title" id="addShoesModalLabel">Add New Shoes</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+
+						<div class="modal-body">
+							<div class="row">
+								<!-- Basic Info Column -->
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="shoeName" class="form-label">Shoe Name</label>
+										<input type="text" class="form-control" id="shoeName" name="shoeName" required>
+									</div>
+
+									<div class="mb-3">
+										<label for="shoeBrand" class="form-label">Brand</label>
+										<select class="form-select" id="shoeBrand" name="shoeBrand" required>
+											<option value="">Select Brand</option>
+											<?php
+											$brands = ['Adidas', 'Anta', 'Nike', 'New Balance'];
+											foreach ($brands as $brand) {
+												echo "<option value='$brand'>$brand</option>";
+											}
+											?>
+										</select>
+									</div>
+
+									<div class="mb-3">
+										<label for="shoeCategory" class="form-label">Category</label>
+										<select class="form-select" id="shoeCategory" name="shoeCategory" required>
+											<option value="">Select Category</option>
+											<?php
+											$categories = ['Men', 'Women', 'Kids'];
+											foreach ($categories as $category) {
+												echo "<option value='$category'>$category</option>";
+											}
+											?>
+										</select>
+									</div>
+
+									<div class="mb-3">
+										<label for="shoeType" class="form-label">Type</label>
+										<select class="form-select" id="shoeType" name="shoeType" required>
+											<option value="">Select Type</option>
+											<option value="Basketball">Basketball</option>
+											<option value="Running">Running</option>
+											<option value="Casual">Casual</option>
+											<option value="Training">Training</option>
+										</select>
+									</div>
+
+									<div class="mb-3">
+										<label for="shoePrice" class="form-label">Price</label>
+										<div class="input-group">
+											<span class="input-group-text">₱</span>
+											<input type="number" step="0.01" class="form-control" id="shoePrice" name="shoePrice" required>
+										</div>
+									</div>
+								</div>
+
+								<!-- Image and Sizes Column -->
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="shoeImage" class="form-label">Product Image</label>
+										<input type="file" class="form-control" id="shoeImage" name="shoeImage" accept="image/*" required>
+										<div class="form-text">Recommended size: 500x500px</div>
+									</div>
+
+									<div class="mb-3">
+										<label class="form-label">Sizes & Stock</label>
+										<div class="sizes-container">
+											<?php
+											$commonSizes = [7, 8, 9, 10, 11, 12];
+											foreach ($commonSizes as $size) {
+												echo '
+                                        <div class="input-group mb-2">
+                                            <span class="input-group-text">Size ' . $size . '</span>
+                                            <input type="number" class="form-control" name="sizes[' . $size . ']" placeholder="Stock" min="0" value="10">
+                                        </div>';
+											}
+											?>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Add Product</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
 	</section>
 	<!-- CONTENT -->
 
 
-	<script src="AdminDashboard.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>
