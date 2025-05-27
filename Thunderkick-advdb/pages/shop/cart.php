@@ -69,9 +69,7 @@
                     <div class="flex-1 space-y-4">
                         <div>
                             <h3 class="text-xl font-semibold"><?=htmlspecialchars($carts['name'])?></h3>
-                            <p class="text-sm text-gray-500"><?=htmlspecialchars($carts['name'])?></p>
-                            <p class="text-sm text-gray-500">COLOR: BLUE</p>
-                            <p class="text-sm text-gray-500">SIZE: <?=htmlspecialchars($carts['size'])?></p>
+                            
                         </div>
 
 

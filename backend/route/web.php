@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_GET['page'] ?? '') === 'filter-p
 
 
 
+
 switch ($request) {
     case 'landing':
         require_once __DIR__ . '/../controllers/CardsController.php';

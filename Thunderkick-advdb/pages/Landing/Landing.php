@@ -102,6 +102,7 @@
 
       <div class=" bg-white rounded-xl shadow-md overflow-hidden  hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200  my-3 mx-4 max-w-65 hover:cursor-pointer">
         <img class=" h-40 w-full object-cover" src=<?=htmlspecialchars($card['shoe_img'])?> alt="Product Image">
+        <input type="hidden" value="<?=htmlspecialchars($card['shoe_id'])?>">
         <div class="px-3 py-4">
           <div class=" flex flex-wrap  h-15">
           <h2 class="text-xl font-semibold font-mono text-gray-800 flex flex-wrap w-60"><?=htmlspecialchars($card['name'])?></h2>
@@ -119,7 +120,7 @@
              <?php if(isset($_SESSION['user'])): ?>
 
               <form method="POST" action="/Thunderkicks1/Thunderkick-advdb/public/index.php?page=addToCart">
-                <!-- <input type="hidden" name="shoe_id" value="<?=htmlspecialchars($card['shoe_id'])?>"> -->
+                <input type="hidden" name="shoe_id" value=<?=htmlspecialchars($card['shoe_id'])?>>
                 <button type="submit" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</button>
               </form>
             <?php else: ?>
@@ -154,7 +155,7 @@
           </div>
 
 
-          <a href="/Thunderkicks1/Thunderkick-advdb/public/products=kids">
+          <a href="/Thunderkicks1/Thunderkick-advdb/public/products=Kids">
           <div class="bg-white rounded-xl overflow-hidden border-0 my-3 mx-4 hover:cursor-pointer max-w-80 group transition duration-300  hover:scale-100">
             <img class="w-full object-cover h-120 transition duration-300 transform group-hover:scale-105" src="/Thunderkicks1/Thunderkick-advdb/public/imgs/shoes/kidsCategory.jpg" alt="Product Image">
             <h1 class="flex justify-center items-center my-7 font-semibold text-2xl">KIDS</h1>
