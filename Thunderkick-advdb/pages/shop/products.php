@@ -11,7 +11,23 @@
         #filter-modal {
             width: 100%;
             height: auto;
+            display: none;
 
+            .loading-spinner {
+                display: inline-block;
+                width: 1rem;
+                height: 1rem;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                border-top-color: white;
+                animation: spin 1s ease-in-out infinite;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
         }
     </style>
 </head>
@@ -69,9 +85,9 @@
 
                 </div>
                 <button class="text-2xl font-bold bg-yellow-600 hover:bg-yellow-500 rounded-2xl px-5 py-1 relative left-40 mt-4 hover:cursor-pointer" id="apply-filter">Apply all</button>
-               <button class="text-2xl font-bold bg-gray-500 hover:bg-gray-400 rounded-2xl px-5 py-1 relative left-40 mt-2 hover:cursor-pointer" id="clear-filter">
-  Clear all
-</button>
+                <button class="text-2xl font-bold bg-gray-500 hover:bg-gray-400 rounded-2xl px-5 py-1 relative left-40 mt-2 hover:cursor-pointer" id="clear-filter">
+                    Clear all
+                </button>
 
 
             </div>
@@ -80,26 +96,26 @@
                 <?php foreach ($adidascards as $card): ?>
                     <form action="/thunderkicks1/thunderkick-advdb/public/index.php?page=addToCart" method="POST">
 
-                        <input name="shoe_id" id="" type="hidden" value=<?=htmlspecialchars($card['shoe_id'])?> >
-                                <div class=" bg-white rounded-xl shadow-md overflow-hidden  hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200  my-3 mx-4 max-w-75 min-w-75 hover:cursor-pointer">
-                        <img class=" h-40 w-full object-cover" src=<?=htmlspecialchars($card['shoe_img'])?> alt="Product Image">
-                        <div class="px-3 py-4">
-                        <div class=" flex flex-wrap  h-15">
-                        <h2 class="text-xl font-semibold font-mono text-gray-800 flex flex-wrap w-60"><?=htmlspecialchars($card['name'])?></h2>
+                        <input name="shoe_id" id="" type="hidden" value=<?= htmlspecialchars($card['shoe_id']) ?>>
+                        <div class=" bg-white rounded-xl shadow-md overflow-hidden  hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200  my-3 mx-4 max-w-75 min-w-75 hover:cursor-pointer">
+                            <img class=" h-40 w-full object-cover" src=<?= htmlspecialchars($card['shoe_img']) ?> alt="Product Image">
+                            <div class="px-3 py-4">
+                                <div class=" flex flex-wrap  h-15">
+                                    <h2 class="text-xl font-semibold font-mono text-gray-800 flex flex-wrap w-60"><?= htmlspecialchars($card['name']) ?></h2>
+                                </div>
+                                <?php if (!empty($card['sizes']) && is_array($card['sizes'])): ?>
+                                    <?php foreach ($card['sizes'] as $size): ?>
+                                        <button type="button" class="size-btn hover:scale-110 border-2 px-2  hover:cursor-pointer  transform transition duration-150 mx-1" data-size="<?= htmlspecialchars($size['size']) ?>"><?= htmlspecialchars($size['size']) ?></button>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <div class="mt-4 flex justify-between items-center">
+                                    <span class=" font-bold text-lg">$<?= htmlspecialchars($card['price']) ?></span>
+                                    <button class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer" type="submit">Reserve Now</button>
+                                </div>
+                            </div>
                         </div>
-                <?php if (!empty($card['sizes']) && is_array($card['sizes'])): ?>
-                            <?php foreach ($card['sizes'] as $size): ?>
-                            <button  type="button" class="size-btn hover:scale-110 border-2 px-2  hover:cursor-pointer  transform transition duration-150 mx-1"  data-size="<?=htmlspecialchars($size['size'])?>"><?=htmlspecialchars($size['size'])?></button>
-                            <?php endforeach; ?>
-                            <?php endif;?>         
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class=" font-bold text-lg">$<?=htmlspecialchars($card['price'])?></span>
-                            <button class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer" type="submit">Buy Now</button>
-                        </div>
-                        </div>
-                    </div>
-      </form>
-                 <?php endforeach;?>
+                    </form>
+                <?php endforeach; ?>
 
             </div>
         </div>
