@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_GET['page'] ?? '') === 'filter-p
 
 
 
-
 switch ($request) {
     case 'landing':
         require_once __DIR__ . '/../controllers/CardsController.php';
@@ -21,14 +20,25 @@ switch ($request) {
         require BASE_PATH . '/pages/Landing/Landing.php';
 
         return $adidascards;
-    case 'login':
+    case 'login': 
+           if (isset($_SESSION['user'])) {
+        header("Location: landing");
+        exit;
+    }
+
         require_once __DIR__ . '/../controllers/userAuthController.php';
         $loginCont = new userAuthController($conn);
         $loginCont->login();
+        
+        
         require BASE_PATH . '/pages/userAuth/login.php';
 
         break;
     case 'register':
+         if (isset($_SESSION['user'])) {
+        header("Location: landing");
+        exit;
+    }
         require_once __DIR__ . '/../controllers/userAuthController.php';
         $regCont = new userAuthController($conn);
         $regCont->register();
@@ -61,16 +71,25 @@ switch ($request) {
         require BASE_PATH . '/pages/shop/products.php';
         break;
     case 'addToCart':
+
+         if (!isset($_SESSION['user'])) {
+        header("Location: login");
+        exit;
+    }
         require_once __DIR__ . '/../controllers/CardsController.php';
         $cards = new CardsController($conn);
         $addCart = $cards->getShoeID($_POST['shoe_id']);
+       
         $_SESSION['carts'] = [
             'shoe_id' => $_POST['shoe_id'],
             'user' => $_SESSION['user']
         ];
-        require BASE_PATH . '/pages/shop/cart.php';
 
-        break;
+       header("Location: landing");
+       exit();
+              
+    
+
     case 'AdminDashboard.php?success=1':
         require BASE_PATH . '/pages/dashboard/AdminDashboard.php';
         break;

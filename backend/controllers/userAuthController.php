@@ -7,12 +7,7 @@ require_once(__DIR__ . '/../model/AuthModel.php');
 
 
     
-    class userAuthController{
-        private $conn;
-        public function __construct($conn){
-            $this->conn=$conn;
-            $loggedin=false;
-
+ 
 
 
 class userAuthController
@@ -62,6 +57,7 @@ class userAuthController
                     'username' => $result['username'],
                     'password' => $result['password']
                 ];
+              
 
                
 
