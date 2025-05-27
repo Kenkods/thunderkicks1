@@ -11,6 +11,7 @@
         private $conn;
         public function __construct($conn){
             $this->conn=$conn;
+            $loggedin=false;
 
 
         }
@@ -60,7 +61,7 @@
                     'username'=>$result['username'],
                     'password'=>$result['password']
                 ];
-                
+               
 
                 header("Location: /thunderkicks1/Thunderkick-advdb/public/index.php?page=landing");
 
