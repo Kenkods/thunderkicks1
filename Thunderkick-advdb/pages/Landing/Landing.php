@@ -1,6 +1,6 @@
 <?php
 
- 
+
 
 
 
@@ -12,6 +12,7 @@
 
 <!doctype html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,18 +21,19 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-  
+
   <style>
-    
-    body, div, section, main {
+    body,
+    div,
+    section,
+    main {
       caret-color: transparent;
       outline: none;
     }
-    
-   
   </style>
 </head>
-<body class="w-full overflow-x-hidden caret-transparent focus:outline-none"> 
+
+<body class="w-full overflow-x-hidden caret-transparent focus:outline-none">
   <header class="cursor-default bg-gray-200">
     <nav class="flex flex-wrap items-center justify-between px-7 py-3">
       <div class="flex items-center space-x-4 w-full md:w-auto">
@@ -59,19 +61,19 @@
         </div>
         <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/checkout.png" alt="checkout" class="h-7 hover:cursor-pointer">
         <?php
-          if(isset($_SESSION['user'])):  ?>
+        if (isset($_SESSION['user'])):  ?>
           <form method="POST" action="/thunderkicks1/Thunderkick-advdb/public/logout">
-            <button type="submit" class="font-extrabold text-xl font-mono px-4 py-1 bg-yellow-400 rounded-2xl hover:bg-yellow-500 hover:cursor-pointer" >Logout</button>
+            <button type="submit" class="font-extrabold text-xl font-mono px-4 py-1 bg-yellow-400 rounded-2xl hover:bg-yellow-500 hover:cursor-pointer">Logout</button>
 
           </form>
-      <?php else: ?>
-        <button type="button" class="font-extrabold text-xl font-mono px-4 py-1 bg-yellow-400 rounded-2xl hover:bg-yellow-500 hover:cursor-pointer" ><a href="/Thunderkicks1/Thunderkick-advdb/public/login">Login</a></button>
-        <?php endif;?>
+        <?php else: ?>
+          <button type="button" class="font-extrabold text-xl font-mono px-4 py-1 bg-yellow-400 rounded-2xl hover:bg-yellow-500 hover:cursor-pointer"><a href="/Thunderkicks1/Thunderkick-advdb/public/login">Login</a></button>
+        <?php endif; ?>
       </div>
     </nav>
   </header>
 
-  <main class="w-full caret-transparent bg-gray-10"> 
+  <main class="w-full caret-transparent bg-gray-10">
     <div class="w-full px-5 md:px-20 py-5">
       <div class="relative w-full cursor-default">
         <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/hero.jpg" alt="hero" class="w-full max-h-[680px] object-cover rounded-lg border-gray-300 border-2">
@@ -90,57 +92,57 @@
         <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/setting.png" alt="setting" class="h-6 hover:cursor-pointer hover:bg-gray-200">
       </div> -->
     </div>
-    
+
 
 
     <div class="w-full  ">
       <div class="w-full flex flex-wrap py-2  px-22 justify-center items-center">
-      
-     
-      <?php foreach($adidascards as $card): ?>
-     
 
-      <div class=" bg-white rounded-xl shadow-md overflow-hidden  hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200  my-3 mx-4 max-w-65 hover:cursor-pointer">
-        <img class=" h-40 w-full object-cover" src=<?=htmlspecialchars($card['shoe_img'])?> alt="Product Image">
-        <input type="hidden" value="<?=htmlspecialchars($card['shoe_id'])?>">
-        <div class="px-3 py-4">
-          <div class=" flex flex-wrap  h-15">
-          <h2 class="text-xl font-semibold font-mono text-gray-800 flex flex-wrap w-60"><?=htmlspecialchars($card['name'])?></h2>
-          </div>
-          <div class="flex flex-wrap px-2">
-          <?php if (!empty($card['sizes']) && is_array($card['sizes'])): ?>
-            <?php foreach ($card['sizes'] as $size): ?>
-              <button  type="button" class="size-btn hover:scale-110 border-2 px-2  hover:cursor-pointer  transform transition duration-150 mx-1"  data-size="<?=htmlspecialchars($size['size'])?>"><?=htmlspecialchars($size['size'])?></button>
-              <?php endforeach; ?>
-            <?php endif;?>
+
+        <?php foreach ($adidascards as $card): ?>
+
+
+          <div class=" bg-white rounded-xl shadow-md overflow-hidden  hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200  my-3 mx-4 max-w-65 hover:cursor-pointer">
+            <img class=" h-40 w-full object-cover" src=<?= htmlspecialchars($card['shoe_img']) ?> alt="Product Image">
+            <input type="hidden" value="<?= htmlspecialchars($card['shoe_id']) ?>">
+            <div class="px-3 py-4">
+              <div class=" flex flex-wrap  h-15">
+                <h2 class="text-xl font-semibold font-mono text-gray-800 flex flex-wrap w-60"><?= htmlspecialchars($card['name']) ?></h2>
+              </div>
+              <div class="flex flex-wrap px-2">
+                <?php if (!empty($card['sizes']) && is_array($card['sizes'])): ?>
+                  <?php foreach ($card['sizes'] as $size): ?>
+                    <button type="button" class="size-btn hover:scale-110 border-2 px-2  hover:cursor-pointer  transform transition duration-150 mx-1" data-size="<?= htmlspecialchars($size['size']) ?>"><?= htmlspecialchars($size['size']) ?></button>
+                  <?php endforeach; ?>
+                <?php endif; ?>
+              </div>
+              <div class="mt-4 flex justify-between items-center">
+                <span class=" font-bold text-lg">$<?= htmlspecialchars($card['price']) ?></span>
+
+                <?php if (isset($_SESSION['user'])): ?>
+
+                  <form method="POST" action="/Thunderkicks1/Thunderkick-advdb/public/index.php?page=addToCart">
+                    <input type="hidden" name="shoe_id" value=<?= htmlspecialchars($card['shoe_id']) ?>>
+                    <button type="submit" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Reserve Now</button>
+                  </form>
+                <?php else: ?>
+                  <a href="/Thunderkicks1/Thunderkick-advdb/public/login" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</a>
+                <?php endif; ?>
+
+              </div>
             </div>
-          <div class="mt-4 flex justify-between items-center">
-            <span class=" font-bold text-lg">$<?=htmlspecialchars($card['price'])?></span>
-           
-             <?php if(isset($_SESSION['user'])): ?>
-
-              <form method="POST" action="/Thunderkicks1/Thunderkick-advdb/public/index.php?page=addToCart">
-                <input type="hidden" name="shoe_id" value=<?=htmlspecialchars($card['shoe_id'])?>>
-                <button type="submit" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</button>
-              </form>
-            <?php else: ?>
-              <a href="/Thunderkicks1/Thunderkick-advdb/public/login" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</a>
-            <?php endif; ?>
-             
           </div>
-        </div>
-      </div>
-        <?php endforeach;?>
-       <button class=" border-1 relative top-5 px-5 py-2 font-medium hover:cursor-pointer hover:scale-105 transition duration-300"> <a href="/Thunderkicks1/Thunderkick-advdb/public/products">View All</a></button>
+        <?php endforeach; ?>
+        <button class=" border-1 relative top-5 px-5 py-2 font-medium hover:cursor-pointer hover:scale-105 transition duration-300"> <a href="/Thunderkicks1/Thunderkick-advdb/public/products">View All</a></button>
 
       </div>
-       
+
 
       <div class="w-full flex flex-col md:flex-row justify-center items-center py-5 bg-gray-100 px-5 md:px-20 text-xl my-15 ">
-      <h1 class="font-bold text-3xl md:text-4xl  mb-4 md:mb-0 font-['Montserrat']">Shop By Category</h1>
+        <h1 class="font-bold text-3xl md:text-4xl  mb-4 md:mb-0 font-['Montserrat']">Shop By Category</h1>
       </div>
       <div class="w-full">
-          <div class="w-full flex flex-wrap py-1 px-20 justify-center items-center">
+        <div class="w-full flex flex-wrap py-1 px-20 justify-center items-center">
 
           <div class="bg-white rounded-xl overflow-hidden border-0 my-3 mx-4 hover:cursor-pointer max-w-110 group transition duration-300 hover:scale-100">
             <img class="w-full object-cover h-120 transition duration-300 transform group-hover:scale-105" src="/Thunderkicks1/Thunderkick-advdb/public/imgs/shoes/mensCategory.jpg" alt="Product Image">
@@ -148,7 +150,7 @@
           </div>
 
 
-          
+
           <div class="bg-white rounded-xl overflow-hidden border-0 my-3 mx-4 hover:cursor-pointer max-w-110 group transition duration-300  hover:scale-100">
             <img class="w-full object-cover h-120 transition duration-300 transform group-hover:scale-105" src="/Thunderkicks1/Thunderkick-advdb/public/imgs/shoes/womenCategory.jpg" alt="Product Image">
             <h1 class="flex justify-center items-center my-7 font-semibold text-2xl">WOMEN</h1>
@@ -156,20 +158,21 @@
 
 
           <a href="/Thunderkicks1/Thunderkick-advdb/public/products=Kids">
-          <div class="bg-white rounded-xl overflow-hidden border-0 my-3 mx-4 hover:cursor-pointer max-w-80 group transition duration-300  hover:scale-100">
-            <img class="w-full object-cover h-120 transition duration-300 transform group-hover:scale-105" src="/Thunderkicks1/Thunderkick-advdb/public/imgs/shoes/kidsCategory.jpg" alt="Product Image">
-            <h1 class="flex justify-center items-center my-7 font-semibold text-2xl">KIDS</h1>
-          </div>
+            <div class="bg-white rounded-xl overflow-hidden border-0 my-3 mx-4 hover:cursor-pointer max-w-80 group transition duration-300  hover:scale-100">
+              <img class="w-full object-cover h-120 transition duration-300 transform group-hover:scale-105" src="/Thunderkicks1/Thunderkick-advdb/public/imgs/shoes/kidsCategory.jpg" alt="Product Image">
+              <h1 class="flex justify-center items-center my-7 font-semibold text-2xl">KIDS</h1>
+            </div>
           </a>
 
-          </div>
+        </div>
       </div>
-        
-      
+
+
     </div>
 
-   
+
   </main>
   <script src="/thunderkicks1/thunderkick-advdb/public/js/landing.js"></script>
 </body>
+
 </html>
