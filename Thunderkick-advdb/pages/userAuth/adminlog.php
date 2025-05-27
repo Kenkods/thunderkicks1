@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link href="/Thunderkicks1/Thunderkick-advdb/public/css/Landing/style.css" rel="stylesheet">
-    <title>Admin</title>
+    <title>Login Form</title>
+    <link rel="stylesheet" href="/thunderkicks1/thunderkick-advdb/public/css/login.css">
 </head>
+
 <body>
-    <main class="w-full  flex justify-center">
-        <div class="max-w-md border-2 px-9">
-            <div class="max-w-xs bg-black h-30 my-5 " ></div>
-            <div class="w-full flex items-center justify-center  text-3xl font-medium mt-10">
-                <h1>Admin Login</h1>
-            </div>
-            <form action="">
-                <div class="w-full">
-                     <input type="text" placeholder="Username" class="min-w-xs border-2 my-10 px-5 py-2 rounded-2xl ">
-                </div>
-                <div class="w-full">
-                     <input type="Password" placeholder="**********" class="min-w-xs border-2 mb-10 px-5 py-2 rounded-2xl">
-                </div>
-                
-                
-            </form>
+    <div class="tk-container">
+        <img src="/thunderkicks1/thunderkick-advdb/public/imgs/hehe.png" alt="" class="tk-logo">
+        <div class="tk-input-group">
+            <input type="text" id="username" name="username" placeholder="Username" required class="tk-input">
         </div>
-       
-    </main>
-    
+        <div class="tk-input-group">
+            <input type="password" id="password" name="password" placeholder="Password" required class="tk-input">
+            <?php if (!empty($error)): ?>
+                <span class="text-3xl">
+                    <?= htmlspecialchars($error) ?>
+                </span>
+            <?php endif; ?>
+        </div>
+        <button type="submit" class="tk-login-button" id="log">Login</button>
+    </div>
 </body>
+
+<script>
+    document.getElementById('log').addEventListener("click", () => {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        const adminUser = "admin";
+        const adminPass = "admin123";
+
+        if (username === adminUser && password === adminPass) {
+            alert("Login successful!");
+            window.location.href = "/thunderkicks1/thunderkick-advdb/pages/dashboard/AdminDashboard.php";
+        } else {
+            alert("Invalid username or password.");
+        }
+    });
+</script>
+
 </html>
