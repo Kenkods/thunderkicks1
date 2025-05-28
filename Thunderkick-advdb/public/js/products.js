@@ -75,9 +75,10 @@ function renderProducts(products) {
     `).join('');
 
     productList.innerHTML += `
-      <form action="/thunderkicks1/thunderkick-advdb/public/index.php?page=addToCart" method="POST">
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200 my-3 mx-4 max-w-75 min-w-75 hover:cursor-pointer">
-          <img class="h-40 w-full object-cover" src="${product.shoe_img}" alt="${product.name}">
+   
+        <div class="card bg-white rounded-xl shadow-md overflow-hidden hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200 my-3 mx-4 max-w-75 min-w-75 hover:cursor-pointer">
+          <input name="shoe_id" id="" type="hidden" value=<?= htmlspecialchars($card['shoe_id'])?>
+        <img class="h-40 w-full object-cover" src="${product.shoe_img}" alt="${product.name}">
           <div class="px-3 py-4">
             <div class="flex flex-wrap h-15">
               <h2 class="text-xl font-semibold font-mono text-gray-800 flex flex-wrap w-60">${product.name}</h2>
@@ -85,13 +86,13 @@ function renderProducts(products) {
             <div class="size-buttons">${sizesButtons}</div>
             <div class="mt-4 flex justify-between items-center">
               <span class="font-bold text-lg">$${product.price}</span>
-              <button class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl" type="submit">
-                Buy Now
+              <button id="addCartBtn" class="addCartBtn px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer"  >
+                Reserve Now
               </button>
             </div>
           </div>
         </div>
-      </form>
+      
     `;
   });
 }
@@ -118,7 +119,9 @@ document.getElementById('apply-filter').addEventListener("click", () => {
       return res.json();
     })
     .then(products => {
+      
       renderProducts(products);
+      flashMessage();
     })
     .catch(err => {
       console.error("Fetch failed:", err);
@@ -160,3 +163,57 @@ window.resetFilters = function () {
   });
   document.getElementById('apply-filter').click();
 };
+
+
+
+//FlagMessage
+function flashMessage(){
+document.querySelectorAll(".addCartBtn").forEach(button => {
+  button.addEventListener("click", () => {
+    const card = button.closest(".card"); // more reliable now
+    const shoeID = card.querySelector("input[name='shoe_id']").value;
+
+
+    fetch("?page=addToCart", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({ shoe_id: shoeID })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        showFlashMessage("Added to cart!", "green");
+        
+      } else {
+        showFlashMessage("Failed to add to cart.", "red");
+      }
+    })
+    .catch(() => {
+      showFlashMessage("Something went wrong.", "red");
+    });
+  });
+});
+
+  function showFlashMessage(message, color) {
+    const old = document.getElementById("flash-message");
+    if (old) old.remove();
+
+    const flash = document.createElement("div");
+    flash.id = "flash-message";
+    flash.className = `fixed top-4 right-4 z-50 px-4 py-3 rounded shadow-md border animate-slide-in ${
+      color === "green" ? "bg-green-500 border-green-600 text-white" : "bg-red-500 border-red-600 text-white"
+    }`;
+
+    flash.innerHTML = `
+      <strong class="font-bold">${color === "green" ? "Success!" : "Error!"}</strong>
+      <span class="block sm:inline">${message}</span>
+      <button onclick="this.parentElement.remove();" class="float-right text-white hover:text-gray-200 font-bold ml-2">&times;</button>
+    `;
+
+    document.body.appendChild(flash);
+    setTimeout(() => flash.remove(), 3000);
+  }
+}
+flashMessage();

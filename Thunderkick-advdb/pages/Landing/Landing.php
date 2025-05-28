@@ -92,7 +92,7 @@
           <input type="search" placeholder="Search entire shop here" class="w-full h-8 pr-10 px-3 py-1 outline-none focus:border-yellow-500 focus:border-b-2 text-lg">
           <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/search.png" alt="search icon" class="h-5 w-5 absolute right-2 top-1.5">
         </div>
-        <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/checkout.png" alt="checkout" class="h-7 hover:cursor-pointer">
+        <img src="/Thunderkicks1/Thunderkick-advdb/public/imgs/checkout.png" alt="checkout" class="h-7 hover:cursor-pointer" id="cart-icon">
         <?php
         if (isset($_SESSION['user'])):  ?>
           <form method="POST" action="/thunderkicks1/Thunderkick-advdb/public/logout">
@@ -135,8 +135,9 @@
         <?php foreach ($adidascards as $card): ?>
 
 
-      <div class=" bg-white rounded-xl shadow-md overflow-hidden  hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200  my-3 mx-4 max-w-65 hover:cursor-pointer">
-        <img class=" h-40 w-full object-cover" src=<?=htmlspecialchars($card['shoe_img'])?> alt="Product Image">
+      <div class="card bg-white rounded-xl shadow-md overflow-hidden  hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200  my-3 mx-4 max-w-65 hover:cursor-pointer">
+        <input name="shoe_id" id="" type="hidden" value=<?= htmlspecialchars($card['shoe_id'])?>>
+      <img class=" h-40 w-full object-cover" src=<?=htmlspecialchars($card['shoe_img'])?> alt="Product Image">
         <input type="hidden" value="<?=htmlspecialchars($card['shoe_id'])?>">
         <div class="px-3 py-4">
           <div class=" flex flex-wrap  h-15">
@@ -155,8 +156,8 @@
              <?php if(isset($_SESSION['user'])): ?>
 
               <!-- <form method="POST" action="/Thunderkicks1/Thunderkick-advdb/public/index.php?page=addToCart"> -->
-                <input type="hidden" name="shoe_id" value=<?=htmlspecialchars($card['shoe_id'])?> id="shoe-id">
-                <button  id="addCartBtn" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</button>
+                
+                <button  id="addCartBtn" class="addCartBtn px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</button>
               <!-- </form> -->
             <?php else: ?>
               <a href="/Thunderkicks1/Thunderkick-advdb/public/login" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</a>

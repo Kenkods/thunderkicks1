@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,18 +59,21 @@
             <!-- LEFT CART ITEMS -->
 
             <div class="flex-1 space-y-6">
-                    <?php foreach($addCart as $carts) :?>
+                
+                    <?php foreach($_SESSION['carts'] as $cartItems): ?>
                 <!-- SINGLE CART ITEM -->
                 <div class="bg-white rounded-lg shadow p-4 flex flex-col md:flex-row gap-4">
-                    <!-- Product Image -->
+                <input type="checkbox" name="selected[]" value="<?= htmlspecialchars($cartItems['shoe_id']) ?>" class="mt-2">
+                    
+                <!-- Product Image -->
                     <div class="flex justify-center items-center bg-gray-100 p-4 rounded">
-                        <img src=<?=htmlspecialchars($carts['shoe_img'])?> alt="cart image" class="h-40 object-contain">
+                        <img src=<?=htmlspecialchars($cartItems['shoe_img'])?> alt="cart image" class="h-40 object-contain">
                     </div>
 
                     <!-- Product Details -->
                     <div class="flex-1 space-y-4">
                         <div>
-                            <h3 class="text-xl font-semibold"><?=htmlspecialchars($carts['name'])?></h3>
+                            <h3 class="text-xl font-semibold"><?=htmlspecialchars($cartItems['name'])?></h3>
                             
                         </div>
 
@@ -81,7 +86,7 @@
                                 <button onclick="increaseNumber('qty1','price1')" class="bg-gray-200 px-2 rounded">+</button>
                             </div>
 
-                            <h4 class="text-lg font-bold">$<span id="price1" data-price="<?=htmlspecialchars($carts['price'])?>"><?=htmlspecialchars($carts['price'])?></span></h4>
+                            <h4 class="text-lg font-bold">$<span id="price1" data-price="<?=htmlspecialchars($cartItems['price'])?>"><?=htmlspecialchars($cartItems['price'])?></span></h4>
                         </div>
 
                         <div class="flex justify-between text-sm text-gray-600">
@@ -98,8 +103,8 @@
                         </div>
                     </div>
                 </div>
-                <?php endforeach;?>
-
+               
+                        <?php endforeach;?>
                 
 
                 <!-- add new item here -->

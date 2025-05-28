@@ -65,6 +65,7 @@ class CardsController
 
             $cardsModel = new CardsModel($this->conn);
             $cards = $cardsModel->getShoeID($shoe_id);
+         
             return $cards;
         }
     }

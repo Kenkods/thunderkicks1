@@ -1,6 +1,9 @@
-document.getElementById("addCartBtn").addEventListener("click",() =>{
-  document.getElementById("addCartBtn").addEventListener("click", () => {
-    const shoeID = document.getElementById("shoe-id").value;
+
+document.querySelectorAll(".addCartBtn").forEach(button => {
+  button.addEventListener("click", () => {
+    const card = button.closest(".card"); // more reliable now
+    const shoeID = card.querySelector("input[name='shoe_id']").value;
+
 
     fetch("?page=addToCart", {
       method: "POST",
@@ -11,12 +14,24 @@ document.getElementById("addCartBtn").addEventListener("click",() =>{
     })
     .then(res => res.json())
     .then(data => {
-      showFlashMessage(data.message || "Item added to cart!", "green");
+      console.log(data);
+      if (data.success) {
+        showFlashMessage("Added to cart!", "green");
+        const items = data.cartItem;
+      items.forEach(item => {
+      console.log("Shoe name:", item.name);
+      console.log("Price:", item.price);
+    });
+        
+      } else {
+        showFlashMessage("Failed to add to cart.", "red");
+      }
     })
     .catch(() => {
       showFlashMessage("Something went wrong.", "red");
     });
   });
+});
 
   function showFlashMessage(message, color) {
     const old = document.getElementById("flash-message");
@@ -37,8 +52,8 @@ document.getElementById("addCartBtn").addEventListener("click",() =>{
     document.body.appendChild(flash);
     setTimeout(() => flash.remove(), 3000);
   }
-  
-}); 
+
+
 
 
 
@@ -66,8 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  
-
+document.getElementById('cart-icon').addEventListener("click", () => {
+  window.location.href = "page=cart";
+});
 });
 
 

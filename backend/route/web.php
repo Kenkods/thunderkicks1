@@ -73,21 +73,44 @@ switch ($request) {
         require BASE_PATH . '/pages/shop/products.php';
         break;
     case 'addToCart':
-        
+       
+
+
          if (!isset($_SESSION['user'])) {
         header("Location: login");
         exit;
     }
         require_once __DIR__ . '/../controllers/CardsController.php';
         $cards = new CardsController($conn);
-        $addCart = $cards->getShoeID($_POST['shoe_id']);
+        $addCart = $cards->getShoeID(shoe_id: $_POST['shoe_id']);
        
-        $_SESSION['carts'] = [
-            'shoe_id' => $_POST['shoe_id'],
-            'user' => $_SESSION['user']
-        ];
+        if (!isset($_SESSION['carts'])) {
+            $_SESSION['carts'] = [];
+        } 
+            foreach($addCart as $cartsAdded){
+            $_SESSION['carts'][]=[
+                'shoe_id'=>$cartsAdded['shoe_id'],
+                'price'=> $cartsAdded['price'],
+                'name'=>$cartsAdded['name'],
+                'shoe_img'=>$cartsAdded['shoe_img']
+            ];
+        }
 
-       header("Location: landing");
+        
+        
+        
+
+        $_SESSION['added']=[
+            'success'=>true
+        ];
+      
+       
+        
+         echo json_encode(['success' => true,
+         'cartItem' => $addCart]);
+         
+
+       
        exit();
               
     
@@ -95,4 +118,11 @@ switch ($request) {
     case 'AdminDashboard.php?success=1':
         require BASE_PATH . '/pages/dashboard/AdminDashboard.php';
         break;
+
+
+    case 'page=cart':
+        require_once __DIR__ . '/../controllers/CardsController.php';
+            
+        require BASE_PATH . '/pages/shop/cart.php';
+          
 }

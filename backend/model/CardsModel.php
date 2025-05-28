@@ -239,6 +239,8 @@ public function addShoe($name, $brand_id, $cat_id, $price, $imagePath, $type_id)
         return $row ? $row['type_id'] : null;
     }
 
+   
+
 }
 
 ?>
