@@ -30,8 +30,10 @@ switch ($request) {
         $loginCont = new userAuthController($conn);
         $loginCont->login();
         
-        
+       
         require BASE_PATH . '/pages/userAuth/login.php';
+     
+
 
         break;
     case 'register':
@@ -71,7 +73,7 @@ switch ($request) {
         require BASE_PATH . '/pages/shop/products.php';
         break;
     case 'addToCart':
-
+        
          if (!isset($_SESSION['user'])) {
         header("Location: login");
         exit;

@@ -57,15 +57,9 @@ class userAuthController
                     'username' => $result['username'],
                     'password' => $result['password']
                 ];
-              
-
-               
-
-                header("Location: /thunderkicks1/Thunderkick-advdb/public/index.php?page=landing");
-
-
-
+                $_SESSION['success'] = 'You have logged in successfully!';
                 header("Location: /thunderkicks1/Thunderkick-advdb/public/index.php?page=landing&status=success");
+                exit();
             } else {
                 header("Location: /thunderkicks1/Thunderkick-advdb/public/index.php?page=login&status=failed");
             }

@@ -27,11 +27,43 @@
       caret-color: transparent;
       outline: none;
     }
+
+     @keyframes slide-in-right {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .animate-slide-in {
+        animation: slide-in-right 0.5s ease-out;
+    }
     
    
   </style>
 </head>
 <body class="w-full overflow-x-hidden caret-transparent focus:outline-none"> 
+<?php if (isset($_SESSION['success'])): ?>
+    <div id="flash-message" class="absolute top-4 right-4 z-50 bg-yellow-500 border border-yellow-600 text-white px-4 py-3 rounded shadow-md animate-slide-in" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline"><?= $_SESSION['success']; ?></span>
+        <button onclick="this.parentElement.remove();" class="float-right text-white hover:text-gray-200 font-bold ml-2">&times;</button>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            const flash = document.getElementById('flash-message');
+            if (flash) flash.remove();
+        }, 3000);
+    </script>
+
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
   <header class="cursor-default bg-gray-200">
     <nav class="flex flex-wrap items-center justify-between px-7 py-3">
       <div class="flex items-center space-x-4 w-full md:w-auto">
@@ -119,10 +151,10 @@
            
              <?php if(isset($_SESSION['user'])): ?>
 
-              <form method="POST" action="/Thunderkicks1/Thunderkick-advdb/public/index.php?page=addToCart">
-                <input type="hidden" name="shoe_id" value=<?=htmlspecialchars($card['shoe_id'])?>>
-                <button type="submit" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</button>
-              </form>
+              <!-- <form method="POST" action="/Thunderkicks1/Thunderkick-advdb/public/index.php?page=addToCart"> -->
+                <input type="hidden" name="shoe_id" value=<?=htmlspecialchars($card['shoe_id'])?> id="shoe-id">
+                <button  id="addCartBtn" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</button>
+              <!-- </form> -->
             <?php else: ?>
               <a href="/Thunderkicks1/Thunderkick-advdb/public/login" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</a>
             <?php endif; ?>
