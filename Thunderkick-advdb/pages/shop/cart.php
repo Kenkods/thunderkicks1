@@ -59,9 +59,11 @@
             <div class="flex-1 space-y-6">
 
                 <?php foreach ($carts as $cartItems): ?>
+
                     <!-- SINGLE CART ITEM -->
+                     <form action="/Thunderkicks1/Thunderkick-advdb/public/order=success" method="POST">
                     <div class="bg-white rounded-lg shadow p-4 flex flex-col md:flex-row gap-4">
-                        <input type="checkbox" name="selected[]" value="<?= htmlspecialchars($cartItems['shoe_id']) ?>" class="mt-2">
+                    <input type="checkbox" name="selected[]" value="<?= htmlspecialchars($cartItems['cart_items_id']) ?>" class="mt-2" onchange="updateCartTotal()">
 
                         <!-- Product Image -->
                         <div class="flex justify-center items-center bg-gray-100 p-4 rounded">
@@ -79,12 +81,13 @@
 
                             <!-- Quantity and Price -->
                             <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
+                                <!-- <div class="flex items-center space-x-2">
                                     <?php $uniqueId = $cartItems['cart_items_id']; ?>
                                     <button onclick="decreaseNumber('qty<?= $uniqueId ?>','price<?= $uniqueId ?>')" class="bg-gray-200 px-2 rounded">-</button>
                                     <input id="qty<?= $uniqueId ?>" type="text" value="<?= htmlspecialchars($cartItems['quantity']) ?>" class="w-10 text-center border rounded">
                                     <button onclick="increaseNumber('qty<?= $uniqueId ?>','price<?= $uniqueId ?>')" class="bg-gray-200 px-2 rounded">+</button>
-                                </div>
+                                </div> -->
+                                <p><?= htmlspecialchars($cartItems['quantity']) ?></p>
 
                                 <?php $initialPrice = htmlspecialchars($cartItems['price']); ?>
                                 <h4 class="text-lg font-bold">
@@ -125,40 +128,40 @@
                 <div class="bg-white rounded-lg shadow p-6 space-y-4">
                     <h3 class="text-lg font-bold">The Total Amount Of</h3>
                     <div class="flex justify-between">
-                        <p>Product Amount</p>
-                        <p>$<span id="product_total_amt">40.00</span></p>
+                        
+                        <p class="hidden">$<span id="product_total_amt">0</span></p>
                     </div>
                     <div class="flex justify-between">
-                        <p>Shipping</p>
-                        <p>$<span id="shipping_charge">10.00</span></p>
+                        <p id="shoe-name"></p>
                     </div>
                     <hr />
                     <div class="flex justify-between font-bold text-lg">
                         <p>Total (incl. VAT)</p>
-                        <p>$<span id="total_cart_amt">50.00</span></p>
+                        <p>$<span id="total_cart_amt">0</span></p>
                     </div>
-                    <button class="w-full bg-yellow-400 text-white py-2 rounded hover:bg-yellow-500">Checkout</button>
+                    
+                        <button class="w-full bg-yellow-400 text-white py-2 rounded hover:bg-yellow-500">Reserve</button>
+                    </form>
                 </div>
 
                 <!-- Discount Code -->
-                <div class="bg-white p-4 rounded shadow">
+                <!-- <div class="bg-white p-4 rounded shadow">
                     <p class="font-semibold mb-2">Add a discount code (optional)</p>
                     <input type="text" class="w-full border px-2 py-1 rounded" placeholder="Enter code" id="discount_code">
                     <button onclick="applyDiscount()" class="mt-2 w-full bg-green-500 text-white py-1 rounded hover:bg-green-600">Apply</button>
-                </div>
+                </div> -->
 
                 <!-- Delivery Info -->
                 <div class="bg-white p-4 rounded shadow">
-                    <p class="font-semibold mb-2">Expected delivery date</p>
-                    <p class="text-sm text-gray-600">May 27th 2025 - May 29th 2025</p>
+                    <p class="font-semibold mb-2">Branch Location:</p>
+                    <p class="text-sm text-gray-600">Gredu, Panabo City Davo Del Norte</p>
                 </div>
             </div>
 
         </div>
     </div>
-</body>
 
-<script>
+    <script>
     function updateLineTotal(qtyId, priceId) {
         const qty = document.getElementById(qtyId);
         const price = document.getElementById(priceId);
@@ -170,37 +173,51 @@
         updateCartTotal();
     }
 
-    function increaseNumber(qtyId, priceId) {
-        const qty = document.getElementById(qtyId);
-        qty.value = parseInt(qty.value) + 1;
-        updateLineTotal(qtyId, priceId);
-    }
+   
 
-    function decreaseNumber(qtyId, priceId) {
-        const qty = document.getElementById(qtyId);
-        if (parseInt(qty.value) > 1) {
-            qty.value = parseInt(qty.value) - 1;
-            updateLineTotal(qtyId, priceId);
-        }
-    }
+ const carts = <?= json_encode($carts) ?>;
+    
+  function updateCartTotal() {
+    let productTotal = 0;
+    const nameContainer = document.getElementById('shoe-name');
+    nameContainer.innerHTML = ""; 
 
-    function updateCartTotal() {
-        let productTotal = 0;
-        document.querySelectorAll(".line-total").forEach(span => {
+    document.querySelectorAll(".line-total").forEach(span => {
+        const cartItemId = span.getAttribute('data-cart-id');
+        const checkbox = document.querySelector(`input[type="checkbox"][value="${cartItemId}"]`);
+        
+        if (checkbox && checkbox.checked) {
             productTotal += parseFloat(span.innerText);
-        });
+              
+            const matchedItem = carts.find(item => item.cart_items_id == cartItemId);
+                if (matchedItem) {
+                        // Append item name to the container
+                    nameContainer.innerHTML += `<div class="mb-2">
+                        <strong>${matchedItem.name}</strong><br>
+                        Quantity: ${matchedItem.quantity}<br>
+                        Size: ${matchedItem.selected_size}<br>
+                        Price: ₱${parseFloat(matchedItem.price).toFixed(2)}
+                    </div>`;
+                }
+        }
+    });
 
-        const shipping = parseFloat(document.getElementById("shipping_charge").innerText);
-        const total = productTotal + shipping;
+    document.getElementById("product_total_amt").innerText = productTotal.toFixed(2);
+    document.getElementById("total_cart_amt").innerText = productTotal.toFixed(2);
+    
 
-        document.getElementById("product_total_amt").innerText = productTotal.toFixed(2);
-        document.getElementById("total_cart_amt").innerText = total.toFixed(2);
-    }
+ 
+}
+
 
     function applyDiscount() {
         alert("Apply discount logic here.");
     }
+   
 </script>
+</body>
+
+
 
 
 </html>

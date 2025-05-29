@@ -46,4 +46,23 @@ class cartsModel
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+
+      public function transferCartToOrder($userId, $selectedIds)
+    {
+        $stmt = $this->conn->prepare("CALL TransferCartToOrder(?, ?)");
+        if (!$stmt) {
+            die("Prepare failed: " . $this->conn->error);
+        }
+
+        $stmt->bind_param("is", $userId, $selectedIds);
+
+        if (!$stmt->execute()) {
+            die("Execution failed: " . $stmt->error);
+        }
+
+        $stmt->close();
+    }
+
+
 }

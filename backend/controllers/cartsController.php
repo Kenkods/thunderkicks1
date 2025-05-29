@@ -32,6 +32,19 @@
 
     }
 
+     public function transferCartToOrder($userId, $selectedCartItemIds)
+    {
+        $cartModel= new cartsModel($this->conn);
+        $selectedIdsString = implode(",", $selectedCartItemIds);
+
+       
+        $cartModel->transferCartToOrder($userId, $selectedIdsString);
+
+        // You can add further logic here like redirecting or showing success message
+    }
+
+
+
 
     }
 ?>
