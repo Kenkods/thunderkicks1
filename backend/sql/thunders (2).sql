@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2025 at 05:48 PM
+-- Generation Time: May 29, 2025 at 09:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -25,46 +25,50 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AddOrUpdateCartItem` (IN `p_user_id` INT, IN `p_shoe_id` INT, IN `p_quantity` INT, IN `p_price` DECIMAL(10,2))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddOrUpdateCartItem` (IN `p_user_id` INT, IN `p_shoe_id` INT, IN `p_quantity` INT, IN `p_price` DECIMAL(10,2), IN `p_size` INT)   BEGIN
     DECLARE v_cart_id INT;
     DECLARE v_existing_quantity INT;
+    DECLARE v_size_id INT;
 
-    -- Find active cart for user (assumed latest cart is active)
+    -- Get or create cart for user
     SELECT cart_id INTO v_cart_id
     FROM cart
     WHERE user_id = p_user_id
-    ORDER BY created_at DESC
     LIMIT 1;
 
-    -- If no cart found, create new cart
     IF v_cart_id IS NULL THEN
-        INSERT INTO cart (user_id, total_amount, created_at)
-        VALUES (p_user_id, 0, NOW());
+        INSERT INTO cart (user_id, total_amount) VALUES (p_user_id, 0);
         SET v_cart_id = LAST_INSERT_ID();
     END IF;
 
-    -- Check if the item already exists in cart_items
-    SELECT quantity INTO v_existing_quantity
-    FROM cart_items
-    WHERE cart_id = v_cart_id AND shoe_id = p_shoe_id
+    -- 
+    SELECT size_id INTO v_size_id
+    FROM sizes
+    WHERE shoe_id = p_shoe_id AND size = p_size
     LIMIT 1;
 
-    -- If item doesn't exist, quantity will be NULL, set to 0
+    -- Check if item with the same size already exists
+    SELECT quantity INTO v_existing_quantity
+    FROM cart_items
+    WHERE cart_id = v_cart_id AND shoe_id = p_shoe_id AND size_id = v_size_id
+    LIMIT 1;
+
     IF v_existing_quantity IS NULL THEN
         SET v_existing_quantity = 0;
     END IF;
 
-    -- If item exists, update quantity, else insert new item
+    -- Update or insert
     IF v_existing_quantity > 0 THEN
         UPDATE cart_items
-        SET quantity = v_existing_quantity + p_quantity, price = p_price
-        WHERE cart_id = v_cart_id AND shoe_id = p_shoe_id;
+        SET quantity = v_existing_quantity + p_quantity,
+            price = p_price
+        WHERE cart_id = v_cart_id AND shoe_id = p_shoe_id AND size_id = v_size_id;
     ELSE
-        INSERT INTO cart_items (cart_id, shoe_id, quantity, price)
-        VALUES (v_cart_id, p_shoe_id, p_quantity, p_price);
+        INSERT INTO cart_items (cart_id, shoe_id, quantity, price, size_id)
+        VALUES (v_cart_id, p_shoe_id, p_quantity, p_price, v_size_id);
     END IF;
 
-    -- Update the total_amount in the cart by summing all items
+    -- Update total_amount in cart
     UPDATE cart c
     JOIN (
         SELECT cart_id, SUM(quantity * price) AS total
@@ -128,8 +132,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `user_id`, `total_amount`, `created_at`) VALUES
-(4, 11, 17195.00, '2025-05-29 12:04:45'),
-(5, 4, 18136.00, '2025-05-29 14:33:59');
+(7, 4, 5800.00, '2025-05-29 18:59:52');
 
 -- --------------------------------------------------------
 
@@ -143,20 +146,17 @@ CREATE TABLE `cart_items` (
   `shoe_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `size_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `cart_items`
 --
 
-INSERT INTO `cart_items` (`cart_items_id`, `cart_id`, `shoe_id`, `quantity`, `price`, `created_at`) VALUES
-(37, 4, 3, 2, 3400.00, '2025-05-29 12:04:45'),
-(38, 4, 4, 1, 6995.00, '2025-05-29 13:11:42'),
-(39, 4, 1, 1, 3400.00, '2025-05-29 14:33:29'),
-(40, 5, 1, 2, 3400.00, '2025-05-29 14:33:59'),
-(41, 5, 4, 1, 6995.00, '2025-05-29 14:35:22'),
-(42, 5, 5, 1, 4341.00, '2025-05-29 15:31:11');
+INSERT INTO `cart_items` (`cart_items_id`, `cart_id`, `shoe_id`, `quantity`, `price`, `created_at`, `size_id`) VALUES
+(51, 7, 2, 1, 2900.00, '2025-05-29 18:59:52', 7),
+(52, 7, 2, 1, 2900.00, '2025-05-29 19:01:00', 9);
 
 -- --------------------------------------------------------
 
@@ -377,7 +377,8 @@ ALTER TABLE `cart`
 --
 ALTER TABLE `cart_items`
   ADD PRIMARY KEY (`cart_items_id`),
-  ADD KEY `cart_id` (`cart_id`);
+  ADD KEY `cart_id` (`cart_id`),
+  ADD KEY `fk_cart_items_size` (`size_id`);
 
 --
 -- Indexes for table `category`
@@ -427,13 +428,13 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `cart_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `cart_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -473,7 +474,8 @@ ALTER TABLE `users`
 -- Constraints for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  ADD CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_cart_items_size` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`size_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `shoes`
