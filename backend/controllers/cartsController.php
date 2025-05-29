@@ -13,13 +13,15 @@
     }
 
 
-        public function insertCartItems($user_id, $shoe_id, $quantity, $price) {
+        public function insertCartItems($user_id, $shoe_id, $quantity, $price,$size) {
     require_once(__DIR__ . '/../model/cartsModel.php');
     $model = new cartsModel($this->conn);
-    $model->addorUpdateCart($user_id, $shoe_id, $quantity, $price);
+    $model->addorUpdateCart($user_id, $shoe_id, $quantity, $price,$size);
     
 
 }
+
+   
 
     public function displayCarts($user_id){
 

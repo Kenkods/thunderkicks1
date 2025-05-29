@@ -86,14 +86,14 @@ switch ($request) {
         $cards = new CardsController($conn);
         $addCart = $cards->getShoeID(shoe_id: $_POST['shoe_id']);
         $cartsController = new cartsController($conn);
-
+        $size=$_POST['size'];
         foreach ($addCart as $cartsAdded) {
             $shoe_id = $cartsAdded['shoe_id'];
             $price = $cartsAdded['price'];
             $quantity = 1;
             $user_id = $_SESSION['user']['user_id'];
 
-            $cartsController->insertCartItems($user_id, $shoe_id, $quantity, $price);
+            $cartsController->insertCartItems($user_id, $shoe_id, $quantity, $price,$size);
         }
 
         $_SESSION['added'] = [

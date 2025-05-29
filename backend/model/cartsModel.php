@@ -7,13 +7,24 @@ class cartsModel {
         $this->conn = $conn;
     }
 
-    public function addorUpdateCart($user_id, $shoe_id, $quantity, $price) {
-    $stmt = $this->conn->prepare("CALL AddOrUpdateCartItem(?, ?, ?, ?)");
-    $stmt->bind_param("iiid", $user_id, $shoe_id, $quantity, $price);
+    public function addorUpdateCart($user_id, $shoe_id, $quantity, $price,$size) {
+    $stmt = $this->conn->prepare("CALL AddOrUpdateCartItem(?, ?, ?, ?,?)");
+    $stmt->bind_param("iiidi", $user_id, $shoe_id, $quantity, $price,$size);
     if (!$stmt->execute()) {
         die("Procedure failed: " . $stmt->error);
     }
     $stmt->close();
+    }
+
+    public function getsize($shoe_id){
+        $query="SELECT * from size where shoe_id=?";
+         $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("i", $shoe_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+
+
     }
     public function getCarts($user_id){
         
