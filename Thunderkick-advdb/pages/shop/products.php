@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,31 +41,31 @@
 
     <main>
 
-    <?php if (isset($_SESSION['success'])): ?>
-    <div id="flash-message" class="absolute top-4 right-4 z-50 bg-yellow-500 border border-yellow-600 text-white px-4 py-3 rounded shadow-md animate-slide-in" role="alert">
-        <strong class="font-bold">Success!</strong>
-        <span class="block sm:inline"><?= $_SESSION['success']; ?></span>
-        <button onclick="this.parentElement.remove();" class="float-right text-white hover:text-gray-200 font-bold ml-2">&times;</button>
-    </div>
+        <?php if (isset($_SESSION['success'])): ?>
+            <div id="flash-message" class="absolute top-4 right-4 z-50 bg-yellow-500 border border-yellow-600 text-white px-4 py-3 rounded shadow-md animate-slide-in" role="alert">
+                <strong class="font-bold">Success!</strong>
+                <span class="block sm:inline"><?= $_SESSION['success']; ?></span>
+                <button onclick="this.parentElement.remove();" class="float-right text-white hover:text-gray-200 font-bold ml-2">&times;</button>
+            </div>
 
-    <script>
-        setTimeout(() => {
-            const flash = document.getElementById('flash-message');
-            if (flash) flash.remove();
-        }, 3000);
-    </script>
+            <script>
+                setTimeout(() => {
+                    const flash = document.getElementById('flash-message');
+                    if (flash) flash.remove();
+                }, 3000);
+            </script>
 
-    <?php unset($_SESSION['success']); ?>
-<?php endif; ?>
-     
-<?php
-if (isset($_SESSION['shoe']) && isset($_SESSION['shoe']['type_name'])) {
-    $typeName = $_SESSION['shoe']['type_name'];
-    // use $typeName safely here
-} else {
-    $typeName = 'Basketball'; // or fallback logic
-}
-?>
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+
+        <?php
+        if (isset($_SESSION['shoe']) && isset($_SESSION['shoe']['type_name'])) {
+            $typeName = $_SESSION['shoe']['type_name'];
+            // use $typeName safely here
+        } else {
+            $typeName = 'Basketball'; // or fallback logic
+        }
+        ?>
 
         <div class="w-full px-11 pb-7 bg-gray-200">
             <div class="flex flex-wrap max-w-xl">
@@ -124,25 +123,25 @@ if (isset($_SESSION['shoe']) && isset($_SESSION['shoe']['type_name'])) {
             <div class="w-full flex flex-wrap  justify-center items-center " id="productList">
                 <?php foreach ($adidascards as $card): ?>
 
-                        
-                        <div class="card bg-white rounded-xl shadow-md overflow-hidden  hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200  my-3 mx-4 max-w-75 min-w-75 hover:cursor-pointer">
-                           <input name="shoe_id" id="" type="hidden" value=<?= htmlspecialchars($card['shoe_id'])?>>
+
+                    <div class="card bg-white rounded-xl shadow-md overflow-hidden  hover:drop-shadow-[0px_4px_5px_rgba(77,77,92,0.8)] transition-shadow duration-300 border-1 border-gray-200  my-3 mx-4 max-w-75 min-w-75 hover:cursor-pointer">
+                        <input name="shoe_id" id="" type="hidden" value=<?= htmlspecialchars($card['shoe_id']) ?>>
                         <img class=" h-40 w-full object-cover" src=<?= htmlspecialchars($card['shoe_img']) ?> alt="Product Image">
-                            <div class="px-3 py-4">
-                                <div class=" flex flex-wrap  h-15">
-                                    <h2 class="text-xl font-semibold font-mono text-gray-800 flex flex-wrap w-60"><?= htmlspecialchars($card['name']) ?></h2>
-                                </div>
-                                <?php if (!empty($card['sizes']) && is_array($card['sizes'])): ?>
-                                    <?php foreach ($card['sizes'] as $size): ?>
-                                        <button type="button" class="size-btn hover:scale-110 border-2 px-2  hover:cursor-pointer  transform transition duration-150 mx-1" data-size="<?= htmlspecialchars($size['size']) ?>"><?= htmlspecialchars($size['size']) ?></button>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class=" font-bold text-lg">$<?= htmlspecialchars($card['price']) ?></span>
-                                    <button id="addCartBtn" class="addCartBtn px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer" >Reserve Now</button>
-                                </div>
+                        <div class="px-3 py-4">
+                            <div class=" flex flex-wrap  h-15">
+                                <h2 class="text-xl font-semibold font-mono text-gray-800 flex flex-wrap w-60"><?= htmlspecialchars($card['name']) ?></h2>
+                            </div>
+                            <?php if (!empty($card['sizes']) && is_array($card['sizes'])): ?>
+                                <?php foreach ($card['sizes'] as $size): ?>
+                                    <button type="button" class="size-btn hover:scale-110 border-2 px-2  hover:cursor-pointer  transform transition duration-150 mx-1" data-size="<?= htmlspecialchars($size['size']) ?>"><?= htmlspecialchars($size['size']) ?></button>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class=" font-bold text-lg">$<?= htmlspecialchars($card['price']) ?></span>
+                                <button id="addCartBtn" class="addCartBtn px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Reserve Now</button>
                             </div>
                         </div>
+                    </div>
                 <?php endforeach; ?>
 
             </div>

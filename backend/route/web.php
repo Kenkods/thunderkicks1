@@ -20,27 +20,27 @@ switch ($request) {
         require BASE_PATH . '/pages/Landing/Landing.php';
 
         return $adidascards;
-    case 'login': 
-           if (isset($_SESSION['user'])) {
-        header("Location: landing");
-        exit;
-    }
+    case 'login':
+        if (isset($_SESSION['user'])) {
+            header("Location: landing");
+            exit;
+        }
 
         require_once __DIR__ . '/../controllers/userAuthController.php';
         $loginCont = new userAuthController($conn);
         $loginCont->login();
-        
-       
+
+
         require BASE_PATH . '/pages/userAuth/login.php';
-     
+
 
 
         break;
     case 'register':
-         if (isset($_SESSION['user'])) {
-        header("Location: landing");
-        exit;
-    }
+        if (isset($_SESSION['user'])) {
+            header("Location: landing");
+            exit;
+        }
         require_once __DIR__ . '/../controllers/userAuthController.php';
         $regCont = new userAuthController($conn);
         $regCont->register();
@@ -73,14 +73,14 @@ switch ($request) {
         require BASE_PATH . '/pages/shop/products.php';
         break;
     case 'addToCart':
-       
 
 
-         if (!isset($_SESSION['user'])) {
-        header("Location: login");
-        exit;
-    }
-    
+
+        if (!isset($_SESSION['user'])) {
+            header("Location: login");
+            exit;
+        }
+
         require_once __DIR__ . '/../controllers/CardsController.php';
         require_once __DIR__ . '/../controllers/cartsController.php';
         $cards = new CardsController($conn);
@@ -96,20 +96,22 @@ switch ($request) {
             $cartsController->insertCartItems($user_id, $shoe_id, $quantity, $price);
         }
 
-        $_SESSION['added']=[
-            'success'=>true
+        $_SESSION['added'] = [
+            'success' => true
         ];
-      
-       
-        
-         echo json_encode(['success' => true,
-         'cartItem' => $addCart]);
-         
 
-       
-       exit();
-              
-    
+
+
+        echo json_encode([
+            'success' => true,
+            'cartItem' => $addCart
+        ]);
+
+
+
+        exit();
+
+
 
     case 'AdminDashboard.php?success=1':
         require BASE_PATH . '/pages/dashboard/AdminDashboard.php';
@@ -118,11 +120,9 @@ switch ($request) {
 
     case 'page=cart':
         require_once __DIR__ . "/../controllers/cartsController.php";
-        $displayCart= new cartsController($conn);
-       $carts=$displayCart->displayCarts($_SESSION['user']['user_id']);
-        
+        $displayCart = new cartsController($conn);
+        $carts = $displayCart->displayCarts($_SESSION['user']['user_id']);
+
 
         require BASE_PATH . '/pages/shop/cart.php';
-       
-          
 }
