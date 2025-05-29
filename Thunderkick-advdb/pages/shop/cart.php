@@ -59,8 +59,8 @@
             <!-- LEFT CART ITEMS -->
 
             <div class="flex-1 space-y-6">
-                
-                    <?php foreach($_SESSION['carts'] as $cartItems): ?>
+               
+                    <?php foreach($carts as $cartItems): ?>
                 <!-- SINGLE CART ITEM -->
                 <div class="bg-white rounded-lg shadow p-4 flex flex-col md:flex-row gap-4">
                 <input type="checkbox" name="selected[]" value="<?= htmlspecialchars($cartItems['shoe_id']) ?>" class="mt-2">
@@ -74,6 +74,10 @@
                     <div class="flex-1 space-y-4">
                         <div>
                             <h3 class="text-xl font-semibold"><?=htmlspecialchars($cartItems['name'])?></h3>
+                            <h3 class="text-xl font-semibold"><?=htmlspecialchars($_SESSION['user']['user_id'])?></h3>
+
+
+
                             
                         </div>
 
@@ -82,7 +86,7 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-2">
                                 <button onclick="decreaseNumber('qty1','price1')" class="bg-gray-200 px-2 rounded">-</button>
-                                <input id="qty1" type="text" value="1" class="w-10 text-center border rounded">
+                                <input id="qty1" type="text" value="<?= htmlspecialchars($cartItems['quantity']) ?>" class="w-10 text-center border rounded">
                                 <button onclick="increaseNumber('qty1','price1')" class="bg-gray-200 px-2 rounded">+</button>
                             </div>
 
@@ -105,8 +109,9 @@
                 </div>
                
                         <?php endforeach;?>
+                        
                 
-
+                      
                 <!-- add new item here -->
 
             </div>

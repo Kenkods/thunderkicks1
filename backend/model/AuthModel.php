@@ -22,7 +22,7 @@ class userModel
     }
     public function login($username)
     {
-        $stmt = $this->conn->prepare("SELECT password FROM users WHERE username = ?");
+        $stmt = $this->conn->prepare("SELECT user_id, password FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
 
         $result = $stmt->execute();

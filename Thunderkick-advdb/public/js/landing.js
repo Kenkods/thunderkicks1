@@ -18,10 +18,10 @@ document.querySelectorAll(".addCartBtn").forEach(button => {
       if (data.success) {
         showFlashMessage("Added to cart!", "green");
         const items = data.cartItem;
-      items.forEach(item => {
-      console.log("Shoe name:", item.name);
-      console.log("Price:", item.price);
-    });
+    //   items.forEach(item => {
+    //   console.log("Shoe name:", item.name);
+    //   console.log("Price:", item.price);
+    // });
         
       } else {
         showFlashMessage("Failed to add to cart.", "red");
@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.getElementById('cart-icon').addEventListener("click", () => {
+  
   window.location.href = "page=cart";
 });
 });

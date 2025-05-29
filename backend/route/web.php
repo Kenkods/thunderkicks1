@@ -80,25 +80,21 @@ switch ($request) {
         header("Location: login");
         exit;
     }
+    
         require_once __DIR__ . '/../controllers/CardsController.php';
+        require_once __DIR__ . '/../controllers/cartsController.php';
         $cards = new CardsController($conn);
         $addCart = $cards->getShoeID(shoe_id: $_POST['shoe_id']);
-       
-        if (!isset($_SESSION['carts'])) {
-            $_SESSION['carts'] = [];
-        } 
-            foreach($addCart as $cartsAdded){
-            $_SESSION['carts'][]=[
-                'shoe_id'=>$cartsAdded['shoe_id'],
-                'price'=> $cartsAdded['price'],
-                'name'=>$cartsAdded['name'],
-                'shoe_img'=>$cartsAdded['shoe_img']
-            ];
-        }
+        $cartsController = new cartsController($conn);
 
-        
-        
-        
+        foreach ($addCart as $cartsAdded) {
+            $shoe_id = $cartsAdded['shoe_id'];
+            $price = $cartsAdded['price'];
+            $quantity = 1;
+            $user_id = $_SESSION['user']['user_id'];
+
+            $cartsController->insertCartItems($user_id, $shoe_id, $quantity, $price);
+        }
 
         $_SESSION['added']=[
             'success'=>true
@@ -121,8 +117,12 @@ switch ($request) {
 
 
     case 'page=cart':
-        require_once __DIR__ . '/../controllers/CardsController.php';
-            
+        require_once __DIR__ . "/../controllers/cartsController.php";
+        $displayCart= new cartsController($conn);
+       $carts=$displayCart->displayCarts($_SESSION['user']['user_id']);
+        
+
         require BASE_PATH . '/pages/shop/cart.php';
+       
           
 }
