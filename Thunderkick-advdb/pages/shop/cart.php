@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,59 +57,65 @@
             <!-- LEFT CART ITEMS -->
 
             <div class="flex-1 space-y-6">
-               
-                    <?php foreach($carts as $cartItems): ?>
-                <!-- SINGLE CART ITEM -->
-                <div class="bg-white rounded-lg shadow p-4 flex flex-col md:flex-row gap-4">
-                <input type="checkbox" name="selected[]" value="<?= htmlspecialchars($cartItems['shoe_id']) ?>" class="mt-2">
-                    
-                <!-- Product Image -->
-                    <div class="flex justify-center items-center bg-gray-100 p-4 rounded">
-                        <img src=<?=htmlspecialchars($cartItems['shoe_img'])?> alt="cart image" class="h-40 object-contain">
-                    </div>
 
-                    <!-- Product Details -->
-                    <div class="flex-1 space-y-4">
-                        <div>
-                            <h3 class="text-xl font-semibold"><?=htmlspecialchars($cartItems['name'])?></h3>
-                            <h3 class="text-xl font-semibold"><?=htmlspecialchars($_SESSION['user']['user_id'])?></h3>
+                <?php foreach ($carts as $cartItems): ?>
+                    <!-- SINGLE CART ITEM -->
+                    <div class="bg-white rounded-lg shadow p-4 flex flex-col md:flex-row gap-4">
+                        <input type="checkbox" name="selected[]" value="<?= htmlspecialchars($cartItems['shoe_id']) ?>" class="mt-2">
 
-
-
-                            
+                        <!-- Product Image -->
+                        <div class="flex justify-center items-center bg-gray-100 p-4 rounded">
+                            <img src=<?= htmlspecialchars($cartItems['shoe_img']) ?> alt="cart image" class="h-40 object-contain">
                         </div>
 
-
-                        <!-- Quantity and Price -->
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-2">
-                                <button onclick="decreaseNumber('qty1','price1')" class="bg-gray-200 px-2 rounded">-</button>
-                                <input id="qty1" type="text" value="<?= htmlspecialchars($cartItems['quantity']) ?>" class="w-10 text-center border rounded">
-                                <button onclick="increaseNumber('qty1','price1')" class="bg-gray-200 px-2 rounded">+</button>
+                        <!-- Product Details -->
+                        <div class="flex-1 space-y-4">
+                            <div>
+                                <h3 class="text-xl font-semibold"><?= htmlspecialchars($cartItems['name']) ?></h3>
+                                <h3 class="text-xl font-semibold"><?= htmlspecialchars($_SESSION['user']['user_id']) ?></h3>
+                                <p class="text-gray-500">Size: <?= htmlspecialchars($cartItems['selected_size']) ?></p>
                             </div>
 
-                            <h4 class="text-lg font-bold">$<span id="price1" data-price="<?=htmlspecialchars($cartItems['price'])?>"><?=htmlspecialchars($cartItems['price'])?></span></h4>
-                        </div>
 
-                        <div class="flex justify-between text-sm text-gray-600">
-                            <button class="hover:text-red-500 flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg> Remove
-                            </button>
-                            <button class="hover:text-pink-500 flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.01 4.01 4 6.5 4c1.74 0 3.41 1.01 4.13 2.44C11.09 5.01 12.76 4 14.5 4 16.99 4 19 6.01 19 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                </svg> Move to Wishlist
-                            </button>
+                            <!-- Quantity and Price -->
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <?php $uniqueId = $cartItems['cart_items_id']; ?>
+                                    <button onclick="decreaseNumber('qty<?= $uniqueId ?>','price<?= $uniqueId ?>')" class="bg-gray-200 px-2 rounded">-</button>
+                                    <input id="qty<?= $uniqueId ?>" type="text" value="<?= htmlspecialchars($cartItems['quantity']) ?>" class="w-10 text-center border rounded">
+                                    <button onclick="increaseNumber('qty<?= $uniqueId ?>','price<?= $uniqueId ?>')" class="bg-gray-200 px-2 rounded">+</button>
+                                </div>
+
+                                <?php $initialPrice = htmlspecialchars($cartItems['price']); ?>
+                                <h4 class="text-lg font-bold">
+                                    $<span
+                                        id="price<?= $uniqueId ?>"
+                                        class="line-total"
+                                        data-price="<?= $initialPrice ?>"
+                                        data-cart-id="<?= $uniqueId ?>"><?= $initialPrice ?></span>
+                                </h4>
+
+                            </div>
+
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <button class="hover:text-red-500 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg> Remove
+                                </button>
+                                <button class="hover:text-pink-500 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.01 4.01 4 6.5 4c1.74 0 3.41 1.01 4.13 2.44C11.09 5.01 12.76 4 14.5 4 16.99 4 19 6.01 19 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                    </svg> Move to Wishlist
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-               
-                        <?php endforeach;?>
-                        
-                
-                      
+
+                <?php endforeach; ?>
+
+
+
                 <!-- add new item here -->
 
             </div>
@@ -155,27 +159,48 @@
 </body>
 
 <script>
+    function updateLineTotal(qtyId, priceId) {
+        const qty = document.getElementById(qtyId);
+        const price = document.getElementById(priceId);
+        const unitPrice = parseFloat(price.getAttribute('data-price'));
+        const newQty = parseInt(qty.value);
+        const newTotal = newQty * unitPrice;
+
+        price.innerText = newTotal.toFixed(2);
+        updateCartTotal();
+    }
+
     function increaseNumber(qtyId, priceId) {
-        let qty = document.getElementById(qtyId);
-        let price = document.getElementById(priceId);
-        let initialPrice= parseFloat(price.getAttribute('data-price'));
-        let newQTY =parseInt(qty.value) +1;
-        qty.value = newQTY;
-        price.innerText = (newQTY*initialPrice).toFixed(2);
+        const qty = document.getElementById(qtyId);
+        qty.value = parseInt(qty.value) + 1;
+        updateLineTotal(qtyId, priceId);
     }
 
     function decreaseNumber(qtyId, priceId) {
-        let qty = document.getElementById(qtyId);
-        let price = document.getElementById(priceId);
+        const qty = document.getElementById(qtyId);
         if (parseInt(qty.value) > 1) {
             qty.value = parseInt(qty.value) - 1;
-            price.innerText = (parseInt(qty.value) * 20).toFixed(2);
+            updateLineTotal(qtyId, priceId);
         }
+    }
+
+    function updateCartTotal() {
+        let productTotal = 0;
+        document.querySelectorAll(".line-total").forEach(span => {
+            productTotal += parseFloat(span.innerText);
+        });
+
+        const shipping = parseFloat(document.getElementById("shipping_charge").innerText);
+        const total = productTotal + shipping;
+
+        document.getElementById("product_total_amt").innerText = productTotal.toFixed(2);
+        document.getElementById("total_cart_amt").innerText = total.toFixed(2);
     }
 
     function applyDiscount() {
         alert("Apply discount logic here.");
     }
 </script>
+
 
 </html>
