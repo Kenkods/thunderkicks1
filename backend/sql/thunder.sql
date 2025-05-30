@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2025 at 10:35 AM
+-- Generation Time: May 30, 2025 at 07:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -174,7 +174,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `user_id`, `total_amount`, `created_at`) VALUES
-(11, 12, 18499.00, '2025-05-30 06:34:41');
+(28, 14, 106287.00, '2025-05-30 13:34:52'),
+(33, 17, 17998.00, '2025-05-30 15:05:56');
 
 -- --------------------------------------------------------
 
@@ -197,8 +198,12 @@ CREATE TABLE `cart_items` (
 --
 
 INSERT INTO `cart_items` (`cart_items_id`, `cart_id`, `shoe_id`, `quantity`, `price`, `created_at`, `size_id`) VALUES
-(64, 11, 17, 1, 9500.00, '2025-05-30 06:34:41', 53),
-(65, 11, 20, 1, 8999.00, '2025-05-30 07:22:42', 75);
+(83, 28, 22, 1, 3192.00, '2025-05-30 13:34:52', 85),
+(84, 28, 23, 1, 10000.00, '2025-05-30 13:35:16', 93),
+(85, 28, 24, 1, 75000.00, '2025-05-30 13:35:18', 98),
+(86, 28, 18, 1, 7095.00, '2025-05-30 13:35:19', 63),
+(87, 28, 58, 1, 11000.00, '2025-05-30 13:35:27', 301),
+(98, 33, 20, 2, 8999.00, '2025-05-30 15:05:56', 73);
 
 -- --------------------------------------------------------
 
@@ -223,6 +228,40 @@ INSERT INTO `category` (`cat_id`, `category_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notification`
+--
+
+CREATE TABLE `notification` (
+  `notif_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notification`
+--
+
+INSERT INTO `notification` (`notif_id`, `user_id`, `order_id`, `description`, `created_at`) VALUES
+(2, 12, 23, 'New order #23 received with total amount ₱17998.00by: 12', '2025-05-30 12:55:45'),
+(3, NULL, 24, 'New order #24 received with total amount ₱7095.00', '2025-05-30 13:10:45'),
+(4, NULL, 25, 'New order #25 received with total amount ₱9500.00', '2025-05-30 13:16:35'),
+(5, NULL, 26, 'New order #26 received with total amount ₱10000.00', '2025-05-30 13:17:45'),
+(6, NULL, 27, 'New order #27 received with total amount ₱7095.00', '2025-05-30 13:29:15'),
+(7, NULL, 28, 'New order #28 received with total amount ₱44594.00', '2025-05-30 13:42:29'),
+(8, NULL, 29, 'New order #29 received with total amount ₱46000.00', '2025-05-30 13:43:34'),
+(9, NULL, 30, 'New order #30 received with total amount ₱7999.00', '2025-05-30 14:07:39'),
+(10, NULL, 31, 'New order #31 received with total amount ₱13905.00', '2025-05-30 15:05:44'),
+(11, NULL, 32, 'New order #32 received with total amount ₱35112.00', '2025-05-30 15:06:09'),
+(12, NULL, 33, 'New order #33 received with total amount ₱8000.00', '2025-05-30 15:06:22'),
+(13, NULL, 34, 'New order #34 received with total amount ₱30375.00', '2025-05-30 15:06:38'),
+(14, NULL, 35, 'New order #35 received with total amount ₱9500.00', '2025-05-30 17:47:44'),
+(15, NULL, 36, 'New order #36 received with total amount ₱7095.00', '2025-05-30 17:51:23');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -243,7 +282,56 @@ INSERT INTO `orders` (`order_id`, `user_id`, `total_amount`, `status`, `created_
 (4, 4, 6300.00, 'Pending', '2025-05-29 23:24:16', '2025-05-29 23:24:16'),
 (5, 4, NULL, 'Pending', '2025-05-29 23:25:35', '2025-05-29 23:25:35'),
 (6, 4, 13905.00, 'Pending', '2025-05-30 04:40:35', '2025-05-30 04:40:35'),
-(7, 4, 12692.00, 'Pending', '2025-05-30 05:37:20', '2025-05-30 05:37:20');
+(7, 4, 12692.00, 'Pending', '2025-05-30 05:37:20', '2025-05-30 05:37:20'),
+(8, 4, 7095.00, 'Pending', '2025-05-30 08:49:00', '2025-05-30 08:49:00'),
+(9, 4, 10000.00, 'Pending', '2025-05-30 08:51:02', '2025-05-30 08:51:02'),
+(10, 4, NULL, 'Pending', '2025-05-30 08:51:13', '2025-05-30 08:51:13'),
+(11, 4, 8999.00, 'Completed', '2025-05-30 08:51:25', '2025-05-30 10:24:18'),
+(12, 4, 75000.00, 'Pending', '2025-05-30 08:53:38', '2025-05-30 08:53:38'),
+(13, 4, 3192.00, 'Pending', '2025-05-30 08:56:08', '2025-05-30 08:56:08'),
+(14, 4, 5466.00, 'Completed', '2025-05-30 09:19:08', '2025-05-30 10:36:09'),
+(15, 4, NULL, 'Pending', '2025-05-30 09:19:20', '2025-05-30 09:19:20'),
+(16, 4, 13000.00, 'Completed', '2025-05-30 09:24:25', '2025-05-30 10:20:54'),
+(17, 4, 13905.00, 'Completed', '2025-05-30 09:25:40', '2025-05-30 10:19:06'),
+(18, 4, 13000.00, 'Completed', '2025-05-30 10:27:25', '2025-05-30 10:29:43'),
+(19, 4, 8999.00, 'Completed', '2025-05-30 10:29:23', '2025-05-30 10:35:43'),
+(20, 4, 10000.00, 'Completed', '2025-05-30 10:39:39', '2025-05-30 10:39:49'),
+(21, 4, 13905.00, 'Pending', '2025-05-30 12:09:50', '2025-05-30 12:09:50'),
+(22, 12, 18499.00, 'Pending', '2025-05-30 12:50:19', '2025-05-30 12:50:19'),
+(23, 12, 17998.00, 'Pending', '2025-05-30 12:55:45', '2025-05-30 12:55:45'),
+(24, 12, 7095.00, 'Pending', '2025-05-30 13:10:45', '2025-05-30 13:10:45'),
+(25, 13, 9500.00, 'Pending', '2025-05-30 13:16:35', '2025-05-30 13:16:35'),
+(26, 13, 10000.00, 'Pending', '2025-05-30 13:17:45', '2025-05-30 13:17:45'),
+(27, 14, 7095.00, 'Completed', '2025-05-30 13:29:15', '2025-05-30 13:29:26'),
+(28, 15, 44594.00, 'Pending', '2025-05-30 13:42:29', '2025-05-30 13:42:29'),
+(29, 15, 46000.00, 'Pending', '2025-05-30 13:43:34', '2025-05-30 13:43:34'),
+(30, 17, 7999.00, 'Completed', '2025-05-30 14:07:39', '2025-05-30 14:08:09'),
+(31, 17, 13905.00, 'Pending', '2025-05-30 15:05:44', '2025-05-30 15:05:44'),
+(32, 17, 35112.00, 'Pending', '2025-05-30 15:06:09', '2025-05-30 15:06:09'),
+(33, 17, 8000.00, 'Pending', '2025-05-30 15:06:22', '2025-05-30 15:06:22'),
+(34, 17, 30375.00, 'Pending', '2025-05-30 15:06:38', '2025-05-30 15:06:38'),
+(35, 12, 9500.00, 'Pending', '2025-05-30 17:47:44', '2025-05-30 17:47:44'),
+(36, 12, 7095.00, 'Pending', '2025-05-30 17:51:23', '2025-05-30 17:51:23');
+
+--
+-- Triggers `orders`
+--
+DELIMITER $$
+CREATE TRIGGER `after_order_insert` AFTER INSERT ON `orders` FOR EACH ROW BEGIN
+    INSERT INTO `notification` (
+        `user_id`,
+        `order_id`,
+        `description`,
+        `created_at`
+    ) VALUES (
+        NULL, 
+        NEW.order_id,
+        CONCAT('New order #', NEW.order_id, ' received with total amount ₱', NEW.total_amount),
+        NOW()
+    );
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -270,7 +358,41 @@ INSERT INTO `order_items` (`order_items_id`, `order_id`, `shoe_id`, `size_id`, `
 (7, 4, 2, 9, 1, 2900.00, '2025-05-29 23:24:16'),
 (9, 6, 19, 67, 1, 13905.00, '2025-05-30 04:40:35'),
 (10, 7, 17, 53, 1, 9500.00, '2025-05-30 05:37:20'),
-(11, 7, 22, 82, 1, 3192.00, '2025-05-30 05:37:20');
+(11, 7, 22, 82, 1, 3192.00, '2025-05-30 05:37:20'),
+(13, 8, 18, 61, 1, 7095.00, '2025-05-30 08:49:00'),
+(14, 9, 23, 92, 1, 10000.00, '2025-05-30 08:51:02'),
+(15, 11, 20, 73, 1, 8999.00, '2025-05-30 08:51:25'),
+(16, 12, 24, 96, 1, 75000.00, '2025-05-30 08:53:38'),
+(17, 13, 22, 85, 1, 3192.00, '2025-05-30 08:56:08'),
+(18, 14, 27, 115, 1, 5466.00, '2025-05-30 09:19:08'),
+(19, 16, 28, 122, 1, 13000.00, '2025-05-30 09:24:25'),
+(20, 17, 19, 67, 1, 13905.00, '2025-05-30 09:25:40'),
+(21, 18, 28, 121, 1, 13000.00, '2025-05-30 10:27:25'),
+(22, 19, 20, 73, 1, 8999.00, '2025-05-30 10:29:23'),
+(23, 20, 23, 93, 1, 10000.00, '2025-05-30 10:39:39'),
+(24, 21, 19, 68, 1, 13905.00, '2025-05-30 12:09:50'),
+(25, 22, 17, 53, 1, 9500.00, '2025-05-30 12:50:19'),
+(26, 22, 20, 75, 1, 8999.00, '2025-05-30 12:50:19'),
+(28, 23, 20, 73, 2, 8999.00, '2025-05-30 12:55:45'),
+(29, 24, 18, 62, 1, 7095.00, '2025-05-30 13:10:45'),
+(30, 25, 17, 54, 1, 9500.00, '2025-05-30 13:16:35'),
+(31, 26, 23, 92, 1, 10000.00, '2025-05-30 13:17:45'),
+(32, 27, 18, 61, 1, 7095.00, '2025-05-30 13:29:15'),
+(33, 28, 20, 73, 1, 8999.00, '2025-05-30 13:42:29'),
+(34, 28, 17, 57, 3, 9500.00, '2025-05-30 13:42:29'),
+(35, 28, 18, 62, 1, 7095.00, '2025-05-30 13:42:29'),
+(36, 29, 28, 122, 1, 13000.00, '2025-05-30 13:43:34'),
+(37, 29, 29, 128, 1, 8000.00, '2025-05-30 13:43:34'),
+(38, 29, 59, 308, 1, 10000.00, '2025-05-30 13:43:34'),
+(39, 29, 60, 314, 1, 10500.00, '2025-05-30 13:43:34'),
+(40, 29, 62, 326, 1, 4500.00, '2025-05-30 13:43:34'),
+(43, 30, 26, 109, 1, 7999.00, '2025-05-30 14:07:39'),
+(44, 31, 19, 68, 1, 13905.00, '2025-05-30 15:05:44'),
+(45, 32, 22, 85, 11, 3192.00, '2025-05-30 15:06:09'),
+(46, 33, 29, 128, 1, 8000.00, '2025-05-30 15:06:22'),
+(47, 34, 30, 133, 9, 3375.00, '2025-05-30 15:06:38'),
+(48, 35, 17, 57, 1, 9500.00, '2025-05-30 17:47:44'),
+(49, 36, 18, 63, 1, 7095.00, '2025-05-30 17:51:23');
 
 -- --------------------------------------------------------
 
@@ -725,7 +847,30 @@ INSERT INTO `users` (`user_id`, `full_name`, `email`, `username`, `password`) VA
 (9, 'John Kenneth Pantonial', 'jkennn.02@gmail.com', 'jkennn2', '$2y$10$kHBCkQy7WuLUz0X085Nm4enqhQfOLHsN.CsGjioKNWN3VAES53GRC'),
 (10, 'John Kenneth Pantonial', 'jkennn.02@gmail.com', 'Kenneth02', '$2y$10$pnW8/1NtsUk2Jy04N1cVSOnfB/4WircVvEQao.4BuD1HZH8W2r5VC'),
 (11, 'John Kenneth Pantonial', 'khan@gmail.com', '123kenneth', '$2y$10$pgcWFRO4Siq84F6BwmTSBujiFviBzj0f8HLUoBNDJWr.Kq6gJRy6u'),
-(12, 'deb', 'davezkiecabz@gmail.com', 'deb', '$2y$10$jrxDoSP8U3zrZxyhRVsttO0DQovEbta207kvQOFP9MRpstQ12Kfv.');
+(12, 'deb', 'davezkiecabz@gmail.com', 'deb', '$2y$10$jrxDoSP8U3zrZxyhRVsttO0DQovEbta207kvQOFP9MRpstQ12Kfv.'),
+(13, 'brent', 'brent@gmail.com', 'brent', '$2y$10$Cp/Hfa2zy0j5h56YDYhZ0O0A1aa9z9SHmZtGO99utO6sPeWnQ6fca'),
+(14, 'brent', 'bren3t@gmail.com', 'brent123', '$2y$10$dFKpkUp/xlYsOjcSvivEZeYMvrtPa5esb6MU723A2YEujxQo11sim'),
+(15, 'ralph levevev', 'adasda@awdas', 'rra', '$2y$10$ikW5VEaQ0sYtVEMGpUSCket4O1dlDSbZjFyoses3NR.Ns/dGbwGju'),
+(16, 'brent areglo', 'brent@gmail.com', 'brent', '$2y$10$FbkmYmYnUCQ0wyH3yYD83.mt5VVy4bxrP4G4J2EsVquVgMfFjU0A2'),
+(17, 'brent areglo', 'brent2@gmail.com', 'brent1', '$2y$10$J98hW5lb34e9UZRAnsngJuBcq0M3vfOcdx/SQ16Lf5btNxImf9uCK');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `viewreceipt`
+-- (See below for the actual view)
+--
+CREATE TABLE `viewreceipt` (
+`order_id` int(11)
+,`user_id` int(11)
+,`created_at` timestamp
+,`total_amount` decimal(10,2)
+,`status` varchar(50)
+,`shoe_id` int(11)
+,`size_id` int(11)
+,`quantity` int(11)
+,`price` decimal(10,2)
+);
 
 -- --------------------------------------------------------
 
@@ -735,6 +880,15 @@ INSERT INTO `users` (`user_id`, `full_name`, `email`, `username`, `password`) VA
 DROP TABLE IF EXISTS `top_4_shoes`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `top_4_shoes`  AS SELECT `s`.`shoe_id` AS `shoe_id`, `s`.`cat_id` AS `cat_id`, `s`.`brand_id` AS `brand_id`, `s`.`name` AS `name`, `s`.`price` AS `price`, `s`.`shoe_img` AS `shoe_img`, `s`.`type_id` AS `type_id`, `oi_summary`.`size_id` AS `size_id`, `sz`.`size` AS `size`, `oi_summary`.`total_quantity` AS `total_quantity` FROM (((select `oi`.`shoe_id` AS `shoe_id`,`oi`.`size_id` AS `size_id`,sum(`oi`.`quantity`) AS `total_quantity` from `order_items` `oi` group by `oi`.`shoe_id`,`oi`.`size_id` order by sum(`oi`.`quantity`) desc limit 4) `oi_summary` join `shoes` `s` on(`s`.`shoe_id` = `oi_summary`.`shoe_id`)) join `sizes` `sz` on(`oi_summary`.`size_id` = `sz`.`size_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `viewreceipt`
+--
+DROP TABLE IF EXISTS `viewreceipt`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewreceipt`  AS SELECT `o`.`order_id` AS `order_id`, `o`.`user_id` AS `user_id`, `o`.`created_at` AS `created_at`, `o`.`total_amount` AS `total_amount`, `o`.`status` AS `status`, `oi`.`shoe_id` AS `shoe_id`, `oi`.`size_id` AS `size_id`, `oi`.`quantity` AS `quantity`, `oi`.`price` AS `price` FROM (`orders` `o` join `order_items` `oi` on(`o`.`order_id` = `oi`.`order_id`)) ;
 
 --
 -- Indexes for dumped tables
@@ -765,6 +919,14 @@ ALTER TABLE `cart_items`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`cat_id`);
+
+--
+-- Indexes for table `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`notif_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `fk_notification_order` (`order_id`);
 
 --
 -- Indexes for table `orders`
@@ -824,13 +986,13 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `cart_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `cart_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -839,16 +1001,22 @@ ALTER TABLE `category`
   MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
+-- AUTO_INCREMENT for table `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `order_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `shoes`
@@ -872,7 +1040,7 @@ ALTER TABLE `type`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
@@ -884,6 +1052,13 @@ ALTER TABLE `users`
 ALTER TABLE `cart_items`
   ADD CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_cart_items_size` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`size_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `notification`
+--
+ALTER TABLE `notification`
+  ADD CONSTRAINT `fk_notification_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `orders`

@@ -58,7 +58,7 @@ $adminNotifications = $orderController->getAdminNotifications();
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="#" class="logout">
+				<a href="index.php?page=login" class="logout">
 					<i class='bx bxs-log-out-circle'></i>
 					<span class="text">Logout</span>
 				</a>
