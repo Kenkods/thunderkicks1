@@ -239,8 +239,25 @@ public function addShoe($name, $brand_id, $cat_id, $price, $imagePath, $type_id)
         return $row ? $row['type_id'] : null;
     }
 
+   public function displayAll() {
+    $query = "SELECT * FROM shoes";
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $rows = [];
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+
+    return $rows;
+}
+
+
+
    
 
 }
 
+    
 ?>

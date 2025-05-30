@@ -66,7 +66,8 @@ switch ($request) {
     case 'products':
         // require_once __DIR__ . '/../controllers/CardsController.php';
         $cards   = new CardsController($conn);
-        $adidascards = $cards->showCategory('Men', 10, 0);
+        // $adidascards = $cards->showCategory('Men', 10, 0);
+        $adidascards=$cards->displayAll();
         require BASE_PATH . '/pages/shop/products.php';
 
         break;
@@ -137,6 +138,7 @@ switch ($request) {
         $order->transferCartToOrder($_SESSION['user']['user_id'],$selected);
          header("Location: ?page=cart"); 
     exit();
+        
 
 
         // require_once __DIR__ . "/../controllers/Controller.php";

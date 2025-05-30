@@ -155,4 +155,27 @@ class CardsController
             ];
         }
     }
+
+
+    public function displayAll(){
+        $model = new CardsModel($this->conn);
+        $result = $model->displayAll();
+         foreach ($result as &$card) {
+            if (!empty($card['sizes'])) {
+                $sizesArr = explode(',', $card['sizes']);
+                $sizes = [];
+                foreach ($sizesArr as $sizeStock) {
+                    list($size, $stock) = explode(':', $sizeStock);
+                    $sizes[] = ['size' => $size, 'stock' => $stock];
+                }
+                $card['sizes'] = $sizes;
+            } else {
+                $card['sizes'] = [];
+            }
+        }
+
+        unset($card);
+        return $result;
+
+    }
 }
