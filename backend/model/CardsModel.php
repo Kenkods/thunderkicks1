@@ -240,7 +240,10 @@ public function addShoe($name, $brand_id, $cat_id, $price, $imagePath, $type_id)
     }
 
    public function displayAll() {
-    $query = "SELECT * FROM shoes";
+    $query = "SELECT s.shoe_id, s.name, s.price, s.shoe_img, GROUP_CONCAT(CONCAT(sz.size, ':', sz.stock) SEPARATOR ', ') AS sizes
+                FROM shoes s
+                JOIN sizes sz ON s.shoe_id = sz.shoe_id
+                GROUP BY s.shoe_id";
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
     $result = $stmt->get_result();
