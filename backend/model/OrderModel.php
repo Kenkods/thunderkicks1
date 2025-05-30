@@ -12,12 +12,12 @@ class OrderModel
     public function getAllOrders()
     {
         $sql = "
-            SELECT o.order_id, o.order_date, u.username, SUM(ci.quantity * ci.price) as total_amount
+            SELECT o.order_id, o.created_at, u.username, SUM(ci.quantity * ci.price) as total_amount
             FROM orders o
             JOIN users u ON o.user_id = u.user_id
             JOIN order_items ci ON ci.order_id = o.order_id
             GROUP BY o.order_id
-            ORDER BY o.order_date DESC
+            ORDER BY o.created_at DESC
         ";
         return $this->conn->query($sql)->fetch_all(MYSQLI_ASSOC);
     }
@@ -50,5 +50,16 @@ class OrderModel
 
         $result = $this->conn->query($query);
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function updateOrderStatus($order_id, $status)
+    {
+        $stmt = $this->conn->prepare("
+        UPDATE orders 
+        SET status = ?, updated_at = NOW() 
+        WHERE order_id = ?
+    ");
+        $stmt->bind_param("si", $status, $order_id);
+        return $stmt->execute();
     }
 }

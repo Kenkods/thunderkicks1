@@ -46,6 +46,37 @@ body {
 	overflow-x: hidden;
 }
 
+/* Add to your AdminDashboard.css or style section */
+.btn-success {
+	background-color: #28a745;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.btn-success:hover {
+	background-color: #218838;
+}
+
+.status.completed {
+	background-color: #28a745;
+	color: white;
+}
+
+.status.pending {
+	background-color: #ffc107;
+	color: black;
+}
+
+.status {
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-size: 14px;
+}
+
 /* SIDEBAR */
 #sidebar {
 	position: fixed;
@@ -470,7 +501,8 @@ body {
 	border-radius: 20px;
 	background: var(--light);
 	padding: 24px;
-	overflow-x: auto;
+	height: 500px;
+	overflow-y: scroll;
 }
 
 #content main .table-data .head {

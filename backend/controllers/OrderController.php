@@ -39,4 +39,10 @@ class OrdersController
         $getRecentOrders = $model->getRecentOrders();
         return $getRecentOrders;
     }
+
+    public function updateOrderStatus($orderId, $status)
+    {
+        $model = new OrderModel($this->conn);
+        return $model->updateOrderStatus($orderId, $status);
+    }
 }

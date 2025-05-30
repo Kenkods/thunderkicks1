@@ -108,6 +108,7 @@ $errorMsg = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
 						<i class='bx bx-search'></i>
 						<i class='bx bx-filter'></i>
 					</div>
+					<!-- Update your orders table in AdminDashboard.php -->
 					<table>
 						<thead>
 							<tr>
@@ -115,25 +116,33 @@ $errorMsg = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
 								<th>Product</th>
 								<th>Date Order</th>
 								<th>Status</th>
+								<th>Action</th> <!-- New column for the button -->
 							</tr>
 						</thead>
 						<tbody>
 							<?php foreach ($recentOrders as $order): ?>
 								<tr>
 									<td>
-
 										<p><?= htmlspecialchars($order['username']) ?></p>
-
-
 									</td>
 									<td>
 										<img src="<?= htmlspecialchars($order['shoe_img']) ?>" alt="shoe image">
 										<p><?= htmlspecialchars($order['name']) ?></p>
 									</td>
 									<td><?= htmlspecialchars(date('Y-m-d', strtotime($order['created_at']))) ?></td>
-									<td><span class="status <?= $order['status'] === 'Completed' ? 'completed' : 'pending' ?>">
+									<td>
+										<span class="status <?= $order['status'] === 'Completed' ? 'completed' : 'pending' ?>">
 											<?= htmlspecialchars($order['status']) ?>
-										</span></td>
+										</span>
+									</td>
+									<td>
+										<?php if ($order['status'] !== 'Completed'): ?>
+											<form method="POST" action="?page=complete-order">
+												<input type="hidden" name="order_id" value="<?= $order['order_id'] ?>">
+												<button type="submit" class="btn btn-success btn-sm">Complete</button>
+											</form>
+										<?php endif; ?>
+									</td>
 								</tr>
 							<?php endforeach; ?>
 						</tbody>

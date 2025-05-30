@@ -21,12 +21,12 @@ switch ($request) {
     case 'landing':
         require_once __DIR__ . '/../controllers/CardsController.php';
         $cards = new CardsController($conn);
-        $topProducts=$cards->viewTopProducts();
+        $topProducts = $cards->viewTopProducts();
 
         require BASE_PATH . '/pages/Landing/Landing.php';
         break;
 
-       
+
     case 'login':
         if (isset($_SESSION['user'])) {
             header("Location: landing");
@@ -154,7 +154,7 @@ switch ($request) {
         $selected = $_POST['selected'];
 
         $order->transferCartToOrder($_SESSION['user']['user_id'], $selected);
-               require BASE_PATH . '/pages/shop/cart.php';
+        require BASE_PATH . '/pages/shop/cart.php';
 
         exit();
 
@@ -174,5 +174,20 @@ switch ($request) {
         $ordersController = new ordersController($conn);
         $orderItems = $ordersController->getOrderItems((int)$_GET['id']);
         require BASE_PATH . '/pages/dashboard/AdminDashboard.php';
+        break;
+
+    case 'complete-order':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
+            require_once __DIR__ . '/../controllers/OrderController.php';
+            $orderController = new OrdersController($conn);
+            $result = $orderController->updateOrderStatus($_POST['order_id'], 'Completed');
+
+            if ($result) {
+                header("Location: ?success=Order+marked+as+completed");
+            } else {
+                header("Location: ?error=Failed+to+update+order");
+            }
+            exit();
+        }
         break;
 }
