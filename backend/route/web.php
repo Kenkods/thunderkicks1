@@ -119,7 +119,11 @@ switch ($request) {
         exit();
 
 
-
+    case 'AdminDashboard':
+        $orderController = new OrdersController($conn);
+        $recentOrders = $orderController->getRecentOrders();
+        require BASE_PATH . '/pages/dashboard/AdminDashboard.php';
+        break;
     case 'adminlogin':
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';

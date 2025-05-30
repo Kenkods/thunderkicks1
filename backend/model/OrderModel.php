@@ -39,10 +39,11 @@ class OrderModel
     public function getRecentOrders()
     {
         $query = "
-        SELECT oi.*, s.name, s.shoe_img,o.status
+        SELECT oi.*, s.name, s.shoe_img,o.status,u.username,u.user_id
         FROM order_items oi
         JOIN shoes s ON oi.shoe_id = s.shoe_id
         JOIN orders o On oi.order_id=o.order_id
+        JOIN users u ON o.user_id=u.user_id
         ORDER BY oi.created_at DESC
         LIMIT 10
     ";

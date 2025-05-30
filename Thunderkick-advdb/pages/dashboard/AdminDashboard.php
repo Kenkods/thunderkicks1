@@ -25,6 +25,18 @@
 </head>
 
 <body>
+	<?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+		<div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+			<strong>Shoe added successfully!</strong>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	<?php elseif (isset($_GET['error'])): ?>
+		<div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
+			<strong>Error:</strong> <?= htmlspecialchars($_GET['error']) ?>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	<?php endif; ?>
+
 	<section id="sidebar">
 		<a href="#" class="brand">
 			<img src="tanda.png" class="logo">
@@ -98,6 +110,7 @@
 						<thead>
 							<tr>
 								<th>User</th>
+								<th>Product</th>
 								<th>Date Order</th>
 								<th>Status</th>
 							</tr>
@@ -105,6 +118,12 @@
 						<tbody>
 							<?php foreach ($recentOrders as $order): ?>
 								<tr>
+									<td>
+
+										<p><?= htmlspecialchars($order['username']) ?></p>
+
+
+									</td>
 									<td>
 										<img src="<?= htmlspecialchars($order['shoe_img']) ?>" alt="shoe image">
 										<p><?= htmlspecialchars($order['name']) ?></p>

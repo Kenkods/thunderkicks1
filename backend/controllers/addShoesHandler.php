@@ -73,7 +73,7 @@ try {
     $result = $controller->addShoe($shoeData);
 
     if ($result['success']) {
-        header('Location: /thunderkicks1/Thunderkick-advdb/pages/dashboard/AdminDashboard.php?success=1');
+        header('Location: /thunderkicks1/Thunderkick-advdb/public/AdminDashboard?success=1');
     } else {
         throw new Exception($result['message']);
     }
