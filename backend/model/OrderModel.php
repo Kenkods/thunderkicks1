@@ -62,4 +62,44 @@ class OrderModel
         $stmt->bind_param("si", $status, $order_id);
         return $stmt->execute();
     }
+
+    public function selectOrderitems(){
+
+    $query="SELECT oi.*, o.*
+            FROM order_items oi
+            JOIN orders o ON oi.order_id = o.order_id
+            WHERE o.user_id = ? 
+            ORDER BY o.order_date DESC
+            ";
+    $user_id=$_SESSION['users']['user_id'];
+    $stmt=$this->conn->query($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    $rows = [];
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+
+    return $rows;
+}
+
+public function viewReceipt(){
+    $user_id=$_SESSION['user']['user_id'];
+    $receipt = $this->conn->prepare("SELECT * FROM viewReceipt WHERE user_id = ?
+    ORDER BY created_at desc ");
+    $receipt->bind_param("i",$user_id );
+    $receipt->execute();
+    $result=$receipt->get_result();
+    $rows=[];
+    while($row = $result->fetch_assoc()){
+        $rows[] = $row;
+    }
+    return $rows;
+    
+
+
+}
 }
