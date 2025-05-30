@@ -63,43 +63,65 @@ class OrderModel
         return $stmt->execute();
     }
 
-    public function selectOrderitems(){
+    public function selectOrderitems()
+    {
 
-    $query="SELECT oi.*, o.*
+        $query = "SELECT oi.*, o.*
             FROM order_items oi
             JOIN orders o ON oi.order_id = o.order_id
             WHERE o.user_id = ? 
             ORDER BY o.order_date DESC
             ";
-    $user_id=$_SESSION['users']['user_id'];
-    $stmt=$this->conn->query($query);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
+        $user_id = $_SESSION['users']['user_id'];
+        $stmt = $this->conn->query($query);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
 
-    $result = $stmt->get_result();
+        $result = $stmt->get_result();
 
-    $rows = [];
-    while ($row = $result->fetch_assoc()) {
-        $rows[] = $row;
+        $rows = [];
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+
+        return $rows;
     }
 
-    return $rows;
-}
-
-public function viewReceipt(){
-    $user_id=$_SESSION['user']['user_id'];
-    $receipt = $this->conn->prepare("SELECT * FROM viewReceipt WHERE user_id = ?
+    public function viewReceipt()
+    {
+        $user_id = $_SESSION['user']['user_id'];
+        $receipt = $this->conn->prepare("SELECT * FROM viewReceipt WHERE user_id = ?
     ORDER BY created_at desc ");
-    $receipt->bind_param("i",$user_id );
-    $receipt->execute();
-    $result=$receipt->get_result();
-    $rows=[];
-    while($row = $result->fetch_assoc()){
-        $rows[] = $row;
+        $receipt->bind_param("i", $user_id);
+        $receipt->execute();
+        $result = $receipt->get_result();
+        $rows = [];
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        return $rows;
     }
-    return $rows;
-    
 
+    public function getTotalSales()
+    {
+        $stmt = $this->conn->prepare("
+        SELECT SUM(total_amount) as total_sales 
+        FROM orders 
+        WHERE status = 'Completed'
+    ");
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result['total_sales'] ?? 0;
+    }
 
-}
+    public function getTotalOrders()
+    {
+        $stmt = $this->conn->prepare("
+        SELECT COUNT(*) as total_orders 
+        FROM orders
+    ");
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result['total_orders'] ?? 0;
+    }
 }

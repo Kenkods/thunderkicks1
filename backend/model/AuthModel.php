@@ -35,4 +35,12 @@ class userModel
             return false;
         }
     }
+
+    public function getTotalUsers()
+    {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total_users FROM users");
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result['total_users'] ?? 0;
+    }
 }

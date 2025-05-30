@@ -1,6 +1,19 @@
 <?php
 $successMsg = isset($_GET['success']) ? 'Shoe added successfully!' : null;
 $errorMsg = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
+$orderController = new OrdersController($conn);
+$totalSales = $orderController->getTotalSales();
+$recentOrders = $orderController->getRecentOrders();
+$orderController = new OrdersController($conn);
+$totalSales = $orderController->getTotalSales();
+$totalOrders = $orderController->getTotalOrders(); // Add this line
+$recentOrders = $orderController->getRecentOrders();
+$userModel = new userModel($conn);
+$totalUsers = $userModel->getTotalUsers();
+$orderController = new OrdersController($conn);
+$totalSales = $orderController->getTotalSales();
+$totalOrders = $orderController->getTotalOrders();
+$recentOrders = $orderController->getRecentOrders();
 ?>s
 <!DOCTYPE html>
 <html lang="en">
@@ -80,21 +93,21 @@ $errorMsg = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
 				<li>
 					<i class='bx bxs-calendar-check'></i>
 					<span class="text">
-						<h3>1020</h3>
-						<p>New Order</p>
+						<h3><?= number_format($totalOrders) ?></h3>
+						<p>Total Orders</p>
 					</span>
 				</li>
 				<li>
 					<i class='bx bxs-group'></i>
 					<span class="text">
-						<h3>2834</h3>
-						<p>Visitors</p>
+						<h3><?= number_format($totalUsers) ?></h3>
+						<p>Registered Users</p>
 					</span>
 				</li>
 				<li>
 					<i class='bx bxs-dollar-circle'></i>
 					<span class="text">
-						<h3>$2543</h3>
+						<h3>₱<?= number_format($totalSales, 2) ?></h3>
 						<p>Total Sales</p>
 					</span>
 				</li>
