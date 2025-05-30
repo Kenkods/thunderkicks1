@@ -1,3 +1,7 @@
+<?php
+$successMsg = isset($_GET['success']) ? 'Shoe added successfully!' : null;
+$errorMsg = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
+?>s
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,18 +29,6 @@
 </head>
 
 <body>
-	<?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
-		<div class="alert alert-success alert-dismissible fade show m-3" role="alert">
-			<strong>Shoe added successfully!</strong>
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-		</div>
-	<?php elseif (isset($_GET['error'])): ?>
-		<div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
-			<strong>Error:</strong> <?= htmlspecialchars($_GET['error']) ?>
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-		</div>
-	<?php endif; ?>
-
 	<section id="sidebar">
 		<a href="#" class="brand">
 			<img src="tanda.png" class="logo">
@@ -64,9 +56,19 @@
 
 	<!-- CONTENT -->
 	<section id="content">
-
 		<!-- MAIN -->
 		<main>
+			<?php if ($successMsg): ?>
+				<div id="flash-message" class="alert alert-success">
+					<strong>Success!</strong> <?= $successMsg ?>
+				</div>
+			<?php endif; ?>
+
+			<?php if ($errorMsg): ?>
+				<div id="flash-message" class="alert alert-danger">
+					<strong>Error!</strong> <?= $errorMsg ?>
+				</div>
+			<?php endif; ?>
 			<div class="head-title">
 				<div class="left">
 					<h1>Dashboard</h1>
@@ -241,10 +243,10 @@
 											$commonSizes = [7, 8, 9, 10, 11, 12];
 											foreach ($commonSizes as $size) {
 												echo '
-                                        <div class="input-group mb-2">
-                                            <span class="input-group-text">Size ' . $size . '</span>
-                                            <input type="number" class="form-control" name="sizes[' . $size . ']" placeholder="Stock" min="0" value="10">
-                                        </div>';
+											<div class="input-group mb-2">
+												<span class="input-group-text">Size ' . $size . '</span>
+												<input type="number" class="form-control" name="sizes[' . $size . ']" placeholder="Stock" min="0" value="10">
+											</div>';
 											}
 											?>
 										</div>
@@ -266,7 +268,20 @@
 	<!-- CONTENT -->
 
 
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+		setTimeout(() => {
+			const flash = document.getElementById('flash-message');
+			if (flash) {
+				flash.classList.add('opacity-0', 'transition-opacity', 'duration-700');
+				setTimeout(() => flash.remove(), 700);
+			}
+		}, 3000); // 3 seconds
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+
 
 </body>
 
