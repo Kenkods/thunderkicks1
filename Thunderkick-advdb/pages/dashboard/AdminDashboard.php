@@ -1,11 +1,3 @@
-<?php
-// Display success/error messages
-if (isset($_GET['success'])) {
-	echo '<div class="alert alert-success">Shoe added successfully!</div>';
-} elseif (isset($_GET['error'])) {
-	echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['error']) . '</div>';
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +10,7 @@ if (isset($_GET['success'])) {
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- My CSS -->
-	<link rel="stylesheet" href="AdminDashboard.css">
+	<link rel="stylesheet" href="\thunderkicks1\Thunderkick-advdb\public\css\AdminDashboard.css">
 	<style>
 		.sizes-container {
 			max-height: 200px;
@@ -111,22 +103,18 @@ if (isset($_GET['success'])) {
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>
-									<img src="sapatos.webp">
-									<p>Jordan</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="sapatos.webp">
-									<p>Nike Air</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
+							<?php foreach ($recentOrders as $order): ?>
+								<tr>
+									<td>
+										<img src="<?= htmlspecialchars($order['shoe_img']) ?>" alt="shoe image">
+										<p><?= htmlspecialchars($order['name']) ?></p>
+									</td>
+									<td><?= htmlspecialchars(date('Y-m-d', strtotime($order['created_at']))) ?></td>
+									<td><span class="status <?= $order['status'] === 'Completed' ? 'completed' : 'pending' ?>">
+											<?= htmlspecialchars($order['status']) ?>
+										</span></td>
+								</tr>
+							<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>

@@ -10,37 +10,39 @@
 
 <body>
     <div class="tk-container">
-        <img src="/thunderkicks1/thunderkick-advdb/public/imgs/hehe.png" alt="" class="tk-logo">
-        <div class="tk-input-group">
-            <input type="text" id="username" name="username" placeholder="Username" required class="tk-input">
-        </div>
-        <div class="tk-input-group">
-            <input type="password" id="password" name="password" placeholder="Password" required class="tk-input">
-            <?php if (!empty($error)): ?>
-                <span class="text-3xl">
-                    <?= htmlspecialchars($error) ?>
-                </span>
-            <?php endif; ?>
-        </div>
-        <button type="submit" class="tk-login-button" id="log">Login</button>
+        <form action="/Thunderkicks1/Thunderkick-advdb/public/index.php?page=adminlogin" method="POST">
+            <img src="/thunderkicks1/thunderkick-advdb/public/imgs/hehe.png" alt="" class="tk-logo">
+            <div class="tk-input-group">
+                <input type="text" id="username" name="username" placeholder="Username" required class="tk-input">
+            </div>
+            <div class="tk-input-group">
+                <input type="password" id="password" name="password" placeholder="Password" required class="tk-input">
+                <?php if (!empty($error)): ?>
+                    <span class="text-3xl">
+                        <?= htmlspecialchars($error) ?>
+                    </span>
+                <?php endif; ?>
+            </div>
+            <button type="submit" class="tk-login-button" id="log">Login</button>
+        </form>
     </div>
 </body>
 
 <script>
-    document.getElementById('log').addEventListener("click", () => {
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value.trim();
+    // document.getElementById('log').addEventListener("click", () => {
+    //     const username = document.getElementById('username').value.trim();
+    //     const password = document.getElementById('password').value.trim();
 
-        const adminUser = "admin";
-        const adminPass = "admin123";
+    //     const adminUser = "admin";
+    //     const adminPass = "admin123";
 
-        if (username === adminUser && password === adminPass) {
-            alert("Login successful!");
-            window.location.href = "/thunderkicks1/thunderkick-advdb/pages/dashboard/AdminDashboard.php";
-        } else {
-            alert("Invalid username or password.");
-        }
-    });
+    //     if (username === adminUser && password === adminPass) {
+    //         alert("Login successful!");
+    //         window.location.href = "/thunderkicks1/thunderkick-advdb/public/index.php?adminsuccess=1";
+    //     } else {
+    //         alert("Invalid username or password.");
+    //     }
+    // });
 </script>
 
 </html>

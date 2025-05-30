@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../controllers/CardsController.php';
 require_once __DIR__ . "/../controllers/cartsController.php";
 require_once __DIR__ . '/../controllers/userAuthController.php';
+require_once __DIR__ . '/../controllers/OrderController.php';
 
 $request = $_GET['page'] ?? 'landing';
 
@@ -50,6 +51,7 @@ switch ($request) {
         $regCont->register();
         require BASE_PATH . '/pages/userAuth/register.php';
         break;
+
     case 'logout':
         // require_once __DIR__ . '/../controllers/userAuthController.php';
         $logoutCont = new userAuthController($conn);
@@ -67,7 +69,7 @@ switch ($request) {
         // require_once __DIR__ . '/../controllers/CardsController.php';
         $cards   = new CardsController($conn);
         // $adidascards = $cards->showCategory('Men', 10, 0);
-        $adidascards=$cards->displayAll();
+        $adidascards = $cards->displayAll();
         require BASE_PATH . '/pages/shop/products.php';
 
         break;
@@ -91,14 +93,14 @@ switch ($request) {
         $cards = new CardsController($conn);
         $addCart = $cards->getShoeID(shoe_id: $_POST['shoe_id']);
         $cartsController = new cartsController($conn);
-        $size=$_POST['size'];
+        $size = $_POST['size'];
         foreach ($addCart as $cartsAdded) {
             $shoe_id = $cartsAdded['shoe_id'];
             $price = $cartsAdded['price'];
             $quantity = 1;
             $user_id = $_SESSION['user']['user_id'];
 
-            $cartsController->insertCartItems($user_id, $shoe_id, $quantity, $price,$size);
+            $cartsController->insertCartItems($user_id, $shoe_id, $quantity, $price, $size);
         }
 
         $_SESSION['added'] = [
@@ -118,28 +120,52 @@ switch ($request) {
 
 
 
-    case 'AdminDashboard.php?success=1':
-        require BASE_PATH . '/pages/dashboard/AdminDashboard.php';
+    case 'adminlogin':
+        $username = $_POST['username'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        if ($username === "admin" && $password === "admin123") {
+            $orderController = new OrdersController($conn);
+            $recentOrders = $orderController->getRecentOrders();
+            require BASE_PATH . '/pages/dashboard/AdminDashboard.php';
+        } else {
+            $error = "Invalid admin credentials";
+            require BASE_PATH . '/pages/userAuth/adminlog.php';
+        }
         break;
 
 
     case 'page=cart':
-        // 
         $displayCart = new cartsController($conn);
         $carts = $displayCart->displayCarts($_SESSION['user']['user_id']);
 
 
         require BASE_PATH . '/pages/shop/cart.php';
         break;
+
     case 'order=success':
-        $order= new cartsController($conn);
-        $selected=$_POST['selected'];
+        $order = new cartsController($conn);
+        $selected = $_POST['selected'];
 
-        $order->transferCartToOrder($_SESSION['user']['user_id'],$selected);
-         header("Location: ?page=cart"); 
-    exit();
-        
+        $order->transferCartToOrder($_SESSION['user']['user_id'], $selected);
+        header("Location: ?page=cart");
+        exit();
 
 
-        // require_once __DIR__ . "/../controllers/Controller.php";
+    case 'admin-orders':
+        require_once __DIR__ . '/../controllers/OrderController.php';
+        $ordersController = new ordersController($conn);
+        $orders = $ordersController->getAllOrders();
+        require BASE_PATH . '/pages/dashboard/AdminDashboard.php';
+        break;
+
+    case 'order-details':
+        if (!isset($_GET['id'])) {
+            die("Missing order ID");
+        }
+        require_once __DIR__ . '/../controllers/OrderController.php';
+        $ordersController = new ordersController($conn);
+        $orderItems = $ordersController->getOrderItems((int)$_GET['id']);
+        require BASE_PATH . '/pages/dashboard/AdminDashboard.php';
+        break;
 }

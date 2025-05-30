@@ -6,8 +6,8 @@ require_once(__DIR__ . '/../model/AuthModel.php');
 
 
 
-    
- 
+
+
 
 
 class userAuthController
@@ -54,10 +54,10 @@ class userAuthController
             $result = $userModel->login($username);
             if ($result && password_verify($password, $result['password'])) {
                 $_SESSION['user'] = [
-                    'user_id'=>$result['user_id'],
-                    'username'=>$username
+                    'user_id' => $result['user_id'],
+                    'username' => $username
                 ];
-                
+
                 $_SESSION['success'] = 'You have logged in successfully!';
                 header("Location: /thunderkicks1/Thunderkick-advdb/public/index.php?page=landing&status=success");
                 exit();

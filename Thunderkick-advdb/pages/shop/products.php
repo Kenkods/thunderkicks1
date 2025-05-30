@@ -138,7 +138,7 @@
                             <?php endif; ?>
                             <div class="mt-4 flex justify-between items-center">
                                 <span class=" font-bold text-lg">$<?= htmlspecialchars($card['price']) ?></span>
-                                <button id="addCartBtn" class="addCartBtn px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to Cart</button>
+                                <button id="addCartBtn" class="addCartBtn px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">Add to art</button>
                             </div>
                         </div>
                     </div>
