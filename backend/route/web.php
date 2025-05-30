@@ -143,10 +143,10 @@ switch ($request) {
 
     case 'page=cart':
         $displayCart = new cartsController($conn);
-                $orderCont= new OrdersController($conn);
+        $orderCont = new OrdersController($conn);
 
         $carts = $displayCart->displayCarts($_SESSION['user']['user_id']);
-        $receipt=$orderCont->orderReceipt();
+        $receipt = $orderCont->orderReceipt();
 
 
         require BASE_PATH . '/pages/shop/cart.php';
@@ -154,15 +154,14 @@ switch ($request) {
 
     case 'order=success':
         $order = new cartsController($conn);
-        $orderCont= new OrdersController($conn);
+        $orderCont = new OrdersController($conn);
         $selected = $_POST['selected'];
 
-         $displayCart = new cartsController($conn);
+        $displayCart = new cartsController($conn);
         $carts = $displayCart->displayCarts($_SESSION['user']['user_id']);
         $order->transferCartToOrder($_SESSION['user']['user_id'], $selected);
-        require BASE_PATH . '/pages/shop/cart.php';
-
-        break;
+        header("Location: page=cart");
+        exit();
 
 
     case 'admin-orders':
@@ -189,9 +188,9 @@ switch ($request) {
             $result = $orderController->updateOrderStatus($_POST['order_id'], 'Completed');
 
             if ($result) {
-                header("Location: ?success=Order+marked+as+completed");
+                header("Location: AdminDashboard?success=Order+marked+as+completed");
             } else {
-                header("Location: ?error=Failed+to+update+order");
+                header("Location: AdminDashboard?error=Failed+to+update+order");
             }
             exit();
         }
