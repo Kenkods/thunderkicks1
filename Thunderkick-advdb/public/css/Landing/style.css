@@ -278,6 +278,9 @@
       max-width: 96rem;
     }
   }
+  .m-3 {
+    margin: calc(var(--spacing) * 3);
+  }
   .mx-1 {
     margin-inline: calc(var(--spacing) * 1);
   }
@@ -320,6 +323,12 @@
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
   }
+  .ml-100 {
+    margin-left: calc(var(--spacing) * 100);
+  }
+  .ml-200 {
+    margin-left: calc(var(--spacing) * 200);
+  }
   .block {
     display: block;
   }
@@ -337,9 +346,6 @@
   }
   .h-5 {
     height: calc(var(--spacing) * 5);
-  }
-  .h-6 {
-    height: calc(var(--spacing) * 6);
   }
   .h-7 {
     height: calc(var(--spacing) * 7);
@@ -406,9 +412,6 @@
   }
   .min-w-75 {
     min-width: calc(var(--spacing) * 75);
-  }
-  .min-w-100 {
-    min-width: calc(var(--spacing) * 100);
   }
   .flex-1 {
     flex: 1;
@@ -626,14 +629,11 @@
   .px-22 {
     padding-inline: calc(var(--spacing) * 22);
   }
-  .px-24 {
-    padding-inline: calc(var(--spacing) * 24);
+  .px-28 {
+    padding-inline: calc(var(--spacing) * 28);
   }
   .px-30 {
     padding-inline: calc(var(--spacing) * 30);
-  }
-  .px-32 {
-    padding-inline: calc(var(--spacing) * 32);
   }
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
@@ -852,13 +852,6 @@
     &:hover {
       @media (hover: hover) {
         border-bottom-color: var(--color-yellow-500);
-      }
-    }
-  }
-  .hover\:bg-gray-200 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-gray-200);
       }
     }
   }

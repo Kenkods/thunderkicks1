@@ -257,6 +257,42 @@ public function addShoe($name, $brand_id, $cat_id, $price, $imagePath, $type_id)
 }
 
 
+public function getTop4Shoes() {
+    $sql = "SELECT * FROM top_4_shoes";
+    $result = $this->conn->query($sql);
+
+    if (!$result) {
+        die("Query failed: " . $this->conn->error);
+    }
+
+    $topShoes = []; // associative array shoe_id => shoe data + sizes array
+
+while ($row = $result->fetch_assoc()) {
+    $shoeId = $row['shoe_id'];
+    if (!isset($topShoes[$shoeId])) {
+        // Initialize shoe data without size info
+        $topShoes[$shoeId] = [
+            'shoe_id' => $row['shoe_id'],
+            'name' => $row['name'],
+            'price' => $row['price'],
+            'shoe_img' => $row['shoe_img'],
+            // add other shoe columns as needed
+            'sizes' => []
+        ];
+    }
+    // Append size info
+    $topShoes[$shoeId]['sizes'][] = [
+        'size_id' => $row['size_id'],
+        'size' => $row['size']
+    ];
+}
+
+    $topShoes = array_values($topShoes);
+
+    return $topShoes;
+}
+
+
 
    
 

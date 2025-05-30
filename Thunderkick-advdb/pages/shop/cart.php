@@ -91,7 +91,7 @@
 
                                 <?php $initialPrice = htmlspecialchars($cartItems['price']); ?>
                                 <h4 class="text-lg font-bold">
-                                    $<span
+                                    ₱<span
                                         id="price<?= $uniqueId ?>"
                                         class="line-total"
                                         data-price="<?= $initialPrice ?>"
@@ -137,7 +137,7 @@
                     <hr />
                     <div class="flex justify-between font-bold text-lg">
                         <p>Total (incl. VAT)</p>
-                        <p>$<span id="total_cart_amt">0</span></p>
+                        <p>₱<span id="total_cart_amt">0</span></p>
                     </div>
                     
                         <button class="w-full bg-yellow-400 text-white py-2 rounded hover:bg-yellow-500">Reserve</button>

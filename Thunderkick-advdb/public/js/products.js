@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+   document.getElementById('cart-icon').addEventListener("click", () => {
+    window.location.href = "page=cart";
+  });
   const filterModal = document.getElementById('filter-modal');
   const filterParent = document.getElementById("filter-parent");
 
