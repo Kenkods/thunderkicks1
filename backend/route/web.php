@@ -160,9 +160,8 @@ switch ($request) {
          $displayCart = new cartsController($conn);
         $carts = $displayCart->displayCarts($_SESSION['user']['user_id']);
         $order->transferCartToOrder($_SESSION['user']['user_id'], $selected);
-        require BASE_PATH . '/pages/shop/cart.php';
-
-        break;
+header("Location: page=cart");
+        exit();
 
 
     case 'admin-orders':
@@ -189,9 +188,9 @@ switch ($request) {
             $result = $orderController->updateOrderStatus($_POST['order_id'], 'Completed');
 
             if ($result) {
-                header("Location: ?success=Order+marked+as+completed");
+                header("Location: AdminDashboard?success=Order+marked+as+completed");
             } else {
-                header("Location: ?error=Failed+to+update+order");
+                header("Location: error=Failed+to+update+order");
             }
             exit();
         }
