@@ -1,16 +1,15 @@
 <?php
 
-require_once __DIR__ . '/../model/orderModel.php';
-
+require_once __DIR__ . '/../model/OrderModel.php';
+require_once __DIR__ . '/../config/db.php';
+$conn = getConnection();
 class OrdersController
 {
     private $conn;
-    private $model;
 
     public function __construct($conn)
     {
         $this->conn = $conn;
-        $this->model = new OrderModel($conn); // Capitalized to match PSR naming
     }
 
     /**
@@ -18,7 +17,9 @@ class OrdersController
      */
     public function getAllOrders()
     {
-        return $this->model->getAllOrders();
+        $model = new OrderModel($this->conn);
+        $recentOrders = $model->getAllOrders();
+        return $recentOrders;
     }
 
     /**
@@ -26,14 +27,16 @@ class OrdersController
      */
     public function getOrderItems($orderId)
     {
-        return $this->model->getOrderItems($orderId);
+        $model = new OrderModel($this->conn);
+        $getOrderItems = $model->getOrderItems($orderId);
+        return  $getOrderItems;
     }
 
-    /**
-     * Get limited recent orders (e.g., latest 5).
-     */
+
     public function getRecentOrders()
     {
-        return $this->model->getRecentOrders();
+        $model = new OrderModel($this->conn);
+        $getRecentOrders = $model->getRecentOrders();
+        return $getRecentOrders;
     }
 }
