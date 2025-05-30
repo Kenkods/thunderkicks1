@@ -73,7 +73,9 @@ try {
     $result = $controller->addShoe($shoeData);
 
     if ($result['success']) {
+        $_SESSION['success'] = 'Shoe added successfully!';
         header('Location: /thunderkicks1/Thunderkick-advdb/public/AdminDashboard?success=1');
+        exit;
     } else {
         throw new Exception($result['message']);
     }
