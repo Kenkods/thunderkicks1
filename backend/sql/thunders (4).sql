@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2025 at 05:33 AM
+-- Generation Time: May 30, 2025 at 08:16 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -152,20 +152,9 @@ CREATE TABLE `brand` (
 
 INSERT INTO `brand` (`brand_id`, `brand_name`) VALUES
 (1, 'Adidas'),
-(2, 'Adidas'),
-(3, 'Adidas'),
-(4, 'Anta'),
-(5, 'Anta'),
-(6, 'Anta'),
-(7, 'Nike'),
-(8, 'Nike'),
-(9, 'Nike'),
-(10, 'Nike'),
-(11, 'Nike'),
-(12, 'Nike'),
-(13, 'Nike'),
-(14, 'Nike'),
-(15, 'New Balance');
+(2, 'Anta'),
+(3, 'Nike'),
+(4, 'New Balance');
 
 -- --------------------------------------------------------
 
@@ -213,20 +202,8 @@ CREATE TABLE `category` (
 
 INSERT INTO `category` (`cat_id`, `category_name`) VALUES
 (1, 'Men'),
-(2, 'Men'),
-(3, 'Men'),
-(4, 'Men'),
-(5, 'Men'),
-(6, 'Men'),
-(7, 'Men'),
-(8, 'Men'),
-(9, 'Men'),
-(10, 'Men'),
-(11, 'Kids'),
-(12, 'Kids'),
-(13, 'Kids'),
-(14, 'Kids'),
-(15, 'Women');
+(2, 'Women'),
+(3, 'Kids');
 
 -- --------------------------------------------------------
 
@@ -249,7 +226,9 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`order_id`, `user_id`, `total_amount`, `status`, `created_at`, `updated_at`) VALUES
 (4, 4, 6300.00, 'Pending', '2025-05-29 23:24:16', '2025-05-29 23:24:16'),
-(5, 4, NULL, 'Pending', '2025-05-29 23:25:35', '2025-05-29 23:25:35');
+(5, 4, NULL, 'Pending', '2025-05-29 23:25:35', '2025-05-29 23:25:35'),
+(6, 4, 13905.00, 'Pending', '2025-05-30 04:40:35', '2025-05-30 04:40:35'),
+(7, 4, 12692.00, 'Pending', '2025-05-30 05:37:20', '2025-05-30 05:37:20');
 
 -- --------------------------------------------------------
 
@@ -273,7 +252,10 @@ CREATE TABLE `order_items` (
 
 INSERT INTO `order_items` (`order_items_id`, `order_id`, `shoe_id`, `size_id`, `quantity`, `price`, `created_at`) VALUES
 (6, 4, 3, 11, 1, 3400.00, '2025-05-29 23:24:16'),
-(7, 4, 2, 9, 1, 2900.00, '2025-05-29 23:24:16');
+(7, 4, 2, 9, 1, 2900.00, '2025-05-29 23:24:16'),
+(9, 6, 19, 67, 1, 13905.00, '2025-05-30 04:40:35'),
+(10, 7, 17, 53, 1, 9500.00, '2025-05-30 05:37:20'),
+(11, 7, 22, 82, 1, 3192.00, '2025-05-30 05:37:20');
 
 -- --------------------------------------------------------
 
@@ -296,22 +278,23 @@ CREATE TABLE `shoes` (
 --
 
 INSERT INTO `shoes` (`shoe_id`, `cat_id`, `brand_id`, `name`, `price`, `shoe_img`, `type_id`) VALUES
-(1, 1, 1, 'Subzone Shoes', 3400.00, NULL, 1),
-(2, 2, 2, 'Own The Game 3 Shoes', 2900.00, NULL, 2),
-(3, 3, 3, 'Subzone Shoes', 3400.00, NULL, 3),
-(4, 4, 4, 'Anta Shock Wave 5 Pro \'Focus\'', 6995.00, NULL, 4),
-(5, 5, 5, 'Anta KT9', 4341.00, NULL, 5),
-(6, 6, 6, 'Anta Kai 2 \'Dallas\'', 6995.00, NULL, 6),
-(7, 7, 7, 'Nike G.T Cut Academy EP', 4995.00, NULL, 7),
-(8, 8, 8, 'Giannis Immortality 4 EP', 4295.00, NULL, 8),
-(9, 9, 9, 'Nike Precision 7 EasyOn', 3695.00, NULL, 9),
-(10, 10, 10, 'G.T Hassle Academy EP', 4995.00, NULL, 10),
-(11, 11, 11, 'Nike Dunk Low', 3095.00, NULL, NULL),
-(12, 12, 12, 'Jordan 4 Retro \'Aluminum\' ', 3995.00, NULL, NULL),
-(13, 13, 13, 'Nike Court Borough Low Recraft ', 2395.00, NULL, NULL),
-(14, 14, 14, 'Jordan 23/7.2 EasyOn', 3295.00, NULL, NULL),
-(15, 15, 15, 'FuelCell SuperComp Trainer v3', 10.00, 'null', 7),
-(16, 1, 1, 'Rosuie', 150.00, '/thunderkicks1/public/uploads/shoe_6835c08ab139a.png', 1);
+(17, 1, 3, 'Zion 4 PF \'Iridescence', 9500.00, '/thunderkicks1/public/uploads/shoe_6839341f1b729.png', 1),
+(18, 1, 3, 'Nike Go FlyEase', 7095.00, '/thunderkicks1/public/uploads/shoe_683936076cafb.png', 1),
+(19, 1, 3, 'Nike Vaporfly 4', 13905.00, '/thunderkicks1/public/uploads/shoe_6839369d2fe66.png', 2),
+(20, 2, 3, 'Nike Zoom Vomero 5', 8999.00, '/thunderkicks1/public/uploads/shoe_683937479b402.png', 2),
+(21, 2, 3, 'Nike Cortez Textile', 5043.00, '/thunderkicks1/public/uploads/shoe_683937d84739c.png', 3),
+(22, 3, 3, 'Air Jordan 1 Low', 3192.00, '/thunderkicks1/public/uploads/shoe_6839385388600.png', 3),
+(23, 1, 4, 'Men\'s ANTA KAI 1 \"Sacred Bond\"', 10000.00, '/thunderkicks1/public/uploads/shoe_683938ac1af38.png', 1),
+(24, 1, 4, 'ANTA Shock Wave 5 Pro \"Sun\"', 75000.00, '/thunderkicks1/public/uploads/shoe_68393907e4d6a.png', 1),
+(25, 1, 4, 'Men\'s ANTA KAI 1 \"Yin\"', 69000.00, '/thunderkicks1/public/uploads/shoe_68393973d9a41.png', 1),
+(26, 1, 1, 'Anthony Edwards 1 Low Trainers', 7999.00, '/thunderkicks1/public/uploads/shoe_68393abb9365a.png', 1),
+(27, 1, 1, 'Harden Volume 9 Shoes', 5466.00, '/thunderkicks1/public/uploads/shoe_68393b4f771b4.png', 1),
+(28, 1, 4, '1906R', 13000.00, '/thunderkicks1/public/uploads/shoe_68393c2617e77.png', 3),
+(29, 1, 1, 'Adizero Evo SL', 8000.00, '/thunderkicks1/public/uploads/shoe_683946f4b9ec7.png', 2),
+(30, 2, 1, 'Duramo Speed 2', 3375.00, '/thunderkicks1/public/uploads/shoe_6839474facb40.png', 2),
+(31, 2, 1, 'Response Super', 4000.00, '/thunderkicks1/public/uploads/shoe_683948dac97ad.png', 2),
+(32, 2, 3, 'Jordan Heir Series PF \'Mother\'s Day\'', 7000.00, '/thunderkicks1/public/uploads/shoe_6839496c15daf.png', 1),
+(33, 2, 3, 'Sabrina 1 \'Dedication\' EP', 7555.00, '/thunderkicks1/public/uploads/shoe_683949ae33493.png', 1);
 
 -- --------------------------------------------------------
 
@@ -376,12 +359,108 @@ INSERT INTO `sizes` (`size_id`, `shoe_id`, `size`, `stock`) VALUES
 (43, 10, 10, 5),
 (44, 10, 11, 8),
 (45, 10, 12, 9),
-(46, 16, 7, 10),
-(47, 16, 8, 10),
-(48, 16, 9, 10),
-(49, 16, 10, 10),
-(50, 16, 11, 10),
-(51, 16, 12, 10);
+(52, 17, 7, 0),
+(53, 17, 8, 7),
+(54, 17, 9, 11),
+(55, 17, 10, 8),
+(56, 17, 11, 7),
+(57, 17, 12, 15),
+(58, 18, 7, 10),
+(59, 18, 8, 10),
+(60, 18, 9, 10),
+(61, 18, 10, 10),
+(62, 18, 11, 10),
+(63, 18, 12, 10),
+(64, 19, 7, 4),
+(65, 19, 8, 9),
+(66, 19, 9, 9),
+(67, 19, 10, 11),
+(68, 19, 11, 7),
+(69, 19, 12, 6),
+(70, 20, 7, 0),
+(71, 20, 8, 8),
+(72, 20, 9, 12),
+(73, 20, 10, 7),
+(74, 20, 11, 7),
+(75, 20, 12, 5),
+(76, 21, 7, 0),
+(77, 21, 8, 11),
+(78, 21, 9, 8),
+(79, 21, 10, 3),
+(80, 21, 11, 3),
+(81, 21, 12, 3),
+(82, 22, 7, 12),
+(83, 22, 8, 12),
+(84, 22, 9, 12),
+(85, 22, 10, 5),
+(86, 22, 11, 4),
+(87, 22, 12, 3),
+(88, 23, 7, 0),
+(89, 23, 8, 8),
+(90, 23, 9, 8),
+(91, 23, 10, 11),
+(92, 23, 11, 11),
+(93, 23, 12, 7),
+(94, 24, 7, 0),
+(95, 24, 8, 12),
+(96, 24, 9, 12),
+(97, 24, 10, 12),
+(98, 24, 11, 12),
+(99, 24, 12, 12),
+(100, 25, 7, 0),
+(101, 25, 8, 10),
+(102, 25, 9, 10),
+(103, 25, 10, 10),
+(104, 25, 11, 10),
+(105, 25, 12, 10),
+(106, 26, 7, 0),
+(107, 26, 8, 6),
+(108, 26, 9, 8),
+(109, 26, 10, 12),
+(110, 26, 11, 8),
+(111, 26, 12, 8),
+(112, 27, 7, 0),
+(113, 27, 8, 13),
+(114, 27, 9, 14),
+(115, 27, 10, 12),
+(116, 27, 11, 7),
+(117, 27, 12, 13),
+(118, 28, 7, 0),
+(119, 28, 8, 13),
+(120, 28, 9, 7),
+(121, 28, 10, 7),
+(122, 28, 11, 7),
+(123, 28, 12, 7),
+(124, 29, 7, 2),
+(125, 29, 8, 9),
+(126, 29, 9, 9),
+(127, 29, 10, 4),
+(128, 29, 11, 6),
+(129, 29, 12, 6),
+(130, 30, 7, 10),
+(131, 30, 8, 10),
+(132, 30, 9, 10),
+(133, 30, 10, 10),
+(134, 30, 11, 10),
+(135, 30, 12, 10),
+(136, 31, 7, 10),
+(137, 31, 8, 10),
+(138, 31, 9, 10),
+(139, 31, 10, 10),
+(140, 31, 11, 10),
+(141, 31, 12, 10),
+(142, 32, 7, 10),
+(143, 32, 8, 10),
+(144, 32, 9, 10),
+(145, 32, 10, 10),
+(146, 32, 11, 10),
+(147, 32, 12, 10),
+(148, 33, 7, 10),
+(149, 33, 8, 10),
+(150, 33, 9, 10),
+(151, 33, 10, 10),
+(152, 33, 11, 10),
+(153, 33, 12, 10);
 
 -- --------------------------------------------------------
 
@@ -400,15 +479,8 @@ CREATE TABLE `type` (
 
 INSERT INTO `type` (`type_id`, `shoe_type`) VALUES
 (1, 'Basketball'),
-(2, 'Basketball'),
-(3, 'Basketball'),
-(4, 'Basketball'),
-(5, 'Basketball'),
-(6, 'Basketball'),
-(7, 'Basketball'),
-(8, 'Basketball'),
-(9, 'Basketball'),
-(10, 'Basketball');
+(2, 'Running'),
+(3, 'Casual');
 
 -- --------------------------------------------------------
 
@@ -529,13 +601,13 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `cart_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `cart_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -547,31 +619,31 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `order_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `shoes`
 --
 ALTER TABLE `shoes`
-  MODIFY `shoe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `shoe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `sizes`
 --
 ALTER TABLE `sizes`
-  MODIFY `size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT for table `type`
 --
 ALTER TABLE `type`
-  MODIFY `type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`

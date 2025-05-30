@@ -59,11 +59,11 @@
         <?php endif; ?>
 
         <?php
-        if (isset($_SESSION['shoe']) && isset($_SESSION['shoe']['type_name'])) {
-            $typeName = $_SESSION['shoe']['type_name'];
+        if (isset($_SESSION['shoe']) && isset($_SESSION['shoe']['shoe_type'])) {
+            $typeName = $_SESSION['shoe']['shoe_type'];
             // use $typeName safely here
         } else {
-            $typeName = 'Basketball'; // or fallback logic
+            $typeName = 'Products'; // or fallback logic
         }
         ?>
 
