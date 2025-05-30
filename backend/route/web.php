@@ -19,12 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_GET['page'] ?? '') === 'filter-p
 
 switch ($request) {
     case 'landing':
-        // require_once __DIR__ . '/../controllers/CardsController.php';
+        require_once __DIR__ . '/../controllers/CardsController.php';
         $cards = new CardsController($conn);
-        $adidascards = $cards->showCategory('Men', 4, 0);
-        require BASE_PATH . '/pages/Landing/Landing.php';
+        $topProducts=$cards->viewTopProducts();
 
-        return $adidascards;
+        require BASE_PATH . '/pages/Landing/Landing.php';
+        break;
+
+       
     case 'login':
         if (isset($_SESSION['user'])) {
             header("Location: landing");
@@ -152,7 +154,8 @@ switch ($request) {
         $selected = $_POST['selected'];
 
         $order->transferCartToOrder($_SESSION['user']['user_id'], $selected);
-        header("Location: ?page=cart");
+               require BASE_PATH . '/pages/shop/cart.php';
+
         exit();
 
 

@@ -178,4 +178,14 @@ class CardsController
         return $result;
 
     }
+
+
+
+
+    public function viewTopProducts(){
+        $model = new CardsModel($this->conn);
+        $result = $model->getTop4Shoes();
+        return $result;
+
+    }
 }
