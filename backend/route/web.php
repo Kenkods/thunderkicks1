@@ -1,4 +1,4 @@
-<?php
+    <?php
 require_once __DIR__ . '/../controllers/CardsController.php';
 require_once __DIR__ . "/../controllers/cartsController.php";
 require_once __DIR__ . '/../controllers/userAuthController.php';
@@ -160,7 +160,7 @@ switch ($request) {
         $displayCart = new cartsController($conn);
         $carts = $displayCart->displayCarts($_SESSION['user']['user_id']);
         $order->transferCartToOrder($_SESSION['user']['user_id'], $selected);
-        header("Location: page=cart");
+header("Location: page=cart");
         exit();
 
 
