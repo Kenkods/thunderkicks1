@@ -36,7 +36,7 @@ document.querySelectorAll(".addCartBtn").forEach(button => {
     const selectedSize = card.dataset.selectedSize;
 
     if (!selectedSize) {
-      showFlashMessage("Please select a size first.", "red");
+        ("Please select a size first.", "red");
       return;
     }
 

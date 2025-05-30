@@ -191,7 +191,7 @@
           </div>
 
 
-          <a href="/Thunderkicks1/Thunderkick-advdb/public/products=Kids">
+          <a href="/Thunderkicks1/Thunderkick-advdb/public/products=kids">
             <div class="bg-white rounded-xl overflow-hidden border-0 my-3 mx-4 hover:cursor-pointer max-w-80 group transition duration-300  hover:scale-100">
               <img class="w-full object-cover h-120 transition duration-300 transform group-hover:scale-105" src="/Thunderkicks1/Thunderkick-advdb/public/imgs/shoes/kidsCategory.jpg" alt="Product Image">
               <h1 class="flex justify-center items-center my-7 font-semibold text-2xl">KIDS</h1>

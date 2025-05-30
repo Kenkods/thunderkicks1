@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2025 at 09:16 PM
+-- Generation Time: May 30, 2025 at 05:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -80,6 +80,59 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `AddOrUpdateCartItem` (IN `p_user_id
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TransferCartToOrder` (IN `userId` INT, IN `selectedIds` TEXT)   BEGIN
+    DECLARE cartId INT;
+    DECLARE totalAmount DECIMAL(10,2);
+    DECLARE orderId INT;
+
+    -- Get cart_id from one of the selected items
+    SELECT cart_id INTO cartId
+    FROM cart_items
+    WHERE FIND_IN_SET(cart_items_id, selectedIds) > 0
+    LIMIT 1;
+
+    -- Calculate total amount
+    SELECT SUM(price * quantity) INTO totalAmount
+    FROM cart_items
+    WHERE FIND_IN_SET(cart_items_id, selectedIds) > 0;
+
+    -- Insert into orders
+    INSERT INTO orders (user_id, total_amount, status, created_at, updated_at)
+    VALUES (userId, totalAmount, 'Pending', NOW(), NOW());
+
+    SET orderId = LAST_INSERT_ID();
+
+    -- Insert into order_items
+    INSERT INTO order_items (order_id, shoe_id, size_id, quantity, price, created_at)
+    SELECT orderId, shoe_id, size_id, quantity, price, NOW()
+    FROM cart_items
+    WHERE FIND_IN_SET(cart_items_id, selectedIds) > 0;
+
+    -- Delete selected cart_items
+    DELETE FROM cart_items
+    WHERE FIND_IN_SET(cart_items_id, selectedIds) > 0;
+    
+    
+
+    -- Delete cart if no more items remain
+    IF NOT EXISTS (
+        SELECT 1 FROM cart_items WHERE cart_id = cartId
+    ) THEN
+        DELETE FROM cart WHERE cart_id = cartId;
+        
+        
+       UPDATE cart c
+JOIN (
+    SELECT cart_id, SUM(price * quantity) AS computed_total
+    FROM cart_items
+    GROUP BY cart_id
+) ci ON c.cart_id = ci.cart_id
+SET c.total_amount = ci.computed_total;
+        
+    END IF;
+
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -127,13 +180,6 @@ CREATE TABLE `cart` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`cart_id`, `user_id`, `total_amount`, `created_at`) VALUES
-(7, 4, 5800.00, '2025-05-29 18:59:52');
-
 -- --------------------------------------------------------
 
 --
@@ -149,14 +195,6 @@ CREATE TABLE `cart_items` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `size_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cart_items`
---
-
-INSERT INTO `cart_items` (`cart_items_id`, `cart_id`, `shoe_id`, `quantity`, `price`, `created_at`, `size_id`) VALUES
-(51, 7, 2, 1, 2900.00, '2025-05-29 18:59:52', 7),
-(52, 7, 2, 1, 2900.00, '2025-05-29 19:01:00', 9);
 
 -- --------------------------------------------------------
 
@@ -189,6 +227,53 @@ INSERT INTO `category` (`cat_id`, `category_name`) VALUES
 (13, 'Kids'),
 (14, 'Kids'),
 (15, 'Women');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `order_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `total_amount` decimal(10,2) DEFAULT NULL,
+  `status` varchar(50) DEFAULT 'PENDING',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `user_id`, `total_amount`, `status`, `created_at`, `updated_at`) VALUES
+(4, 4, 6300.00, 'Pending', '2025-05-29 23:24:16', '2025-05-29 23:24:16'),
+(5, 4, NULL, 'Pending', '2025-05-29 23:25:35', '2025-05-29 23:25:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `order_items_id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `shoe_id` int(11) DEFAULT NULL,
+  `size_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`order_items_id`, `order_id`, `shoe_id`, `size_id`, `quantity`, `price`, `created_at`) VALUES
+(6, 4, 3, 11, 1, 3400.00, '2025-05-29 23:24:16'),
+(7, 4, 2, 9, 1, 2900.00, '2025-05-29 23:24:16');
 
 -- --------------------------------------------------------
 
@@ -387,6 +472,22 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`cat_id`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`order_items_id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `shoe_id` (`shoe_id`),
+  ADD KEY `size_id` (`size_id`);
+
+--
 -- Indexes for table `shoes`
 --
 ALTER TABLE `shoes`
@@ -428,19 +529,31 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `cart_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `cart_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `order_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `shoes`
@@ -476,6 +589,20 @@ ALTER TABLE `users`
 ALTER TABLE `cart_items`
   ADD CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_cart_items_size` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`size_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`shoe_id`) REFERENCES `shoes` (`shoe_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_items_ibfk_3` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`size_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `shoes`
