@@ -14,6 +14,7 @@ $orderController = new OrdersController($conn);
 $totalSales = $orderController->getTotalSales();
 $totalOrders = $orderController->getTotalOrders();
 $recentOrders = $orderController->getRecentOrders();
+$adminNotifications = $orderController->getAdminNotifications();
 ?>s
 <!DOCTYPE html>
 <html lang="en">
@@ -163,23 +164,22 @@ $recentOrders = $orderController->getRecentOrders();
 				</div>
 				<div class="todo">
 					<div class="head">
-						<h3>Todos</h3>
-						<i class='bx bx-plus'></i>
-						<i class='bx bx-filter'></i>
+						<h3>Notifications</h3>
+						<i class='bx bx-bell'></i>
 					</div>
-					<ul class="todo-list">
-						<li class="completed">
-							<p>Restock</p>
-							<i class='bx bx-dots-vertical-rounded'></i>
-						</li>
-						<li class="completed">
-							<p>Social Media Engagement</p>
-							<i class='bx bx-dots-vertical-rounded'></i>
-						</li>
-						<li class="not-completed">
-							<p>Updates on Flatform</p>
-							<i class='bx bx-dots-vertical-rounded'></i>
-						</li>
+					<ul class="notification-list">
+						<?php if (!empty($adminNotifications)): ?>
+							<?php foreach ($adminNotifications as $notification): ?>
+								<li>
+									<p><?= htmlspecialchars($notification['description']) ?></p>
+									<span class="date"><?= htmlspecialchars(date('M d, Y H:i', strtotime($notification['created_at']))) ?></span>
+								</li>
+							<?php endforeach; ?>
+						<?php else: ?>
+							<li>
+								<p>No new notifications.</p>
+							</li>
+						<?php endif; ?>
 					</ul>
 				</div>
 			</div>

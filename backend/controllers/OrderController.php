@@ -69,4 +69,10 @@ class OrdersController
         $model = new OrderModel($this->conn);
         return $model->getTotalOrders();
     }
+
+    public function getAdminNotifications()
+    {
+        $model = new OrderModel($this->conn);
+        return $model->getAdminNotifications();
+    }
 }

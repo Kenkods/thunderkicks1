@@ -9,22 +9,22 @@
 </head>
 
 <body class="w-full overflow-x-hidden caret-transparent focus:outline-none">
-     <?php if (isset($_SESSION['success'])): ?>
-    <div id="flash-message" class="absolute top-4 right-4 z-50 bg-yellow-500 border border-yellow-600 text-white px-4 py-3 rounded shadow-md animate-slide-in" role="alert">
-      <strong class="font-bold">Success!</strong>
-      <span class="block sm:inline"><?= $_SESSION['success']; ?></span>
-      <button onclick="this.parentElement.remove();" class="float-right text-white hover:text-gray-200 font-bold ml-2">&times;</button>
-    </div>
+    <?php if (isset($_SESSION['success'])): ?>
+        <div id="flash-message" class="absolute top-4 right-4 z-50 bg-yellow-500 border border-yellow-600 text-white px-4 py-3 rounded shadow-md animate-slide-in" role="alert">
+            <strong class="font-bold">Success!</strong>
+            <span class="block sm:inline"><?= $_SESSION['success']; ?></span>
+            <button onclick="this.parentElement.remove();" class="float-right text-white hover:text-gray-200 font-bold ml-2">&times;</button>
+        </div>
 
-    <script>
-      setTimeout(() => {
-        const flash = document.getElementById('flash-message');
-        if (flash) flash.remove();
-      }, 3000);
-    </script>
+        <script>
+            setTimeout(() => {
+                const flash = document.getElementById('flash-message');
+                if (flash) flash.remove();
+            }, 3000);
+        </script>
 
-    <?php unset($_SESSION['success']); ?>
-  <?php endif; ?>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
 
     <header class="cursor-default bg-gray-200">
         <nav class="flex flex-wrap items-center justify-between px-7 py-3">
@@ -66,7 +66,7 @@
     </header>
 
     <div class="max-w-7xl mx-auto p-4">
-        <h2 class="text-2xl font-bold mb-6">Cart (2 items)</h2>
+        <h2 class="text-2xl font-bold mb-6">Cart</h2>
 
         <!-- CART ITEMS -->
         <div class="flex flex-col lg:flex-row gap-8">
@@ -74,74 +74,66 @@
             <!-- LEFT CART ITEMS -->
 
             <div class="flex-1 space-y-6">
-                       
+
                 <?php foreach ($carts as $cartItems): ?>
 
                     <!-- SINGLE CART ITEM -->
-                     <form action="/Thunderkicks1/Thunderkick-advdb/public/order=success" method="POST">
-                    <div class="bg-white rounded-lg shadow p-4 flex flex-col md:flex-row gap-4">
-                    <input type="checkbox" name="selected[]" value="<?= htmlspecialchars($cartItems['cart_items_id']) ?>" class="mt-2" onchange="updateCartTotal()">
+                    <form action="/Thunderkicks1/Thunderkick-advdb/public/order=success" method="POST">
+                        <div class="bg-white rounded-lg shadow p-4 flex flex-col md:flex-row gap-4">
+                            <input type="checkbox" name="selected[]" value="<?= htmlspecialchars($cartItems['cart_items_id']) ?>" class="mt-2" onchange="updateCartTotal()">
 
-                        <!-- Product Image -->
-                        <div class="flex justify-center items-center bg-gray-100 p-4 rounded">
-                            <img src=<?= htmlspecialchars($cartItems['shoe_img']) ?> alt="cart image" class="h-40 object-contain">
-                        </div>
-
-                        <!-- Product Details -->
-                        <div class="flex-1 space-y-4">
-                            <div>
-                                <h3 class="text-xl font-semibold"><?= htmlspecialchars($cartItems['name']) ?></h3>
-                                <h3 class="text-xl font-semibold"><?= htmlspecialchars($_SESSION['user']['user_id']) ?></h3>
-                                <p class="text-gray-500">Size: <?= htmlspecialchars($cartItems['selected_size']) ?></p>
+                            <!-- Product Image -->
+                            <div class="flex justify-center items-center bg-gray-100 p-4 rounded">
+                                <img src=<?= htmlspecialchars($cartItems['shoe_img']) ?> alt="cart image" class="h-40 object-contain">
                             </div>
 
+                            <!-- Product Details -->
+                            <div class="flex-1 space-y-4">
+                                <div>
+                                    <h3 class="text-xl font-semibold"><?= htmlspecialchars($cartItems['name']) ?></h3>
+                                    <h3 class="text-xl font-semibold"><?= htmlspecialchars($_SESSION['user']['user_id']) ?></h3>
+                                    <p class="text-gray-500">Size: <?= htmlspecialchars($cartItems['selected_size']) ?></p>
+                                </div>
 
-                            <!-- Quantity and Price -->
-                            <div class="flex items-center justify-between">
-                                <!-- <div class="flex items-center space-x-2">
+
+                                <!-- Quantity and Price -->
+                                <div class="flex items-center justify-between">
+                                    <!-- <div class="flex items-center space-x-2">
                                     <?php $uniqueId = $cartItems['cart_items_id']; ?>
                                     <button onclick="decreaseNumber('qty<?= $uniqueId ?>','price<?= $uniqueId ?>')" class="bg-gray-200 px-2 rounded">-</button>
                                     <input id="qty<?= $uniqueId ?>" type="text" value="<?= htmlspecialchars($cartItems['quantity']) ?>" class="w-10 text-center border rounded">
                                     <button onclick="increaseNumber('qty<?= $uniqueId ?>','price<?= $uniqueId ?>')" class="bg-gray-200 px-2 rounded">+</button>
                                 </div> -->
-                                <p><?= htmlspecialchars($cartItems['quantity']) ?></p>
+                                    <p><?= htmlspecialchars($cartItems['quantity']) ?></p>
 
-                                <?php $initialPrice = htmlspecialchars($cartItems['price']); ?>
-                                <h4 class="text-lg font-bold">
-                                    ₱<span
-                                        id="price<?= $uniqueId ?>"
-                                        class="line-total"
-                                        data-price="<?= $initialPrice ?>"
-                                        data-cart-id="<?= $uniqueId ?>"><?= $initialPrice ?></span>
-                                </h4>
+                                    <?php $initialPrice = htmlspecialchars($cartItems['price']); ?>
+                                    <h4 class="text-lg font-bold">
+                                        ₱<span
+                                            id="price<?= $uniqueId ?>"
+                                            class="line-total"
+                                            data-price="<?= $initialPrice ?>"
+                                            data-cart-id="<?= $uniqueId ?>"><?= $initialPrice ?></span>
+                                    </h4>
 
-                            </div>
+                                </div>
 
-                            <div class="flex justify-between text-sm text-gray-600">
-                                <button class="hover:text-red-500 flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg> Remove
-                                </button>
-                                <button class="hover:text-pink-500 flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.01 4.01 4 6.5 4c1.74 0 3.41 1.01 4.13 2.44C11.09 5.01 12.76 4 14.5 4 16.99 4 19 6.01 19 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                    </svg> Move to Wishlist
-                                </button>
+                                <div class="flex justify-between text-sm text-gray-600">
+                                    <button class="hover:text-red-500 flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg> Remove
+                                    </button>
+                                    <button class="hover:text-pink-500 flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.01 4.01 4 6.5 4c1.74 0 3.41 1.01 4.13 2.44C11.09 5.01 12.76 4 14.5 4 16.99 4 19 6.01 19 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                        </svg> Move to Wishlist
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
 
-
-
-               <div>
-                    <div>
-                        <h1><?=var_dump($receipt[0])  ?></h1>
-                    </div>
-               </div>
-                        
 
             </div>
 
@@ -150,7 +142,7 @@
                 <div class="bg-white rounded-lg shadow p-6 space-y-4">
                     <h3 class="text-lg font-bold">The Total Amount Of</h3>
                     <div class="flex justify-between">
-                        
+
                         <p class="hidden">$<span id="product_total_amt">0</span></p>
                     </div>
                     <div class="flex justify-between">
@@ -161,12 +153,12 @@
                         <p>Total (incl. VAT)</p>
                         <p>₱<span id="total_cart_amt">0</span></p>
                     </div>
-                    
-                        <button class="w-full bg-yellow-400 text-white py-2 rounded hover:bg-yellow-500" type="submit">Reserve</button>
+
+                    <button class="w-full bg-yellow-400 text-white py-2 rounded hover:bg-yellow-500" type="submit">Checkout</button>
                     </form>
                 </div>
 
-             
+
                 <div class="bg-white p-4 rounded shadow">
                     <p class="font-semibold mb-2">Branch Location:</p>
                     <p class="text-sm text-gray-600">Gredu, Panabo City Davo Del Norte</p>
@@ -177,59 +169,58 @@
     </div>
 
     <script>
-    function updateLineTotal(qtyId, priceId) {
-        const qty = document.getElementById(qtyId);
-        const price = document.getElementById(priceId);
-        const unitPrice = parseFloat(price.getAttribute('data-price'));
-        const newQty = parseInt(qty.value);
-        const newTotal = newQty * unitPrice;
+        function updateLineTotal(qtyId, priceId) {
+            const qty = document.getElementById(qtyId);
+            const price = document.getElementById(priceId);
+            const unitPrice = parseFloat(price.getAttribute('data-price'));
+            const newQty = parseInt(qty.value);
+            const newTotal = newQty * unitPrice;
 
-        price.innerText = newTotal.toFixed(2);
-        updateCartTotal();
-    }
+            price.innerText = newTotal.toFixed(2);
+            updateCartTotal();
+        }
 
-   
 
- const carts = <?= json_encode($carts) ?>;
-    
-  function updateCartTotal() {
-    let productTotal = 0;
-    const nameContainer = document.getElementById('shoe-name');
-    nameContainer.innerHTML = ""; 
 
-    document.querySelectorAll(".line-total").forEach(span => {
-        const cartItemId = span.getAttribute('data-cart-id');
-        const checkbox = document.querySelector(`input[type="checkbox"][value="${cartItemId}"]`);
-        
-        if (checkbox && checkbox.checked) {
-            productTotal += parseFloat(span.innerText);
-              
-            const matchedItem = carts.find(item => item.cart_items_id == cartItemId);
-                if (matchedItem) {
+        const carts = <?= json_encode($carts) ?>;
+
+        function updateCartTotal() {
+            let productTotal = 0;
+            const nameContainer = document.getElementById('shoe-name');
+            nameContainer.innerHTML = "";
+
+            document.querySelectorAll(".line-total").forEach(span => {
+                const cartItemId = span.getAttribute('data-cart-id');
+                const checkbox = document.querySelector(`input[type="checkbox"][value="${cartItemId}"]`);
+
+                if (checkbox && checkbox.checked) {
+                    productTotal += parseFloat(span.innerText);
+
+                    const matchedItem = carts.find(item => item.cart_items_id == cartItemId);
+                    if (matchedItem) {
                         // Append item name to the container
-                    nameContainer.innerHTML += `<div class="mb-2">
+                        nameContainer.innerHTML += `<div class="mb-2">
                         <strong>${matchedItem.name}</strong><br>
                         Quantity: ${matchedItem.quantity}<br>
                         Size: ${matchedItem.selected_size}<br>
                         Price: ₱${parseFloat(matchedItem.price).toFixed(2)}
                     </div>`;
+                    }
                 }
+            });
+
+            document.getElementById("product_total_amt").innerText = productTotal.toFixed(2);
+            document.getElementById("total_cart_amt").innerText = productTotal.toFixed(2);
+
+
+
         }
-    });
-
-    document.getElementById("product_total_amt").innerText = productTotal.toFixed(2);
-    document.getElementById("total_cart_amt").innerText = productTotal.toFixed(2);
-    
-
- 
-}
 
 
-    function applyDiscount() {
-        alert("Apply discount logic here.");
-    }
-   
-</script>
+        function applyDiscount() {
+            alert("Apply discount logic here.");
+        }
+    </script>
 </body>
 
 

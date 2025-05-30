@@ -124,4 +124,23 @@ class OrderModel
         $result = $stmt->get_result()->fetch_assoc();
         return $result['total_orders'] ?? 0;
     }
+
+    public function getAdminNotifications()
+    {
+        $query = "
+            SELECT notif_id, description, created_at
+            FROM notification
+            WHERE user_id IS NULL -- Notifications for all admins
+            ORDER BY created_at DESC
+            LIMIT 5
+        ";
+        $result = $this->conn->query($query);
+        if ($result) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+            // Log the error or handle it appropriately
+            error_log("Error fetching admin notifications: " . $this->conn->error);
+            return [];
+        }
+    }
 }
