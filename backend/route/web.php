@@ -162,7 +162,7 @@ switch ($request) {
         $order->transferCartToOrder($_SESSION['user']['user_id'], $selected);
         require BASE_PATH . '/pages/shop/cart.php';
 
-        exit();
+        break;
 
 
     case 'admin-orders':

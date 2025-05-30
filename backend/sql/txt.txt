@@ -1,0 +1,1 @@
+select `o`.`order_id` AS `order_id`,`o`.`user_id` AS `user_id`,`o`.`created_at` AS `created_at`,`o`.`total_amount` AS `total_amount`,`o`.`status` AS `status`,`oi`.`shoe_id` AS `shoe_id`,`oi`.`size_id` AS `size_id`,`oi`.`quantity` AS `quantity`,`oi`.`price` AS `price` from (`thunders`.`orders` `o` join `thunders`.`order_items` `oi` on(`o`.`order_id` = `oi`.`order_id`))
