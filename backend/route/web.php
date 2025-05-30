@@ -143,7 +143,10 @@ switch ($request) {
 
     case 'page=cart':
         $displayCart = new cartsController($conn);
+                $orderCont= new OrdersController($conn);
+
         $carts = $displayCart->displayCarts($_SESSION['user']['user_id']);
+        $receipt=$orderCont->orderReceipt();
 
 
         require BASE_PATH . '/pages/shop/cart.php';
@@ -151,12 +154,15 @@ switch ($request) {
 
     case 'order=success':
         $order = new cartsController($conn);
+        $orderCont= new OrdersController($conn);
         $selected = $_POST['selected'];
 
+         $displayCart = new cartsController($conn);
+        $carts = $displayCart->displayCarts($_SESSION['user']['user_id']);
         $order->transferCartToOrder($_SESSION['user']['user_id'], $selected);
-               require BASE_PATH . '/pages/shop/cart.php';
-
-        exit();
+        $receipt=$orderCont->orderReceipt();
+        require BASE_PATH . '/pages/shop/cart.php';
+              break;
 
 
     case 'admin-orders':

@@ -39,4 +39,20 @@ class OrdersController
         $getRecentOrders = $model->getRecentOrders();
         return $getRecentOrders;
     }
+
+
+
+    public function getOrderHistory(){
+
+        $model= new OrderModel($this->conn);
+        $getHistory=$model->selectOrderitems();
+        return $getHistory;
+    }
+
+    public function orderReceipt(){
+
+        $model= new OrderModel($this->conn);
+       $receipt= $model->viewReceipt();
+       return $receipt;
+    }
 }

@@ -9,6 +9,23 @@
 </head>
 
 <body class="w-full overflow-x-hidden caret-transparent focus:outline-none">
+     <?php if (isset($_SESSION['success'])): ?>
+    <div id="flash-message" class="absolute top-4 right-4 z-50 bg-yellow-500 border border-yellow-600 text-white px-4 py-3 rounded shadow-md animate-slide-in" role="alert">
+      <strong class="font-bold">Success!</strong>
+      <span class="block sm:inline"><?= $_SESSION['success']; ?></span>
+      <button onclick="this.parentElement.remove();" class="float-right text-white hover:text-gray-200 font-bold ml-2">&times;</button>
+    </div>
+
+    <script>
+      setTimeout(() => {
+        const flash = document.getElementById('flash-message');
+        if (flash) flash.remove();
+      }, 3000);
+    </script>
+
+    <?php unset($_SESSION['success']); ?>
+  <?php endif; ?>
+
     <header class="cursor-default bg-gray-200">
         <nav class="flex flex-wrap items-center justify-between px-7 py-3">
             <div class="flex items-center space-x-4 w-full md:w-auto">
@@ -57,7 +74,7 @@
             <!-- LEFT CART ITEMS -->
 
             <div class="flex-1 space-y-6">
-
+                       
                 <?php foreach ($carts as $cartItems): ?>
 
                     <!-- SINGLE CART ITEM -->
@@ -119,7 +136,12 @@
 
 
 
-                <!-- add new item here -->
+               <div>
+                    <div>
+                        <h1><?=var_dump($receipt[0])  ?></h1>
+                    </div>
+               </div>
+                        
 
             </div>
 
@@ -140,18 +162,11 @@
                         <p>₱<span id="total_cart_amt">0</span></p>
                     </div>
                     
-                        <button class="w-full bg-yellow-400 text-white py-2 rounded hover:bg-yellow-500">Reserve</button>
+                        <button class="w-full bg-yellow-400 text-white py-2 rounded hover:bg-yellow-500" type="submit">Reserve</button>
                     </form>
                 </div>
 
-                <!-- Discount Code -->
-                <!-- <div class="bg-white p-4 rounded shadow">
-                    <p class="font-semibold mb-2">Add a discount code (optional)</p>
-                    <input type="text" class="w-full border px-2 py-1 rounded" placeholder="Enter code" id="discount_code">
-                    <button onclick="applyDiscount()" class="mt-2 w-full bg-green-500 text-white py-1 rounded hover:bg-green-600">Apply</button>
-                </div> -->
-
-                <!-- Delivery Info -->
+             
                 <div class="bg-white p-4 rounded shadow">
                     <p class="font-semibold mb-2">Branch Location:</p>
                     <p class="text-sm text-gray-600">Gredu, Panabo City Davo Del Norte</p>

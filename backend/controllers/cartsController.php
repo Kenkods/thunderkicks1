@@ -40,7 +40,7 @@
        
         $cartModel->transferCartToOrder($userId, $selectedIdsString);
 
-        // You can add further logic here like redirecting or showing success message
+        
     }
 
 
