@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2025 at 08:16 AM
+-- Generation Time: May 30, 2025 at 10:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -169,6 +169,13 @@ CREATE TABLE `cart` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`cart_id`, `user_id`, `total_amount`, `created_at`) VALUES
+(11, 12, 18499.00, '2025-05-30 06:34:41');
+
 -- --------------------------------------------------------
 
 --
@@ -184,6 +191,14 @@ CREATE TABLE `cart_items` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `size_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart_items`
+--
+
+INSERT INTO `cart_items` (`cart_items_id`, `cart_id`, `shoe_id`, `quantity`, `price`, `created_at`, `size_id`) VALUES
+(64, 11, 17, 1, 9500.00, '2025-05-30 06:34:41', 53),
+(65, 11, 20, 1, 8999.00, '2025-05-30 07:22:42', 75);
 
 -- --------------------------------------------------------
 
@@ -284,9 +299,9 @@ INSERT INTO `shoes` (`shoe_id`, `cat_id`, `brand_id`, `name`, `price`, `shoe_img
 (20, 2, 3, 'Nike Zoom Vomero 5', 8999.00, '/thunderkicks1/public/uploads/shoe_683937479b402.png', 2),
 (21, 2, 3, 'Nike Cortez Textile', 5043.00, '/thunderkicks1/public/uploads/shoe_683937d84739c.png', 3),
 (22, 3, 3, 'Air Jordan 1 Low', 3192.00, '/thunderkicks1/public/uploads/shoe_6839385388600.png', 3),
-(23, 1, 4, 'Men\'s ANTA KAI 1 \"Sacred Bond\"', 10000.00, '/thunderkicks1/public/uploads/shoe_683938ac1af38.png', 1),
-(24, 1, 4, 'ANTA Shock Wave 5 Pro \"Sun\"', 75000.00, '/thunderkicks1/public/uploads/shoe_68393907e4d6a.png', 1),
-(25, 1, 4, 'Men\'s ANTA KAI 1 \"Yin\"', 69000.00, '/thunderkicks1/public/uploads/shoe_68393973d9a41.png', 1),
+(23, 1, 2, 'Men\'s ANTA KAI 1 \"Sacred Bond\"', 10000.00, '/thunderkicks1/public/uploads/shoe_683938ac1af38.png', 1),
+(24, 1, 2, 'ANTA Shock Wave 5 Pro \"Sun\"', 75000.00, '/thunderkicks1/public/uploads/shoe_68393907e4d6a.png', 1),
+(25, 1, 2, 'Men\'s ANTA KAI 1 \"Yin\"', 69000.00, '/thunderkicks1/public/uploads/shoe_68393973d9a41.png', 1),
 (26, 1, 1, 'Anthony Edwards 1 Low Trainers', 7999.00, '/thunderkicks1/public/uploads/shoe_68393abb9365a.png', 1),
 (27, 1, 1, 'Harden Volume 9 Shoes', 5466.00, '/thunderkicks1/public/uploads/shoe_68393b4f771b4.png', 1),
 (28, 1, 4, '1906R', 13000.00, '/thunderkicks1/public/uploads/shoe_68393c2617e77.png', 3),
@@ -294,7 +309,12 @@ INSERT INTO `shoes` (`shoe_id`, `cat_id`, `brand_id`, `name`, `price`, `shoe_img
 (30, 2, 1, 'Duramo Speed 2', 3375.00, '/thunderkicks1/public/uploads/shoe_6839474facb40.png', 2),
 (31, 2, 1, 'Response Super', 4000.00, '/thunderkicks1/public/uploads/shoe_683948dac97ad.png', 2),
 (32, 2, 3, 'Jordan Heir Series PF \'Mother\'s Day\'', 7000.00, '/thunderkicks1/public/uploads/shoe_6839496c15daf.png', 1),
-(33, 2, 3, 'Sabrina 1 \'Dedication\' EP', 7555.00, '/thunderkicks1/public/uploads/shoe_683949ae33493.png', 1);
+(33, 2, 3, 'Sabrina 1 \'Dedication\' EP', 7555.00, '/thunderkicks1/public/uploads/shoe_683949ae33493.png', 1),
+(58, 1, 4, 'New Balance 327 ', 11000.00, '/thunderkicks1/public/uploads/shoe_6839653e72098.png', 3),
+(59, 2, 4, 'New Balance 530', 10000.00, '/thunderkicks1/public/uploads/shoe_6839658b29eb3.png', 3),
+(60, 2, 4, 'New Balance 1906R', 10500.00, '/thunderkicks1/public/uploads/shoe_683965df8566c.png', 3),
+(61, 2, 2, 'Anta Rocket 4.0', 5000.00, '/thunderkicks1/public/uploads/shoe_6839664dc3d72.png', 2),
+(62, 2, 2, 'Anta A-Flash Bubble 3.0', 4500.00, '/thunderkicks1/public/uploads/shoe_683966af04583.png', 2);
 
 -- --------------------------------------------------------
 
@@ -460,7 +480,200 @@ INSERT INTO `sizes` (`size_id`, `shoe_id`, `size`, `stock`) VALUES
 (150, 33, 9, 10),
 (151, 33, 10, 10),
 (152, 33, 11, 10),
-(153, 33, 12, 10);
+(153, 33, 12, 10),
+(154, 34, 7, 10),
+(155, 34, 8, 10),
+(156, 34, 9, 10),
+(157, 34, 10, 10),
+(158, 34, 11, 10),
+(159, 34, 12, 10),
+(160, 35, 7, 10),
+(161, 35, 8, 10),
+(162, 35, 9, 10),
+(163, 35, 10, 10),
+(164, 35, 11, 10),
+(165, 35, 12, 10),
+(166, 36, 7, 10),
+(167, 36, 8, 10),
+(168, 36, 9, 10),
+(169, 36, 10, 10),
+(170, 36, 11, 10),
+(171, 36, 12, 10),
+(172, 37, 7, 10),
+(173, 37, 8, 10),
+(174, 37, 9, 10),
+(175, 37, 10, 10),
+(176, 37, 11, 10),
+(177, 37, 12, 10),
+(178, 38, 7, 10),
+(179, 38, 8, 10),
+(180, 38, 9, 10),
+(181, 38, 10, 10),
+(182, 38, 11, 10),
+(183, 38, 12, 10),
+(184, 39, 7, 10),
+(185, 39, 8, 10),
+(186, 39, 9, 10),
+(187, 39, 10, 10),
+(188, 39, 11, 10),
+(189, 39, 12, 10),
+(190, 40, 7, 10),
+(191, 40, 8, 10),
+(192, 40, 9, 10),
+(193, 40, 10, 10),
+(194, 40, 11, 10),
+(195, 40, 12, 10),
+(196, 41, 7, 10),
+(197, 41, 8, 10),
+(198, 41, 9, 10),
+(199, 41, 10, 10),
+(200, 41, 11, 10),
+(201, 41, 12, 10),
+(202, 42, 7, 10),
+(203, 42, 8, 10),
+(204, 42, 9, 10),
+(205, 42, 10, 10),
+(206, 42, 11, 10),
+(207, 42, 12, 10),
+(208, 43, 7, 10),
+(209, 43, 8, 10),
+(210, 43, 9, 10),
+(211, 43, 10, 10),
+(212, 43, 11, 10),
+(213, 43, 12, 10),
+(214, 44, 7, 10),
+(215, 44, 8, 10),
+(216, 44, 9, 10),
+(217, 44, 10, 10),
+(218, 44, 11, 10),
+(219, 44, 12, 10),
+(220, 45, 7, 10),
+(221, 45, 8, 10),
+(222, 45, 9, 10),
+(223, 45, 10, 10),
+(224, 45, 11, 10),
+(225, 45, 12, 10),
+(226, 46, 7, 10),
+(227, 46, 8, 10),
+(228, 46, 9, 10),
+(229, 46, 10, 10),
+(230, 46, 11, 10),
+(231, 46, 12, 10),
+(232, 47, 7, 10),
+(233, 47, 8, 10),
+(234, 47, 9, 10),
+(235, 47, 10, 10),
+(236, 47, 11, 10),
+(237, 47, 12, 10),
+(238, 48, 7, 10),
+(239, 48, 8, 10),
+(240, 48, 9, 10),
+(241, 48, 10, 10),
+(242, 48, 11, 10),
+(243, 48, 12, 10),
+(244, 49, 7, 10),
+(245, 49, 8, 10),
+(246, 49, 9, 10),
+(247, 49, 10, 10),
+(248, 49, 11, 10),
+(249, 49, 12, 10),
+(250, 50, 7, 10),
+(251, 50, 8, 10),
+(252, 50, 9, 10),
+(253, 50, 10, 10),
+(254, 50, 11, 10),
+(255, 50, 12, 10),
+(256, 51, 7, 10),
+(257, 51, 8, 10),
+(258, 51, 9, 10),
+(259, 51, 10, 10),
+(260, 51, 11, 10),
+(261, 51, 12, 10),
+(262, 52, 7, 10),
+(263, 52, 8, 10),
+(264, 52, 9, 10),
+(265, 52, 10, 10),
+(266, 52, 11, 10),
+(267, 52, 12, 10),
+(268, 53, 7, 10),
+(269, 53, 8, 10),
+(270, 53, 9, 10),
+(271, 53, 10, 10),
+(272, 53, 11, 10),
+(273, 53, 12, 10),
+(274, 54, 7, 10),
+(275, 54, 8, 10),
+(276, 54, 9, 10),
+(277, 54, 10, 10),
+(278, 54, 11, 10),
+(279, 54, 12, 10),
+(280, 55, 7, 10),
+(281, 55, 8, 10),
+(282, 55, 9, 10),
+(283, 55, 10, 10),
+(284, 55, 11, 10),
+(285, 55, 12, 10),
+(286, 56, 7, 10),
+(287, 56, 8, 10),
+(288, 56, 9, 10),
+(289, 56, 10, 10),
+(290, 56, 11, 10),
+(291, 56, 12, 10),
+(292, 57, 7, 10),
+(293, 57, 8, 10),
+(294, 57, 9, 10),
+(295, 57, 10, 10),
+(296, 57, 11, 10),
+(297, 57, 12, 10),
+(298, 58, 7, 10),
+(299, 58, 8, 10),
+(300, 58, 9, 10),
+(301, 58, 10, 10),
+(302, 58, 11, 10),
+(303, 58, 12, 10),
+(304, 59, 7, 10),
+(305, 59, 8, 10),
+(306, 59, 9, 10),
+(307, 59, 10, 10),
+(308, 59, 11, 10),
+(309, 59, 12, 10),
+(310, 60, 7, 10),
+(311, 60, 8, 10),
+(312, 60, 9, 10),
+(313, 60, 10, 10),
+(314, 60, 11, 10),
+(315, 60, 12, 10),
+(316, 61, 7, 10),
+(317, 61, 8, 10),
+(318, 61, 9, 10),
+(319, 61, 10, 10),
+(320, 61, 11, 10),
+(321, 61, 12, 10),
+(322, 62, 7, 10),
+(323, 62, 8, 10),
+(324, 62, 9, 10),
+(325, 62, 10, 10),
+(326, 62, 11, 10),
+(327, 62, 12, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `top_4_shoes`
+-- (See below for the actual view)
+--
+CREATE TABLE `top_4_shoes` (
+`shoe_id` int(11)
+,`cat_id` int(11)
+,`brand_id` int(11)
+,`name` varchar(120)
+,`price` decimal(10,2)
+,`shoe_img` varchar(255)
+,`type_id` int(11)
+,`size_id` int(11)
+,`size` int(11)
+,`total_quantity` decimal(32,0)
+);
 
 -- --------------------------------------------------------
 
@@ -511,7 +724,17 @@ INSERT INTO `users` (`user_id`, `full_name`, `email`, `username`, `password`) VA
 (8, 'khanksie orga', 'jkqt02@gmail.com', 'khanskie', '$2y$10$aPLw8Opg2kB6.x7XShNiP.jnq8V48Jhc4O4X58YAHkq2l8jPQ.Qzm'),
 (9, 'John Kenneth Pantonial', 'jkennn.02@gmail.com', 'jkennn2', '$2y$10$kHBCkQy7WuLUz0X085Nm4enqhQfOLHsN.CsGjioKNWN3VAES53GRC'),
 (10, 'John Kenneth Pantonial', 'jkennn.02@gmail.com', 'Kenneth02', '$2y$10$pnW8/1NtsUk2Jy04N1cVSOnfB/4WircVvEQao.4BuD1HZH8W2r5VC'),
-(11, 'John Kenneth Pantonial', 'khan@gmail.com', '123kenneth', '$2y$10$pgcWFRO4Siq84F6BwmTSBujiFviBzj0f8HLUoBNDJWr.Kq6gJRy6u');
+(11, 'John Kenneth Pantonial', 'khan@gmail.com', '123kenneth', '$2y$10$pgcWFRO4Siq84F6BwmTSBujiFviBzj0f8HLUoBNDJWr.Kq6gJRy6u'),
+(12, 'deb', 'davezkiecabz@gmail.com', 'deb', '$2y$10$jrxDoSP8U3zrZxyhRVsttO0DQovEbta207kvQOFP9MRpstQ12Kfv.');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `top_4_shoes`
+--
+DROP TABLE IF EXISTS `top_4_shoes`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `top_4_shoes`  AS SELECT `s`.`shoe_id` AS `shoe_id`, `s`.`cat_id` AS `cat_id`, `s`.`brand_id` AS `brand_id`, `s`.`name` AS `name`, `s`.`price` AS `price`, `s`.`shoe_img` AS `shoe_img`, `s`.`type_id` AS `type_id`, `oi_summary`.`size_id` AS `size_id`, `sz`.`size` AS `size`, `oi_summary`.`total_quantity` AS `total_quantity` FROM (((select `oi`.`shoe_id` AS `shoe_id`,`oi`.`size_id` AS `size_id`,sum(`oi`.`quantity`) AS `total_quantity` from `order_items` `oi` group by `oi`.`shoe_id`,`oi`.`size_id` order by sum(`oi`.`quantity`) desc limit 4) `oi_summary` join `shoes` `s` on(`s`.`shoe_id` = `oi_summary`.`shoe_id`)) join `sizes` `sz` on(`oi_summary`.`size_id` = `sz`.`size_id`)) ;
 
 --
 -- Indexes for dumped tables
@@ -601,13 +824,13 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `cart_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `cart_items_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -631,13 +854,13 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `shoes`
 --
 ALTER TABLE `shoes`
-  MODIFY `shoe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `shoe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `sizes`
 --
 ALTER TABLE `sizes`
-  MODIFY `size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+  MODIFY `size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
 
 --
 -- AUTO_INCREMENT for table `type`
@@ -649,7 +872,7 @@ ALTER TABLE `type`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
@@ -669,26 +892,12 @@ ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
--- Constraints for table `order_items`
---
-ALTER TABLE `order_items`
-  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`shoe_id`) REFERENCES `shoes` (`shoe_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `order_items_ibfk_3` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`size_id`) ON UPDATE CASCADE;
-
---
 -- Constraints for table `shoes`
 --
 ALTER TABLE `shoes`
   ADD CONSTRAINT `fk_type` FOREIGN KEY (`type_id`) REFERENCES `type` (`type_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `shoes_ibfk_1` FOREIGN KEY (`cat_id`) REFERENCES `category` (`cat_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `shoes_ibfk_2` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`brand_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `sizes`
---
-ALTER TABLE `sizes`
-  ADD CONSTRAINT `sizes_ibfk_1` FOREIGN KEY (`shoe_id`) REFERENCES `shoes` (`shoe_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
