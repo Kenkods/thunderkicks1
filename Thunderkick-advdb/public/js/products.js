@@ -63,6 +63,28 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       return;
     }
+    // Delegate size button behavior inside productList
+    document.getElementById("productList").addEventListener("click", function (e) {
+      if (e.target.classList.contains("size-btn")) {
+        const button = e.target;
+        const card = button.closest(".card");
+
+        // Remove active styles from all size buttons in this card only
+        card.querySelectorAll(".size-btn").forEach(btn =>
+          btn.classList.remove('bg-yellow-500', 'scale-110')
+        );
+
+        // Add active styles to clicked button
+        button.classList.add('bg-yellow-500', 'scale-110');
+
+        // Save selected size
+        const selectedSize = button.getAttribute('data-size');
+        card.dataset.selectedSize = selectedSize;
+
+        console.log('Selected size:', selectedSize);
+      }
+    });
+
 
     products.forEach(product => {
       const sizesButtons = product.sizes.map(sizeObj => `
@@ -86,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="mt-4 flex justify-between items-center">
               <span class="font-bold text-lg">$${product.price}</span>
               <button class="addCartBtn px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded-xl hover:cursor-pointer">
-                Reserve Now
+                Add to Cart
               </button>
             </div>
           </div>
@@ -183,39 +205,39 @@ window.resetFilters = function () {
 
 
 function flashMessage() {
- document.querySelectorAll(".addCartBtn").forEach(button => {
-  button.addEventListener("click", () => {
-    const card = button.closest(".card");
-    const shoeID = card.querySelector("input[name='shoe_id']").value;
-    const selectedSize = card.dataset.selectedSize;
+  document.querySelectorAll(".addCartBtn").forEach(button => {
+    button.addEventListener("click", () => {
+      const card = button.closest(".card");
+      const shoeID = card.querySelector("input[name='shoe_id']").value;
+      const selectedSize = card.dataset.selectedSize;
 
-    if (!selectedSize) {
-      showFlashMessage("Please select a size first.", "red");
-      return;
-    }
-
-    console.log("Adding to cart:", shoeID, "Size:", selectedSize);
-
-    fetch("?page=addToCart", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: new URLSearchParams({ shoe_id: shoeID, size: selectedSize })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        showFlashMessage("Added to cart!", "green");
-      } else {
-        showFlashMessage("Failed to add to cart.", "red");
+      if (!selectedSize) {
+        showFlashMessage("Please select a size first.", "red");
+        return;
       }
-    })
-    .catch(() => {
-      showFlashMessage("Something went wrong.", "red");
+
+      console.log("Adding to cart:", shoeID, "Size:", selectedSize);
+
+      fetch("?page=addToCart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({ shoe_id: shoeID, size: selectedSize })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            showFlashMessage("Added to cart!", "green");
+          } else {
+            showFlashMessage("Failed to add to cart.", "red");
+          }
+        })
+        .catch(() => {
+          showFlashMessage("Something went wrong.", "red");
+        });
     });
   });
-});
 
   function showFlashMessage(message, color) {
     const old = document.getElementById("flash-message");
