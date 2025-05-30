@@ -12,7 +12,7 @@ class cartsModel
     public function addorUpdateCart($user_id, $shoe_id, $quantity, $price, $size)
     {
         $stmt = $this->conn->prepare("CALL AddOrUpdateCartItem(?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiids", $user_id, $shoe_id, $quantity, $price, $size); // Fix: last param is string for size
+        $stmt->bind_param("iiids", $user_id, $shoe_id, $quantity, $price, $size);
         if (!$stmt->execute()) {
             die("Procedure failed: " . $stmt->error);
         }
@@ -48,7 +48,7 @@ class cartsModel
     }
 
 
-      public function transferCartToOrder($userId, $selectedIds)
+    public function transferCartToOrder($userId, $selectedIds)
     {
         $stmt = $this->conn->prepare("CALL TransferCartToOrder(?, ?)");
         if (!$stmt) {
@@ -63,6 +63,4 @@ class cartsModel
 
         $stmt->close();
     }
-
-
 }

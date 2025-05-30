@@ -18,10 +18,6 @@ class CardsModel
             JOIN sizes sz ON s.shoe_id = sz.shoe_id
             WHERE b.brand_name = ?
             ";
-
-
-
-
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
@@ -160,7 +156,6 @@ class CardsModel
     public function addShoe($name, $brand_id, $cat_id, $price, $imagePath, $type_id)
     {
 
-        // Insert into shoes table
         $query = "INSERT INTO shoes (name, brand_id, cat_id, price, shoe_img, type_id) 
               VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -183,7 +178,6 @@ class CardsModel
 
     public function addSizes($shoe_id, $sizes)
     {
-        // Prepare the insert statement for sizes
         $query = "INSERT INTO sizes (shoe_id, size, stock) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($query);
 
@@ -265,22 +259,19 @@ class CardsModel
             die("Query failed: " . $this->conn->error);
         }
 
-        $topShoes = []; // associative array shoe_id => shoe data + sizes array
+        $topShoes = [];
 
         while ($row = $result->fetch_assoc()) {
             $shoeId = $row['shoe_id'];
             if (!isset($topShoes[$shoeId])) {
-                // Initialize shoe data without size info
                 $topShoes[$shoeId] = [
                     'shoe_id' => $row['shoe_id'],
                     'name' => $row['name'],
                     'price' => $row['price'],
                     'shoe_img' => $row['shoe_img'],
-                    // add other shoe columns as needed
                     'sizes' => []
                 ];
             }
-            // Append size info
             $topShoes[$shoeId]['sizes'][] = [
                 'size_id' => $row['size_id'],
                 'size' => $row['size']

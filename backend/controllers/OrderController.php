@@ -12,9 +12,6 @@ class OrdersController
         $this->conn = $conn;
     }
 
-    /**
-     * Get all orders (for admin panel).
-     */
     public function getAllOrders()
     {
         $model = new OrderModel($this->conn);
@@ -22,9 +19,6 @@ class OrdersController
         return $recentOrders;
     }
 
-    /**
-     * Get detailed items for a specific order.
-     */
     public function getOrderItems($orderId)
     {
         $model = new OrderModel($this->conn);
